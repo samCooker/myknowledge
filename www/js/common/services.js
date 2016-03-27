@@ -445,7 +445,7 @@
         }
 
         /**
-         *
+         * 工作日志系统登陆
          */
         function workLogPostFun(url,postData) {
             var delay = $q.defer();

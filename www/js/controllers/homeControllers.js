@@ -39,13 +39,7 @@
 
         //跳转至工作日志填写页面
         function toWorkLogFun() {
-            commonHttp.workLogPost('common/login.action',{account:'Shicx',password:'sam159'}).then(function (data) {
-                if(data===true){
-                    $state.go('worklog');
-                }
-            }).catch(function (error) {
-                tipMsg.alertMsg(error);
-            })
+            $state.go("worklog");
         }
     }
 
