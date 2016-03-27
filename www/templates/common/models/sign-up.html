@@ -1,0 +1,34 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">注册</h1>
+        <div class="buttons">
+            <button class="button button-clear button-icon ion-close-round" ng-click="closeSignup()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <form >
+        <div class="list">
+            <label class="item item-input">
+                <i class="icon ion-android-person padding-right ss-log-i-30 calm"></i>
+                <input type="text" ng-model="signData.username" placeholder="username" >
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-email padding-right ss-log-i-30 calm"></i>
+                <input type="text" ng-model="signData.email" placeholder="email">
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-ios-locked padding-right ss-log-i-30 calm"></i>
+                <input type="password" ng-model="signData.password" placeholder="password">
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-ios-locked padding-right ss-log-i-30 calm"></i>
+                <input type="password" ng-model="signData.checkpwd" placeholder="check password">
+            </label>
+            <label class="item">
+                <button class="button button-block button-positive" ng-click="submitSignup()">注册</button>
+            </label>
+        </div>
+        </form>
+    </ion-content>
+</ion-modal-view>

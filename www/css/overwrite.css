@@ -1,0 +1,7 @@
+@charset "UTF-8";
+/*覆盖ionic原有的样式*/
+
+/*覆盖ionic的加载样式*/
+.loading-container .loading {
+    background-color: inherit;
+}
