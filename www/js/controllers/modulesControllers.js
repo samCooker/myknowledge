@@ -18,6 +18,7 @@
         $scope.scrollToTop=scrollToTopFun;//返回至顶部
         $scope.worklogList=[];
 
+
         //下拉刷新
         function doRefreshFun(){
             $scope.$broadcast('scroll.refreshComplete');//广播下拉完成事件，否则图标不消失
