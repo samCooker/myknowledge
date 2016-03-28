@@ -1,0 +1,66 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">添加日志</h1>
+        <div class="buttons">
+            <button class="button button-clear button-icon ion-close-round" ng-click="worklogAddModal.hide()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">填写日期（ID）:  ID:{{submitData.id}}</span>
+                <input type="text" ng-model="submitData.dailyId" placeholder="dailyId" >
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">填写日期:</span>
+                <input type="text" ng-model="submitData.workDate" placeholder="workDate" >
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">当前用户（ID）:</span>
+                <input type="text" ng-model="submitData.userId" placeholder="useHours" >
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">用时:</span>
+                <div class="range range-positive" style=" width: 90%;">
+                    <span style="width: 40px;">{{submitData.useHours}}</span>
+                    <i class="icon ion-ios-clock-outline"></i>
+                    <input type="range" ng-model="submitData.useHours" min="0" max="5" step="0.5">
+                    <i class="icon ion-ios-clock"></i>
+                </div>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">评价:</span>
+                <div class="range range-positive" style=" width: 90%;">
+                    <span style="width: 80px;">{{evaSelfName}}</span>
+                    <i class="icon ion-android-happy"></i>
+                    <input type="range" ng-model="submitData.evaSelf" min="1" max="4" ng-change="evaSelfName=evaSelfArr[submitData.evaSelf]">
+                    <i class="icon ion-android-sad"></i>
+                </div>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">内容:</span>
+                <input type="text" ng-model="submitData.content" placeholder="content" >
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">类型:</span>
+                <cs-ion-radio ng-model="submitData.workType" ng-value="'1'">项目</cs-ion-radio>
+                <cs-ion-radio ng-model="submitData.workType" ng-value="'2'">学习</cs-ion-radio>
+                <cs-ion-radio ng-model="submitData.workType" ng-value="'7'">请假</cs-ion-radio>
+                <cs-ion-radio ng-model="submitData.workType" ng-value="'9'">其他</cs-ion-radio>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">项目编号:</span>
+                <input type="text" ng-model="submitData.prjNo" placeholder="prjNo" >
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">项目:</span>
+                <input type="text" ng-model="submitData.prjName" placeholder="prjName" >
+            </label>
+
+            <label class="item">
+                <button class="button button-block button-positive" ng-click="submitWorkLog()">添加</button>
+            </label>
+        </div>
+    </ion-content>
+</ion-modal-view>

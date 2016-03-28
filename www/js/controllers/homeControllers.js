@@ -39,7 +39,7 @@
 
         //跳转至工作日志填写页面
         function toWorkLogFun() {
-            $state.go("worklog");
+            $state.go('modules.worklog');
         }
     }
 

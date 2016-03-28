@@ -67,11 +67,12 @@
          * 可输入信息的对话框
          * @param $scope
          * @param title
+         * @param defval
          * @param subTitle
          * @returns {*}
          */
-        function inputMsgFun($scope, title, subTitle) {
-            $scope._popData = {}; //需要预先定义一个弹出窗数据接收对象
+        function inputMsgFun($scope,defval,title, subTitle) {
+            $scope._popData = {text:defval}; //需要预先定义一个弹出窗数据接收对象
             return $ionicPopup.show({
                 template: '<input type="text" ng-model="_popData.text">',
                 title: title || '请输入内容',
@@ -79,7 +80,7 @@
                 scope: $scope, //弹出窗的scope继承自父页面，可以访问父页面数据
                 buttons: [
                     { text: '取消' }, {
-                        text: '<b>保存</b>',
+                        text: '<b>确定</b>',
                         type: 'button-positive',
                         onTap: function(e) {
                             //不允许用户关闭 e.preventDefault();
@@ -166,7 +167,7 @@
                     }
                 );
             } else {
-                tipMsg.showMsg("no datePicker.");
+                defer.reject(false);
             }
             return defer.promise;
         }
@@ -342,6 +343,7 @@
             jsonPost: jsonPostFun,
             formPost: formPostFun,
             workLogPost:workLogPostFun,
+            workLogGet:workLogGetFun,
             httpGet:httpGetFun
         };
 
@@ -445,7 +447,7 @@
         }
 
         /**
-         * 工作日志系统登陆
+         * 工作日志系统登陆 post
          */
         function workLogPostFun(url,postData) {
             var delay = $q.defer();
@@ -458,8 +460,21 @@
                 data: $httpParamSerializer(postData)
             };
             $http(req).success(function (data) {
-                console.log(data);
-                delay.resolve(true);
+                delay.resolve(data);
+            }).error(function (error) {
+                console.log(error);
+                delay.reject(error);
+            });
+            return delay.promise;
+        }
+
+        /**
+         * 工作日志系统登陆 get
+         */
+        function workLogGetFun(url) {
+            var delay = $q.defer();
+            $http.get('http://116.10.203.202:7070/ccoa/'+url).success(function (data) {
+                delay.resolve(data);
             }).error(function (error) {
                 console.log(error);
                 delay.reject(error);

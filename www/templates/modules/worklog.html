@@ -9,22 +9,21 @@
                     </button>
                 </ion-nav-buttons>
             </ion-nav-bar>
-            <ion-content on-scroll-complete="scrollComplete()" delegate-handle="contentScroll"
-                         class="stable-bg has-header">
+            <ion-content class="stable-bg has-header">
                 <ion-refresher on-refresh="doRefresh()"
                                pulling-text="下拉刷新..."
                                refreshing-text="正在刷新!"
                                spinner="android">
                 </ion-refresher>
                 <ion-list>
-                    <ion-item ng-repeat="item in itemList">
-                        {{item.title}}
+                    <ion-item ng-repeat="worklog in worklogList">
+                        <div>{{worklog.date}} {{worklog.item}}</div>
                         <!--列表按钮-->
-                        <ion-option-button class="button-info" ng-click="finishItem(item)">
+                        <ion-option-button class="button-info" ng-click="editItem(worklog)">
                             <i class="icon ion-checkmark-round calm"></i>
                         </ion-option-button>
-                        <ion-option-button class="button-info" ng-click="deleteItem(item)">
-                            <i class="icon ion-close-round assertive"></i>
+                        <ion-option-button class="button-info" ng-click="deleteItem(worklog)">
+                            <i class="icon ion-android-close calm"></i>
                         </ion-option-button>
                     </ion-item>
                 </ion-list>
@@ -32,10 +31,6 @@
                 <ion-infinite-scroll on-infinite="loadMore()" spinner="android" distance="1%" immediate-check="false"
                                      ng-if="!isLoadEnd"></ion-infinite-scroll>
             </ion-content>
-            <div class="ss-scroll-box" ng-if="showToTop" ng-click="scrollToTop()"><i class="icon ion-arrow-up-a"></i>
-                <div>[TOP]</div>
-            </div>
-
         </ion-view>
     </ion-side-menu-content>
     <ion-side-menu side="left">

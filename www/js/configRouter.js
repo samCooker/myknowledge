@@ -59,11 +59,16 @@ $stateProvider
             }
         }
     })
-    .state('worklog',{
-        url:'/worklog',
+    .state('modules',{
+        url:'/modules',
+        abstract:true,
         controller:'worklogController',
         templateUrl:'templates/modules/worklog.html'
     })
-    ;
+    .state('modules.worklog',{
+        url:'/worklog',
+        controller:'worklogController',
+        templateUrl:'templates/modules/worklog.html'
+    });
     $urlRouterProvider.otherwise('/login');//找不到对应url的默认设置
 });
