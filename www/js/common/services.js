@@ -79,10 +79,17 @@
                 subTitle: subTitle || '',
                 scope: $scope, //弹出窗的scope继承自父页面，可以访问父页面数据
                 buttons: [
-                    { text: '取消' }, {
+                    {
+                        text: '取消',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            return false;
+                        }
+                    },
+                    {
                         text: '<b>确定</b>',
                         type: 'button-positive',
-                        onTap: function(e) {
+                        onTap: function (e) {
                             //不允许用户关闭 e.preventDefault();
                             return $scope._popData.text;
                         }

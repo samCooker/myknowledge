@@ -30,6 +30,9 @@
         },
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
     "dependent_plugins": {}

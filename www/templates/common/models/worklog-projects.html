@@ -1,0 +1,23 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">添加日志</h1>
+        <div class="buttons">
+            <button class="button button-clear button-icon ion-close-round" ng-click="worklogProjectsModal.hide()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="stable-bg has-header">
+        <ion-refresher on-refresh="doRefreshProjects()"
+                       pulling-text="下拉刷新..."
+                       refreshing-text="正在刷新!"
+                       spinner="android">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-repeat="project in projectsData">
+                <div ng-click="chooseProject(project)">{{project.id}}&nbsp;&nbsp;&nbsp;&nbsp;{{project.name}}</div>
+            </ion-item>
+        </ion-list>
+        <!--可设置ng-if防止无限加载-->
+        <ion-infinite-scroll on-infinite="loadMoreProjects()" spinner="android" distance="1%" immediate-check="false" ng-if="!isProjectsLoadEnd"></ion-infinite-scroll>
+    </ion-content>
+</ion-modal-view>

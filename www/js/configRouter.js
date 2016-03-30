@@ -67,8 +67,12 @@ $stateProvider
     })
     .state('modules.worklog',{
         url:'/worklog',
-        controller:'worklogController',
-        templateUrl:'templates/modules/worklog.html'
-    });
+        views:{
+           'worklogcontent':{
+               templateUrl:'templates/modules/worklog-content.html'
+           }
+        }
+    })
+    ;
     $urlRouterProvider.otherwise('/login');//找不到对应url的默认设置
 });
