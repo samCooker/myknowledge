@@ -14,9 +14,10 @@
                        spinner="android">
         </ion-refresher>
         <ion-list>
-            <ion-item ng-repeat="worklog in worklogList">
-                <div>&nbsp;&nbsp;{{worklog.date}}</div>
-                <div>{{worklog.item}}</div>
+            <ion-item ng-repeat="worklog in worklogList" class="item item-avatar">
+                <img src="img/ionic.png">
+                <h2>&nbsp;&nbsp;{{worklog.date}}</h2>
+                <div class="ss-item-p">{{worklog.item}}</div>
                 <!--列表按钮-->
                 <ion-option-button class="button-info" ng-click="editItem(worklog)">
                     <i class="icon ion-checkmark-round calm"></i>

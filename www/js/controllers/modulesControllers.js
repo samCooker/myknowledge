@@ -28,25 +28,24 @@
         var dayTransfer={0:6,1:0,2:1,3:2,4:3,5:4,6:5};
         //显示评价详情
         $scope.evaSelfArr={1:'一般',2:'满意',3:'非常满意',4:'不满意'};
-        $scope.evaSelfName=$scope.evaSelfArr[$scope.submitData.evaSelf];
+        var limitDate=new Date('2016-02-01');
 
         //弹出登陆对话框
         worklogLoginModelFun();
 
         //下拉刷新
         function doRefreshFun(){
-            if(!$scope.searchData.day){
-                var currentDate=new Date();
-                var year = currentDate.getFullYear();
-                var month = currentDate.getMonth()+1;
-                var day = currentDate.getDate()-dayTransfer[currentDate.getDay()];
-                $scope.searchData.day=year+'-'+month+'-'+day
-            }
+            //获取当前周的星期一日期
+            var currentDate=new Date();
+            var year = currentDate.getFullYear();
+            var month = currentDate.getMonth()+1;
+            var firstDayOfWeek = currentDate.getDate()-dayTransfer[currentDate.getDay()];
+            $scope.searchData.day=year+'-'+month+'-'+firstDayOfWeek;
             commonHttp.workLogGet('workdaily/myDaily.do?day='+$scope.searchData.day).then(function (data) {
                 $scope.worklogList=resolveHtmlData(data);
             }).catch(function (error) {
                 console.log(error);
-                tipMsg.showMsg('获取数据异常。');
+                tipMsg.showMsg('获取数据异常 !_!');
             }).finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');//广播下拉完成事件，否则图标不消失
                 $scope.isLoadEnd=false;
@@ -55,8 +54,31 @@
 
         //上拉加载
         function loadMoreFun(){
-            $scope.isLoadEnd=true;
-            $scope.$broadcast('scroll.infiniteScrollComplete');//广播上拉完成事件，否则图标不消失
+            if(!$scope.searchData.day){
+                return;
+            }
+            // 获取上周星期一日期
+            var _lastDate=new Date($scope.searchData.day).getTime();
+            console.log($scope.searchData.day);
+            var _searchDay=new Date(_lastDate-7*24*60*60*1000);
+            //最多只能查询limitDate之后的数据
+            if(_searchDay<limitDate){
+                tipMsg.showMsg('没有更多的数据了=_=||');
+                $scope.isLoadEnd=true;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                return;
+            }
+            $scope.searchData.day=_searchDay.getFullYear()+'-'+(_searchDay.getMonth()+1)+'-'+_searchDay.getDate();
+            console.log($scope.searchData.day);
+            commonHttp.workLogGet('workdaily/myDaily.do?day='+$scope.searchData.day).then(function (data) {
+                var _list=resolveHtmlData(data);
+                $scope.worklogList=$scope.worklogList.concat(_list);
+            }).catch(function (error) {
+                console.log(error);
+                tipMsg.showMsg('获取数据异常。');
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');//广播上拉完成事件，否则图标不消失
+            });
         }
 
         //解析工作日志的html数据
@@ -227,6 +249,7 @@
 
         // 打开选择项目对话框
         function selectProjectFun() {
+            console.log('select');
             $scope.worklogAddModal.hide();
             $scope.worklogProjectsModal.show();
             $scope.doRefreshProjects();
@@ -235,6 +258,7 @@
         //选择项目
         $scope.searchPrjsParams={pageNum:1,numPerPage:20};
         $scope.projectsData=[];
+        //刷新项目列表
         $scope.doRefreshProjects = function () {
             $scope.projectsData=[];
             $scope.searchPrjsParams.pageNum=1;
@@ -250,6 +274,7 @@
                 $scope.isProjectsLoadEnd=false;
             });
         };
+        //加载项目数据
         $scope.loadMoreProjects= function () {
             $scope.searchPrjsParams.pageNum++;
             commonHttp.workLogPost('project/projectSelect.do',$scope.searchPrjsParams).then(function (htmlData) {
@@ -264,13 +289,19 @@
                 $scope.$broadcast('scroll.infiniteScrollComplete');//广播下拉完成事件，否则图标不消失
             });
         };
+        //选择项目完成
         $scope.chooseProject= function (project) {
             $scope.submitData.prjNo=project.id;
             $scope.submitData.prjName=project.name;
+            $scope.cancelSelectPrj();
+        };
+        //隐藏项目选择框，显示填写框
+        $scope.cancelSelectPrj= function () {
             $scope.worklogProjectsModal.hide();
             $scope.worklogAddModal.show();
         };
 
+        //解析返回的项目数据
         function resolveProjectsHtmlData(htmlData) {
             var _prjList=[];
             if(!htmlData){
@@ -308,6 +339,7 @@
                     $scope.submitData.dailyId=baseData.dailyId;
                     $scope.submitData.userId=baseData.userId;
                     $scope.submitData.workDate=item.date;
+                    $scope.evaSelfName=$scope.evaSelfArr[$scope.submitData.evaSelf];
                     $scope.worklogAddModal.show();
                 });
             }).finally(function () {

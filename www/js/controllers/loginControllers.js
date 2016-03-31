@@ -15,6 +15,7 @@
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
         $scope.login = loginFun; //登陆
+        $scope.toWorkLog=toWorkLogFun;//登陆工作日志
         $scope.toSignup = toSignupFun;
 
         //登陆
@@ -33,6 +34,11 @@
             }).finally(function () {
                 tipMsg.loading().hide();//隐藏加载框
             });
+        }
+
+        // 登陆工作日志
+        function toWorkLogFun() {
+            $state.go('modules.worklog',null,{reload:true});
         }
 
         //根据角色跳转至不同页面

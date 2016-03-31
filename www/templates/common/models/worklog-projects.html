@@ -3,13 +3,13 @@
     <ion-header-bar>
         <h1 class="title">添加日志</h1>
         <div class="buttons">
-            <button class="button button-clear button-icon ion-close-round" ng-click="worklogProjectsModal.hide()"></button>
+            <button class="button button-clear button-icon ion-close-round" ng-click="cancelSelectPrj()"></button>
         </div>
     </ion-header-bar>
     <ion-content class="stable-bg has-header">
         <ion-refresher on-refresh="doRefreshProjects()"
                        pulling-text="下拉刷新..."
-                       refreshing-text="正在刷新!"
+                       refreshing-text="正在刷新"
                        spinner="android">
         </ion-refresher>
         <ion-list>

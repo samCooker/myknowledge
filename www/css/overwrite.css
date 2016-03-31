@@ -5,3 +5,15 @@
 .loading-container .loading {
     background-color: inherit;
 }
+
+/*自动换行*/
+.ss-item-p{
+    white-space: initial;
+}
+.ss-item-margin{
+    margin: 1px 15px;
+}
+
+.ss-i-color-blue{
+    color: #387EF5;
+}

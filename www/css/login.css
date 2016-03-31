@@ -33,8 +33,11 @@
     text-align: center;
 }
 
+.ss-text-right{
+    text-align: right;
+}
+
 .ss-top-15{
     margin-top: 15%
 }
-
 
