@@ -9,11 +9,13 @@
         .directive('csTimePicker',CsTimePickerDir)//自定义的时间选择指令
         .directive('csSearchInput',CsSearchInputDir)//带有删除键的查询工具条
         .directive('csBackTo',CsbackToDir)//顶部栏左侧返回按钮
+        .directive('csReturnBtn',CsReturnBtnDir)//顶部栏左侧返回按钮
         .directive('csContentToggle',CsContentToggle)//内容显示隐藏
         ;
 
     /**
      * 带有删除键的查询工具条
+     *      <cs-search-input ng-model="" btn-click=""></cs-search-input>
      * @returns {*}
      * @constructor
      */
@@ -293,6 +295,24 @@
                 var stateName=$scope.backToState||'app.fordos';
                 $scope.s_backToHome=function(){
                     $state.go(stateName);
+                }
+            }
+        }
+    }
+    /**
+     * 返回上一页
+     *      <cs-return-btn></cs-return-btn>
+     * @returns {*}
+     */
+    function CsReturnBtnDir(){
+        return {
+            restrict:'E',
+            transclude: true,
+            replace:true,
+            template:'<button class="button button-icon button-clear ion-chevron-left" ng-click="_returnBack()"></button>',
+            controller:function($scope,$ionicHistory){
+                $scope._returnBack=function(){
+                    $ionicHistory.goBack();
                 }
             }
         }

@@ -4,7 +4,7 @@
 var appModule = angular.module('starter', ['ionic']);
 
 // 设置运行时的参数
-appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $state, tipMsg, dbTool) {
+appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $state , tipMsg, dbTool) {
 
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -38,7 +38,7 @@
 
         // 登陆工作日志
         function toWorkLogFun() {
-            $state.go('modules.worklog',null,{reload:true});
+            $state.go('worklog.list');
         }
 
         //根据角色跳转至不同页面

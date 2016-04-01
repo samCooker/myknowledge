@@ -174,7 +174,7 @@
                     }
                 );
             } else {
-                defer.reject(false);
+                defer.resolve(false);
             }
             return defer.promise;
         }
@@ -346,12 +346,17 @@
      * 对http请求的一个封装，可设置请求json数据方便调试
      */
     function CommonHttpFun($q, $http,$httpParamSerializer, appConfig, tipMsg) {
+
+        var _data={};//可在多个controller中传递的数据对象
+
         return {
             jsonPost: jsonPostFun,
             formPost: formPostFun,
             workLogPost:workLogPostFun,
             workLogGet:workLogGetFun,
-            httpGet:httpGetFun
+            httpGet:httpGetFun,
+            getSubmitData:getSubmitDataFun,//获取数据，在多个controller中传递
+            setSubmitData:setSubmitDataFun//设置数据
         };
 
         /**
@@ -467,7 +472,11 @@
                 data: $httpParamSerializer(postData)
             };
             $http(req).success(function (data) {
-                delay.resolve(data);
+                if(typeof(data) =='string'&&data.indexOf('重定向到登录页')!=-1){
+                    delay.reject('你没有登录(～￣(OO)￣)ブ');
+                }else {
+                    delay.resolve(data);
+                }
             }).error(function (error) {
                 console.log(error);
                 delay.reject(error);
@@ -481,12 +490,27 @@
         function workLogGetFun(url) {
             var delay = $q.defer();
             $http.get('http://116.10.203.202:7070/ccoa/'+url).success(function (data) {
-                delay.resolve(data);
+                if(typeof(data) =='string'&&data.indexOf('重定向到登录页')!=-1){
+                    delay.reject('你没有登录(～￣(OO)￣)ブ');
+                }else {
+                    delay.resolve(data);
+                }
             }).error(function (error) {
                 console.log(error);
                 delay.reject(error);
             });
             return delay.promise;
+        }
+
+        /**
+         * 获取数据，在多个controller中传递
+         */
+        function getSubmitDataFun() {
+            return _data;
+        }
+
+        function setSubmitDataFun(data) {
+            _data=data;
         }
     }
 })();

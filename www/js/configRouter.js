@@ -13,6 +13,7 @@
 appModule.config(function($stateProvider, $urlRouterProvider){
 
 $stateProvider
+    //登陆
     .state('login',{
         url:'/login',
         controller:'loginController',
@@ -59,18 +60,30 @@ $stateProvider
             }
         }
     })
-    .state('modules',{
-        url:'/modules',
+    //工作日志
+    .state('worklog',{
+        url:'/worklog',
         abstract:true,
-        controller:'worklogController',
+        controller:'worklogHomeController',
         templateUrl:'templates/modules/worklog.html'
     })
-    .state('modules.worklog',{
-        url:'/worklog',
+    .state('worklog.list',{
+        url:'/list',
         views:{
            'worklogcontent':{
-               templateUrl:'templates/modules/worklog-content.html'
+               controller:'worklogListController',
+               templateUrl:'templates/modules/worklog-list.html'
            }
+        }
+    })
+    .state('worklog.edit',{
+        url:'/edit',
+        views:{
+            'worklogcontent':{
+                controller:'worklogEditController',
+                params:{id:null},//定义需要传递的值，使用 $state.go('',{id:''})可传递
+                templateUrl:'templates/modules/worklog-edit.html'
+            }
         }
     })
     ;
