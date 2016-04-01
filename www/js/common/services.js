@@ -133,14 +133,16 @@
 
     /**
      * 各工具方法
-     * @param tipMsg
+     * @param $q
      * @returns {*}
      * @constructor
      */
-    function ToolsFun(tipMsg, $q) {
-        var Fac = {
+    function ToolsFun($q) {
+
+        return {
             dataPicker: dataPickerFun, //日期控件
             checkEmail: checkEmailFun, //判断电子邮件格式是否正确
+            checkConnection:checkConnectionFun,
             isInArray:isInArrayFun
         };
 
@@ -200,7 +202,31 @@
             return false;
         }
 
-        return Fac;
+        /**
+         * 查看网络连接状况
+         *
+         * @return {isConn: 'true网络连接正常  false无连接',type:''}
+         *
+         */
+        function checkConnectionFun() {
+            if(navigator&&navigator.connection) {
+                //网络连接状况
+                var _netStates = {};
+                _netStates[Connection.UNKNOWN] = '未知网络';
+                _netStates[Connection.ETHERNET] = '以太网';
+                _netStates[Connection.WIFI] = 'WiFi网络';
+                _netStates[Connection.CELL_2G] = '2G网络';
+                _netStates[Connection.CELL_3G] = '3G网络';
+                _netStates[Connection.CELL_4G] = '4G网络';
+                _netStates[Connection.CELL] = '通用连接';
+                _netStates[Connection.NONE] = '无网络连接';
+                var networkState = navigator.connection.type;
+                var _isConn=Connection.NONE != networkState;
+                return {isConn:_isConn,type:_netStates[networkState]};
+            }
+            return {isConn:true,type:'无法检测网络连接'};
+        }
+
     }
 
     /**
@@ -345,7 +371,7 @@
     /**
      * 对http请求的一个封装，可设置请求json数据方便调试
      */
-    function CommonHttpFun($q, $http,$httpParamSerializer, appConfig, tipMsg) {
+    function CommonHttpFun($q, $http,$httpParamSerializer, appConfig, tipMsg,tools) {
 
         var _data={};//可在多个controller中传递的数据对象
 
@@ -380,12 +406,17 @@
                 });
             } else {
                 //在线
-                $http.post(appConfig.getHost() + url, jsonData).success(function (data) {
-                    delay.resolve(data);
-                }).error(function (error) {
-                    console.log(error);
-                    delay.reject('服务器连接失败。');
-                });
+                var _conn = tools.checkConnection();
+                if(_conn.isConn) {//检测网络连接
+                    $http.post(appConfig.getHost() + url, jsonData).success(function (data) {
+                        delay.resolve(data);
+                    }).error(function (error) {
+                        console.log(error);
+                        delay.reject('服务器连接失败。');
+                    });
+                }else{
+                    delay.reject(_conn.type);
+                }
             }
             return delay.promise;
         }
@@ -418,12 +449,17 @@
                 });
             } else {
                 //在线
-                $http(req).success(function (data) {
-                    delay.resolve(data);
-                }).error(function (error) {
-                    console.log(error);
-                    delay.reject('服务器连接失败。');
-                });
+                var _conn = tools.checkConnection();
+                if(_conn.isConn) {//检测网络连接
+                    $http(req).success(function (data) {
+                        delay.resolve(data);
+                    }).error(function (error) {
+                        console.log(error);
+                        delay.reject('服务器连接失败。');
+                    });
+                }else{
+                    delay.reject(_conn.type);
+                }
             }
 
             return delay.promise;
@@ -448,12 +484,17 @@
                 });
             } else {
                 //在线
-                $http.get(appConfig.getHost() + url).success(function (data) {
-                    delay.resolve(data);
-                }).error(function (error) {
-                    console.log(error);
-                    delay.reject('服务器连接失败。');
-                });
+                var _conn = tools.checkConnection();
+                if(_conn.isConn) {//检测网络连接
+                    $http.get(appConfig.getHost() + url).success(function (data) {
+                        delay.resolve(data);
+                    }).error(function (error) {
+                        console.log(error);
+                        delay.reject('服务器连接失败。');
+                    });
+                }else{
+                    delay.reject(_conn.type);
+                }
             }
             return delay.promise;
         }
@@ -471,16 +512,22 @@
                 },
                 data: $httpParamSerializer(postData)
             };
-            $http(req).success(function (data) {
-                if(typeof(data) =='string'&&data.indexOf('重定向到登录页')!=-1){
-                    delay.reject('你没有登录(～￣(OO)￣)ブ');
-                }else {
-                    delay.resolve(data);
-                }
-            }).error(function (error) {
-                console.log(error);
-                delay.reject(error);
-            });
+            var _conn = tools.checkConnection();
+            if(_conn.isConn) {//检测网络连接
+                $http(req).success(function (data) {
+                    if (typeof(data) == 'string' && data.indexOf('重定向到登录页') != -1) {
+                        delay.reject('你没有登录(～￣(OO)￣)ブ');
+                    } else {
+                        delay.resolve(data);
+                    }
+                }).error(function (error) {
+                    console.log(error);
+                    delay.reject(error);
+                });
+            }else{
+                console.log(_conn.type);
+                delay.reject(_conn.type);
+            }
             return delay.promise;
         }
 
@@ -489,16 +536,21 @@
          */
         function workLogGetFun(url) {
             var delay = $q.defer();
-            $http.get('http://116.10.203.202:7070/ccoa/'+url).success(function (data) {
-                if(typeof(data) =='string'&&data.indexOf('重定向到登录页')!=-1){
-                    delay.reject('你没有登录(～￣(OO)￣)ブ');
-                }else {
-                    delay.resolve(data);
-                }
-            }).error(function (error) {
-                console.log(error);
-                delay.reject(error);
-            });
+            var _conn = tools.checkConnection();
+            if(_conn.isConn) {//检测网络连接
+                $http.get('http://116.10.203.202:7070/ccoa/' + url).success(function (data) {
+                    if (typeof(data) == 'string' && data.indexOf('重定向到登录页') != -1) {
+                        delay.reject('你没有登录(～￣(OO)￣)ブ');
+                    } else {
+                        delay.resolve(data);
+                    }
+                }).error(function (error) {
+                    console.log(error);
+                    delay.reject(error);
+                });
+            }else{
+                delay.reject(_conn.type);
+            }
             return delay.promise;
         }
 

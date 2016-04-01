@@ -45,6 +45,10 @@ appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $s
         return false;
     }, 101);//101 数值越高优先级越高，详情可查看源码
 
+    document.addEventListener("offline", function (data) {
+        console.log(data);
+    }, false);
+
 });
 
 //tabs位置设置
