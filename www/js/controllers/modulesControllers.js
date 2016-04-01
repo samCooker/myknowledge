@@ -98,14 +98,20 @@
             if(isCurrent) {
                 //获取当前周的星期一日期
                 var currentDate = new Date();
-                // getDay 方法星期天返回的是0，需要判断是否为星期天
-                var firstDayOfWeek = currentDate.getDate() - (currentDate.getDay() == 0 ? 6 : currentDate.getDay() - 1);
+                var _dayInterval = currentDate.getDay() == 0 ? 6 : currentDate.getDay() - 1;
+                var _timemill=currentDate.getTime()-_dayInterval*24*60*60*1000;
+                var firstDateOfWeek=new Date(_timemill);
                 //返回 yyyy-MM-dd 格式日期
-                $scope.searchData.day = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + firstDayOfWeek;
+                $scope.searchData.day = firstDateOfWeek.getFullYear() + '-' + (firstDateOfWeek.getMonth() + 1) + '-' + firstDateOfWeek.getDate();
                 return true;
             }else{
                 // 获取查询日期的上一个星期一日期
                 if(!$scope.searchData.day){
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                    return false;
+                }
+                if(!/^\d{4}-\d{1,2}-\d{2}/.test($scope.searchData.day)){
+                    tipMsg.showMsg('日期获取异常');
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                     return false;
                 }
@@ -254,6 +260,8 @@
                     $scope.submitData.workDate=item.date;
                     commonHttp.setSubmitData($scope.submitData);
                     $state.go('worklog.edit',null,{reload:true});
+                }).catch(function (error) {
+                    tipMsg.showMsg(error);
                 });
             }).finally(function () {
                 tipMsg.loading().hide();
