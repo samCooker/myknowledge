@@ -2,10 +2,14 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
+//var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var ngAnnotate = require('gulp-ng-annotate');//压缩angularjs相关插件
+var uglify = require('gulp-uglify');
+var ngmin = require('gulp-ngmin');
+var stripDebug = require('gulp-strip-debug');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -48,4 +52,14 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('minify', function() {
+    return gulp.src(['./www/js/app.js','./www/js/configRouter.js','./www/js/common/*.js','./www/js/controllers/*.js'])
+        .pipe(ngAnnotate())
+        .pipe(ngmin({dynamic: false}))
+        .pipe(stripDebug())
+        .pipe(uglify({outSourceMap: false}))
+        .pipe(concat('all.min.js'))
+        .pipe(gulp.dest('./www/js/'))
 });
