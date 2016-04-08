@@ -239,6 +239,10 @@
         var Fac = {
             initWebSqlDb: initWebSqlDbFun,
             putFdData: putFdDataFun,
+            getWorklogUser:getWorklogUserFun,
+            putWorklogUser:putWorklogUserFun,
+            putWorklogData: putWorklogDataFun,
+            getWorklogData:getWorklogDataFun,
             postOrUpdate: postOrUpdateFun,
             findFdData: findFdDataFun,
             getAllFdData: getAllFdDataFun,
@@ -249,6 +253,8 @@
 
         var _db;
         var _fdId = 'fodoItem';
+        var _worklogId = 'worklogId';
+        var _worklogUserId = 'worklogUserId';
 
         /**
          * 创建一个本地存储数据库
@@ -256,6 +262,16 @@
          */
         function initWebSqlDbFun(dbname) {
             _db = new PouchDB(dbname, { adapter: 'websql' });
+
+            _db.createIndex({
+                index: {
+                    fields: ['_id'],//对字段建立索引
+                    name:'search-id-index'
+                }
+            }).catch(function (err) {
+                tipMsg.showMsg('创建失败。');
+                console.log(err);
+            });
         }
 
         /**
@@ -271,6 +287,78 @@
             }).catch(function(err) {
                 tipMsg.showMsg('保存失败。');
                 console.log(err);
+            });
+        }
+
+        /**
+         * 保存最近一次的工作日志信息数据，_id指定
+         * @param data 数据对象
+         * @returns {*}
+         */
+        function putWorklogDataFun(data) {
+            findDataByIdFun(_worklogId).then(function (result) {
+                if(result._id){
+                    result.useHours=data.useHours;
+                    result.workType=data.workType;
+                    result.prjNo=data.prjNo;
+                    result.prjName=data.prjName;
+                    _db.put(result);
+                }else{
+                    data._id = _worklogId; //指定id
+                    _db.put(data);
+                }
+            }).catch(function (error) {
+                tipMsg.showMsg(error);
+            });
+        }
+
+        /**
+         * 获取保存在本地的工作日志信息数据
+         * @returns {*}
+         */
+        function getWorklogDataFun() {
+            return findDataByIdFun(_worklogId,['_id','useHours', 'workType', 'prjNo', 'prjName']);
+        }
+
+        function getWorklogUserFun() {
+            return findDataByIdFun(_worklogUserId,['_id','account','password']);
+        }
+
+        function putWorklogUserFun(data) {
+            findDataByIdFun(_worklogUserId).then(function (result) {
+                if(result._id){
+                    result.account=data.account;
+                    result.password=data.password;
+                    _db.put(result);
+                }else{
+                    data._id = _worklogUserId; //指定id
+                    _db.put(data);
+                }
+            }).catch(function (error) {
+                tipMsg.showMsg(error);
+            });
+        }
+
+        /**
+         * 根据_id查找doc
+         * @param id
+         * @param fields 指定返回的字段，若为空则返回所有
+         * @returns {*}
+         */
+        function findDataByIdFun(id,fields) {
+            var returnData={};
+            return _db.find({
+                selector: { _id: { $eq: id } },
+                fields: fields
+            }).then(function(data) {
+                if (data.docs && data.docs.length > 0) {
+                    data.docs.forEach(function(doc) {
+                        if (doc._id==id) {
+                            returnData=doc;
+                        }
+                    });
+                }
+                return returnData;
             });
         }
 
@@ -510,6 +598,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
+                cache:false,
                 data: $httpParamSerializer(postData)
             };
             var _conn = tools.checkConnection();
@@ -535,10 +624,24 @@
          * 工作日志系统登陆 get
          */
         function workLogGetFun(url) {
+            var _time=new Date().getTime();
+            if(url.indexOf('?')!=-1){
+                url=url+'&_='+_time;
+            }else{
+                url=url+'?_='+_time;
+            }
             var delay = $q.defer();
+            var req = {
+                method: 'GET',
+                url: 'http://116.10.203.202:7070/ccoa/'+url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                cache:false
+            };
             var _conn = tools.checkConnection();
             if(_conn.isConn) {//检测网络连接
-                $http.get('http://116.10.203.202:7070/ccoa/' + url).success(function (data) {
+                $http(req).success(function (data) {
                     if (typeof(data) == 'string' && data.indexOf('重定向到登录页') != -1) {
                         delay.reject('你没有登录(～￣(OO)￣)ブ');
                     } else {

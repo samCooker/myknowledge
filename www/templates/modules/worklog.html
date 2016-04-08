@@ -1,20 +1,15 @@
-<ion-side-menus enable-menu-with-back-views="false" ><!--enable-menu-with-back-views:是否能用物理返回键打开侧边框 drag-content - 是否允许拖动内容打开侧栏菜单，默认为 true。-->
+<ion-side-menus enable-menu-with-back-views="true" ><!--enable-menu-with-back-views:是否能用物理返回键打开侧边框 drag-content - 是否允许拖动内容打开侧栏菜单，默认为 true。-->
     <ion-side-menu-content drag-content="false">
         <ion-nav-view name="worklogcontent"></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu side="left">
-        <ion-header-bar class="bar-stable ss-text-center">
-            <h1 class="title">登陆设置</h1>
+        <ion-header-bar class="bar-stable">
+            <h1 class="title ss-text-center">登陆设置</h1>
         </ion-header-bar>
         <ion-content class="stable-bg"><!--background color-->
             <ion-list>
                 <ion-item class="item-stable item-thumbnail-left">
 
-                </ion-item>
-                <ion-item class="item-stable">
-                    <label class="item-input">
-                        <input type="text" placeholder="say something ..."/>
-                    </label>
                 </ion-item>
                 <ion-item menu-close ng-click="worklogLoginModal.show()" class="item-stable item-icon-left item-icon-right">
                     <!--menu-close点击后关闭侧边栏-->

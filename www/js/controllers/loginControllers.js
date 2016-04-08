@@ -11,7 +11,7 @@
      * 登陆控制器
      */
     function loginControllerFun($scope, $state, $ionicModal, tipMsg,tools, loginService) {
-        $scope.loginData = {username:'cookie' ,password:'1' }; //登陆数据
+        $scope.loginData = {}; //登陆数据
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
         $scope.login = loginFun; //登陆
@@ -25,6 +25,7 @@
                 if (result.id) {
                     //根据角色跳转至不同页面
                     toDifferentPage(result);
+                    $scope.hasError = false;
                 } else {
                     tipMsg.showMsg('用户名或密码错误!');
                 }
@@ -81,7 +82,7 @@
     /**
      * 登陆服务
      */
-    function loginServiceFun($q, commonHttp, tipMsg, tools) {
+    function loginServiceFun($q, commonHttp, tipMsg, tools,appConfig) {
         return {
             login: loginFun,
             signup: signupFun
@@ -91,18 +92,27 @@
          * 登陆
          */
         function loginFun(data) {
-            if (data.username && data.password) {
-                return commonHttp.jsonPost('login_check', data);
-            } else {
+            if (!data.username || !data.password) {
                 var delay = $q.defer();
-                if (!data.password) {
-                    delay.reject('无密码');
-                    return delay.promise;
-                }
                 if (!data.username) {
                     delay.reject('无用户名');
                     return delay.promise;
                 }
+                if (!data.password) {
+                    delay.reject('无密码');
+                    return delay.promise;
+                }
+            } else if(!appConfig.getLocalDebug()){
+                return commonHttp.jsonPost('login_check', data);
+            }else{
+                var delay2 = $q.defer();
+                var user=appConfig.getDebugUser();
+                if(data.username==user.username&&data.password==user.password){
+                    delay2.resolve({"id":1,"account":"cookie","username":"cookie",roles:['admin']});
+                }else{
+                    delay2.reject('用户名或密码错误');
+                }
+                return delay2.promise;
             }
         }
 

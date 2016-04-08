@@ -12,8 +12,8 @@
      * 工作日志父类控制器
      * @constructor
      */
-    function WorklogHomeController($scope,$ionicModal,$filter,$state,commonHttp,tipMsg,tools) {
-        $scope.loginData={account:'Shicx',password:'sam159'};
+    function WorklogHomeController($scope,$ionicModal,$filter,$state,commonHttp,tipMsg,dbTool) {
+        $scope.loginData={};
         $scope.worklogLogin=worklogLoginFun;//登陆日志系统
         $scope.worklogLogout=worklogLogoutFun;//登出日志系统
 
@@ -24,8 +24,22 @@
         }).then(function(modal) {
             //登陆对话框对象
             $scope.worklogLoginModal = modal;
-            $scope.worklogLoginModal.show();
+            initWorklogUser().then(function () {
+                $scope.worklogLoginModal.show();
+            }).catch(function (error) {
+                tipMsg.showMsg(error);
+                $scope.worklogLoginModal.show();
+            });
         });
+
+        function initWorklogUser() {
+            return dbTool.getWorklogUser().then(function (data) {
+                console.log(data);
+                $scope.loginData.account=data.account;
+                $scope.loginData.password=data.password;
+                return true;
+            });
+        }
 
         //日志系统登陆
         function worklogLoginFun() {
@@ -34,10 +48,13 @@
                 if(data.indexOf('../workdaily/myDaily.do')){
                     $scope.worklogLoginModal.hide();
                     $scope.$broadcast('worklog.refreshworklog');
+                }else{
+                    tipMsg.showMsg('登陆出现了错误。');
                 }
             }).catch(function (error) {
-                tipMsg.alertMsg(error);
+                tipMsg.showMsg('登陆出现了错误。');
             }).finally(function () {
+                dbTool.putWorklogUser($scope.loginData);
                 tipMsg.loading().hide();//显示加载框
             });
         }
@@ -45,9 +62,11 @@
         //日志系统登出
         function worklogLogoutFun() {
             commonHttp.workLogGet('common/logout.do').then(function (data) {
+                tipMsg.showMsg(data);
+            }).catch(function (error) {
                 tipMsg.showMsg('退出成功\\(^o^)/YES!');
             }).finally(function () {
-                $state.go('home.welcome');
+                ionic.Platform.exitApp();//退出app
             });
         }
 
@@ -56,7 +75,7 @@
     /**
      * 工作日志列表控制器
      * */
-    function WorklogListController($scope,$rootScope,$filter,$state,commonHttp,tipMsg,tools) {
+    function WorklogListController($scope,$rootScope,$filter,$state,commonHttp,tipMsg,tools,dbTool) {
         $scope.chooseWorkDate=chooseWorkDateFun;//选择一个日期新增日志
         $scope.isLoadEnd=false;//是否已经加载完成
         $scope.doRefresh=doRefreshFun;//刷新
@@ -70,7 +89,8 @@
         $scope.editItem=editItemFun;//编辑
 
         //接收刷新列表的广播
-        $scope.$on('worklog.refreshworklog', function (event,data) {
+        $rootScope.$on('worklog.refreshworklog', function (event,data) {
+            console.log(data);
             doRefreshFun();
         });
 
@@ -78,7 +98,7 @@
         function doRefreshFun(){
             //获取当前周的星期一日期
             if(getFirstDayOfWeek(true)) {
-                commonHttp.workLogGet('workdaily/myDaily.do?day=' + $scope.searchData.day).then(function (data) {
+                commonHttp.workLogPost('workdaily/myDaily.do').then(function (data) {
                     if(data&&data.length) {
                         $scope.worklogList = resolveHtmlData(data);
                     }else{
@@ -107,11 +127,13 @@
             }else{
                 // 获取查询日期的上一个星期一日期
                 if(!$scope.searchData.day){
+                    $scope.isLoadEnd=true;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                     return false;
                 }
-                if(!/^\d{4}-\d{1,2}-\d{2}/.test($scope.searchData.day)){
+                if(!/^\d{4}-\d{1}|\d{2}-\d{2}/.test($scope.searchData.day)){
                     tipMsg.showMsg('日期获取异常');
+                    $scope.isLoadEnd=true;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                     return false;
                 }
@@ -152,16 +174,17 @@
             var itemList=[];
             var htmlArr=htmlData.split('openMyDailyEdit(\'');
             angular.forEach(htmlArr, function (item) {
-                  if(/^\d{4}-\d{2}-\d{2}/.test(item)&&/【\d.\d】/.test(item)){
-                      var _date=item.substring(0,item.indexOf('\')">'));
-                      var _arr=item.split(/【/);
-                      for(var i=1;i<_arr.length;i++){
-                          var _workLog={date:_date,index:i-1};
-                          _workLog.item='【'+_arr[i].substring(0,_arr[i].indexOf('</div>'));
-                          itemList.push(_workLog);
-                      }
-                  }
+                if(/^\d{4}-\d{2}-\d{2}/.test(item)&&/【\d.\d】/.test(item)){
+                    var _date=item.substring(0,item.indexOf('\')">'));
+                    var _arr=item.split(/【/);
+                    for(var i=1;i<_arr.length;i++){
+                        var _workLog={date:_date,index:i-1};
+                        _workLog.item='【'+_arr[i].substring(0,_arr[i].indexOf('</div>'));
+                        itemList.push(_workLog);
+                    }
+                }
             });
+            itemList=itemList.reverse();
             return itemList;
         }
 
@@ -173,13 +196,13 @@
             var _value = 'value="';
             var _arr = htmlData.split('<input');
             angular.forEach(_arr, function (value) {
-               if(value.indexOf(_hd_dailyId)!=-1){
-                   var _sp_dailyId =value.split(_value)[1];
-                   returnData.dailyId = _sp_dailyId.substring(0, _sp_dailyId.indexOf('"'));
-               }else if(value.indexOf(_hd_userId)!=-1){
-                   var _sp_userId =value.split(_value)[1];
-                   returnData.userId = _sp_userId.substring(0, _sp_userId.indexOf('"'));
-               }
+                if(value.indexOf(_hd_dailyId)!=-1){
+                    var _sp_dailyId =value.split(_value)[1];
+                    returnData.dailyId = _sp_dailyId.substring(0, _sp_dailyId.indexOf('"'));
+                }else if(value.indexOf(_hd_userId)!=-1){
+                    var _sp_userId =value.split(_value)[1];
+                    returnData.userId = _sp_userId.substring(0, _sp_userId.indexOf('"'));
+                }
             });
             return returnData;
         }
@@ -197,9 +220,7 @@
                 }else{
                     $scope.submitData.workDate = $filter('date')(date, 'yyyy-MM-dd');
                     return commonHttp.workLogGet('workdaily/workDailyEdit.do?day=' + $scope.submitData.workDate).then(function (htmlData) {
-                        initSubmitData(resolveReturnData(htmlData));
-                        commonHttp.setSubmitData($scope.submitData);
-                        $state.go('worklog.edit');
+                        initAndEditWorklog(resolveReturnData(htmlData));
                     }).catch(function (error) {
                         tipMsg.showMsg(error);
                     });
@@ -216,10 +237,8 @@
             return tipMsg.inputMsg($scope,defDate,'输入一个日期(yyyy-MM-dd)').then(function (workDate) {
                 if(/\d{4}-\d{2}-\d{2}/.test(workDate)){
                     commonHttp.workLogGet('workdaily/workDailyEdit.do?day='+workDate).then(function (htmlData) {
-                        initSubmitData(resolveReturnData(htmlData));
                         $scope.submitData.workDate =workDate;
-                        commonHttp.setSubmitData($scope.submitData);
-                        $state.go('worklog.edit',null,{reload:true});
+                        initAndEditWorklog(resolveReturnData(htmlData));
                     }).catch(function (error) {
                         tipMsg.showMsg(error);
                     });
@@ -230,15 +249,19 @@
         }
 
         // 初始化日志数据
-        function initSubmitData(data) {
-            $scope.submitData.useHours=4;
-            $scope.submitData.workType=1;
-            $scope.submitData.prjNo='5C934';
-            $scope.submitData.prjName='广西食药局移动执法办公终端管理系统（二期）建设';
-            $scope.submitData.evaSelf=1;
-            $scope.submitData.ajax=1;
-            $scope.submitData.dailyId=data.dailyId;
-            $scope.submitData.userId=data.userId;
+        function initAndEditWorklog(data) {
+            dbTool.getWorklogData().then(function (doc) {
+                $scope.submitData.useHours=doc.useHours||4;
+                $scope.submitData.workType=doc.workType||1;
+                $scope.submitData.prjNo=doc.prjNo;
+                $scope.submitData.prjName=doc.prjName;
+                $scope.submitData.evaSelf=1;
+                $scope.submitData.ajax=1;
+                $scope.submitData.dailyId=data.dailyId;
+                $scope.submitData.userId=data.userId;
+                commonHttp.setSubmitData($scope.submitData);
+                $state.go('worklog.edit',null,{reload:true});
+            });
         }
 
         //编辑日志
@@ -263,6 +286,8 @@
                 }).catch(function (error) {
                     tipMsg.showMsg(error);
                 });
+            }).catch(function (error) {
+                tipMsg.showMsg(error);
             }).finally(function () {
                 tipMsg.loading().hide();
             });
@@ -283,6 +308,8 @@
                         commonHttp.workLogGet('workdaily/workDailyDetailDelete.do?id='+ids[item.index]).then(function (data) {
                             doRefreshFun();
                         });
+                    }).catch(function (error) {
+                        tipMsg.showMsg(error);
                     }).finally(function () {
                         tipMsg.loading().hide();
                     });
@@ -296,7 +323,7 @@
      * 工作日志填写编辑控制器
      * @constructor
      */
-    function WorklogEditController($scope,$ionicHistory,$ionicModal,tipMsg,commonHttp) {
+    function WorklogEditController($scope,$ionicHistory,$ionicModal,$rootScope,tipMsg,commonHttp,dbTool) {
         $scope.evaSelfArr={1:'一般',2:'满意',3:'非常满意',4:'不满意'};//显示评价详情
         $scope.submitWorkLog=submitWorkLogFun;// 提交日志
         $scope.selectProject=selectProjectFun;
@@ -314,8 +341,10 @@
                 if(data.message) {
                     tipMsg.showMsg(data.message);
                 }
+                //本地保存最近一次的提交
+                dbTool.putWorklogData($scope.submitData);
                 $ionicHistory.goBack();
-                $scope.$broadcast('worklog.refreshworklog');
+                $rootScope.$broadcast('worklog.refreshworklog');
             }).catch(function (error) {
                 console.log(error);
             }).finally(function () {
@@ -329,7 +358,11 @@
                 return false;
             }
             if(!$scope.submitData.userId){
-                tipMsg.showMsg('用户没有登录');
+                tipMsg.showMsg('用户没有登录。');
+                return false;
+            }
+            if(!$scope.submitData.prjNo||!$scope.submitData.prjName){
+                tipMsg.showMsg('没有选择项目。');
                 return false;
             }
             return true;
@@ -367,7 +400,6 @@
         //加载项目数据
         $scope.loadMoreProjects= function () {
             $scope.searchPrjsParams.pageNum++;
-            $scope.searchPrjsParams.prjName=$scope.searchPrjName;
             commonHttp.workLogPost('project/projectSelect.do',$scope.searchPrjsParams).then(function (htmlData) {
                 var _arr=resolveProjectsHtmlData(htmlData);
                 if($scope.totalPrjs<=$scope.projectsData.length) {

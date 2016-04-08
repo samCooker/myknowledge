@@ -20,7 +20,7 @@
             <ion-item ng-repeat="worklog in worklogList" class="item item-icon-left">
                 <i class="icon calm" ng-class="{'ion-ribbon-a':$odd,'ion-ribbon-b':$even}"></i>
                 <h2>&nbsp;&nbsp;{{worklog.date}}</h2>
-                <div class="ss-item-p">{{worklog.item}}</div>
+                <p>{{worklog.item}}</p>
                 <!--列表按钮-->
                 <ion-option-button class="button-info" ng-click="editItem(worklog)">
                     <i class="icon ion-checkmark-round ion-compose"></i>
