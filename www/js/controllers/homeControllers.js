@@ -15,7 +15,7 @@
         $scope.relogin = toLoginPage;
         $scope.logout = toLoginPage;
 
-        //重新登陆和登出时，回到登陆页面
+        //重新登录和登出时，回到登录页面
         function toLoginPage() {
             commonHttp.httpGet('logout.json').then(function () {
                 $state.go('login');

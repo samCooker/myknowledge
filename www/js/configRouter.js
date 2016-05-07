@@ -13,13 +13,13 @@
 appModule.config(function($stateProvider, $urlRouterProvider){
 
 $stateProvider
-    //登陆
+    //登录
     .state('login',{
         url:'/login',
         controller:'loginController',
         templateUrl:'templates/login.html'
     })
-    //普通用户登陆
+    //普通用户登录
     .state('home',{//状态名称
         url: '/home',//页面跳转url,跳转方式有：1.$state.go(stateName) 2. 点击包含 ui-sref 指令的链接 <a ui-sref=stateName>Go State</a> 或 href=url的链接
         abstract: true,//表明此状态不能被显性激活，只能被子状态隐性激活
@@ -35,7 +35,7 @@ $stateProvider
             }
         }
     })
-    //管理员登陆
+    //管理员登录
     .state('admin',{
         url:'/admin',
         abstract:true,

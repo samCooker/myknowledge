@@ -588,7 +588,7 @@
         }
 
         /**
-         * 工作日志系统登陆 post
+         * 工作日志系统登录 post
          */
         function workLogPostFun(url,postData) {
             var delay = $q.defer();
@@ -621,7 +621,7 @@
         }
 
         /**
-         * 工作日志系统登陆 get
+         * 工作日志系统登录 get
          */
         function workLogGetFun(url) {
             var _time=new Date().getTime();

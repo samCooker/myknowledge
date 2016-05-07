@@ -12,17 +12,18 @@
      * 工作日志父类控制器
      * @constructor
      */
-    function WorklogHomeController($scope,$ionicModal,$filter,$state,commonHttp,tipMsg,dbTool) {
+    function WorklogHomeController($scope,$ionicModal,$rootScope,$state,commonHttp,tipMsg,dbTool) {
         $scope.loginData={};
-        $scope.worklogLogin=worklogLoginFun;//登陆日志系统
+        $scope.isLogin=false;
+        $scope.worklogLogin=worklogLoginFun;//登录日志系统
         $scope.worklogLogout=worklogLogoutFun;//登出日志系统
 
-        // 创建一个登陆对话框
+        // 创建一个登录对话框
         $ionicModal.fromTemplateUrl('templates/common/models/worklog-login.html', {
             scope: $scope, //继承自父scope
             animation: 'slide-in-up' //弹出动画
         }).then(function(modal) {
-            //登陆对话框对象
+            //登录对话框对象
             $scope.worklogLoginModal = modal;
             initWorklogUser().then(function () {
                 $scope.worklogLoginModal.show();
@@ -34,40 +35,59 @@
 
         function initWorklogUser() {
             return dbTool.getWorklogUser().then(function (data) {
-                console.log(data);
                 $scope.loginData.account=data.account;
                 $scope.loginData.password=data.password;
                 return true;
             });
         }
 
-        //日志系统登陆
+        //日志系统登录
         function worklogLoginFun() {
             tipMsg.loading().show();//显示加载框
             commonHttp.workLogPost('common/login.action',$scope.loginData).then(function (data) {
-                if(data.indexOf('../workdaily/myDaily.do')){
+                if(data.indexOf('../workdaily/myDaily.do')!=-1){
+                    $scope.isLogin=true;
                     $scope.worklogLoginModal.hide();
-                    $scope.$broadcast('worklog.refreshworklog');
+                    $rootScope.$broadcast('worklog.refreshworklog');
+                }else if(data.indexOf('账号或密码不正确')!=-1){
+                    tipMsg.showMsg('账号或密码不正确');
+                    logoutFun();
                 }else{
-                    tipMsg.showMsg('登陆出现了错误。');
+                    tipMsg.showMsg('未知错误。');
+                    logoutFun();
                 }
             }).catch(function (error) {
-                tipMsg.showMsg('登陆出现了错误。');
+                tipMsg.showMsg('登录出现了错误。');
+                logoutFun();
             }).finally(function () {
                 dbTool.putWorklogUser($scope.loginData);
                 tipMsg.loading().hide();//显示加载框
             });
         }
 
-        //日志系统登出
+        //日志系统登出并退出
         function worklogLogoutFun() {
             commonHttp.workLogGet('common/logout.do').then(function (data) {
-                tipMsg.showMsg(data);
+                //tipMsg.showMsg(data);
             }).catch(function (error) {
-                tipMsg.showMsg('退出成功\\(^o^)/YES!');
+                //tipMsg.showMsg('退出成功\\(^o^)/YES!');
             }).finally(function () {
+                $scope.isLogin = false;
                 ionic.Platform.exitApp();//退出app
             });
+        }
+
+        //日志系统登出
+        function logoutFun() {
+            if($scope.isLogin) {
+                commonHttp.workLogGet('common/logout.do').then(function (data) {
+                    //tipMsg.showMsg(data);
+                }).catch(function (error) {
+                    //tipMsg.showMsg('退出成功\\(^o^)/YES!');
+                }).finally(function () {
+                    $scope.isLogin = false;
+                });
+            }
         }
 
     }
@@ -90,7 +110,6 @@
 
         //接收刷新列表的广播
         $rootScope.$on('worklog.refreshworklog', function (event,data) {
-            console.log(data);
             doRefreshFun();
         });
 
@@ -218,11 +237,14 @@
                     //没有日期控件，需手动输入一个日期
                     inputDateManually();
                 }else{
+                    tipMsg.loading().show();//显示加载框
                     $scope.submitData.workDate = $filter('date')(date, 'yyyy-MM-dd');
                     return commonHttp.workLogGet('workdaily/workDailyEdit.do?day=' + $scope.submitData.workDate).then(function (htmlData) {
                         initAndEditWorklog(resolveReturnData(htmlData));
                     }).catch(function (error) {
                         tipMsg.showMsg(error);
+                    }).finally(function () {
+                        tipMsg.loading().hide();
                     });
                 }
             }).catch(function (error) {
@@ -235,12 +257,15 @@
         function inputDateManually() {
             var defDate= $filter('date')(new Date(), 'yyyy-MM-dd');
             return tipMsg.inputMsg($scope,defDate,'输入一个日期(yyyy-MM-dd)').then(function (workDate) {
+                tipMsg.loading().show();//显示加载框
                 if(/\d{4}-\d{2}-\d{2}/.test(workDate)){
                     commonHttp.workLogGet('workdaily/workDailyEdit.do?day='+workDate).then(function (htmlData) {
                         $scope.submitData.workDate =workDate;
                         initAndEditWorklog(resolveReturnData(htmlData));
                     }).catch(function (error) {
                         tipMsg.showMsg(error);
+                    }).finally(function () {
+                        tipMsg.loading().hide();
                     });
                 }else if(workDate!==false){
                     tipMsg.showMsg('请输入指定格式的日期');

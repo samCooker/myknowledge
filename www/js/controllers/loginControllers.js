@@ -4,21 +4,21 @@
 
 (function() {
     appModule
-        .controller('loginController', loginControllerFun) // 登陆控制器
+        .controller('loginController', loginControllerFun) // 登录控制器
         .factory('loginService', loginServiceFun);
 
     /**
-     * 登陆控制器
+     * 登录控制器
      */
     function loginControllerFun($scope, $state, $ionicModal, tipMsg,tools, loginService) {
-        $scope.loginData = {}; //登陆数据
+        $scope.loginData = {}; //登录数据
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
-        $scope.login = loginFun; //登陆
-        $scope.toWorkLog=toWorkLogFun;//登陆工作日志
+        $scope.login = loginFun; //登录
+        $scope.toWorkLog=toWorkLogFun;//登录工作日志
         $scope.toSignup = toSignupFun;
 
-        //登陆
+        //登录
         function loginFun() {
             tipMsg.loading().show();//显示加载框
             loginService.login($scope.loginData).then(function(result) {
@@ -37,7 +37,7 @@
             });
         }
 
-        // 登陆工作日志
+        // 登录工作日志
         function toWorkLogFun() {
             $state.go('worklog.list');
         }
@@ -80,7 +80,7 @@
     }
 
     /**
-     * 登陆服务
+     * 登录服务
      */
     function loginServiceFun($q, commonHttp, tipMsg, tools,appConfig) {
         return {
@@ -89,7 +89,7 @@
         };
 
         /**
-         * 登陆
+         * 登录
          */
         function loginFun(data) {
             if (!data.username || !data.password) {
