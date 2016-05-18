@@ -7,10 +7,20 @@
         "files": {}
     },
     "installed_plugins": {
+        "cn.jpush.phonegap.JPushPlugin": {
+            "API_KEY": "21f9723ba2ac4e04e96917cc",
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "cordova-plugin-splashscreen": {
@@ -22,21 +32,25 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "io.litehelpers.cordova.sqliteStorage": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
-        "cordova-plugin-x-toast": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
-        "cordova-plugin-datepicker": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
-        "cordova-plugin-network-information": {
+        "com.lovedudu.cordova": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        }
+    }
 }

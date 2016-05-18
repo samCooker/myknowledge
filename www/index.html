@@ -1,43 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
-    
-    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
-    <link href="css/overwrite.css" rel="stylesheet">
-    <!--your css style-->
-    <link href="css/login.css" rel="stylesheet">
-    <link href="css/directives.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+  <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
-    <script src="lib/ionic/js/ionic-angular.min.js"></script>
+  <link href="lib/treecontrol/tree-control.css" rel="stylesheet">
+  <!--登陆页面样式-->
+  <link href="css/login.css" rel="stylesheet">
+  <!-- 与指令相关样式-->
+  <link href="css/directives.css" rel="stylesheet">
+  <!-- 覆盖ionic原有的样式-->
+  <link href="css/overwrite.css" rel="stylesheet">
+  <!-- 与个模块相关样式-->
+  <link href="css/models.css" rel="stylesheet">
 
-    <!-- pouchdb js-->
-    <script src="lib/pouchdb/pouchdb-5.0.0.min.js"></script>
-    <script src="lib/pouchdb/pouchdb.find.min.js"></script>
+  <!--图标样式-->
+  <link href="css/icons/iconfont.css" rel="stylesheet">
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
 
-    <!-- your app's js -->
-    <!--<script src="js/all.min.js"></script>-->
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+  <script src="lib/ionic/js/ionic-angular.min.js"></script>
 
-    <script src="js/app.js"></script>
-    <script src="js/configRouter.js"></script>
-    <script src="js/common/directives.js"></script>
-    <script src="js/common/filters.js"></script>
-    <script src="js/common/services.js"></script>
+  <!-- pouchdb js-->
+  <script src="lib/pouchdb/pouchdb-5.0.0.min.js"></script>
+  <script src="lib/pouchdb/pouchdb.find.min.js"></script>
 
-    <script src="js/controllers/loginControllers.js"></script>
-    <script src="js/controllers/homeControllers.js"></script>
-    <script src="js/controllers/modulesControllers.js"></script>
+  <script src="lib/treecontrol/angular-tree-control.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!--<script src="js/all.min.js"></script>-->
+
+  <!-- common js-->
+  <script src="js/app.js"></script>
+  <script src="js/configRouter.js"></script>
+  <script src="js/common/directives.js"></script>
+  <script src="js/common/filters.js"></script>
+  <script src="js/common/services.js"></script>
+
+  <!-- index js-->
+  <script src="js/controllers/loginControllers.js"></script>
+  <script src="js/controllers/homeControllers.js"></script>
+
+  <!-- ccworklog js-->
+  <script src="modules/ccworklog/js/services.js"></script>
+  <script src="modules/ccworklog/js/ccworklogControllers.js"></script>
+
+  <!-- =-->
+  <script src="modules/treecontrol/js/basic-example.js"></script>
+
+  <!-- 地图定位-->
+  <script src="modules/geolocation/js/geolocationControllers.js"></script>
 
 </head>
 <body ng-app="starter">

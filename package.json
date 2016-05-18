@@ -27,7 +27,14 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "variables": {
+        "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa"
+      },
+      "locator": "https://github.com/mrwutong/cordova-qdc-baidu-location",
+      "id": "cn.jpush.phonegap.JPushPlugin"
+    }
   ],
   "cordovaPlatforms": [
     {

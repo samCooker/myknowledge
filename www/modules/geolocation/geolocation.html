@@ -1,0 +1,23 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-view view-title="">
+    <!--头部-->
+    <ion-nav-bar class="bar bar-header bar-positive" align-title="center"><!--头部-->
+        <ion-nav-buttons side="left"><!--左边的按钮-->
+            <cs-return-btn></cs-return-btn>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right"><!--右边的按钮-->
+            <i class="icon ion-android-checkmark-circle ss-log-i-30">
+            </i>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <!--内容-->
+    <ion-content>
+      <ion-list>
+        <ion-item ng-click="getCurrentPosition()">获取位置</ion-item>
+        <ion-item ng-click="navigation()">导航</ion-item>
+      </ion-list>
+      {{position}}
+
+      {{errorInfo}}
+    </ion-content>
+</ion-view>

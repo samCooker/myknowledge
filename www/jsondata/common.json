@@ -1,5 +1,11 @@
-
 {
-    "login_check":{"id":1,"account":"cookie","username":"cookie"},
-    "logout.json":"true"
+  "login_check": {
+    "id": 1,
+    "account": "cookie",
+    "username": "cookie",
+    "roles": [
+      "admin"
+    ]
+  },
+  "logout.json": "true"
 }

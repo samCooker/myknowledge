@@ -1,7 +1,7 @@
 // 使用cordova+angularjs+ionic开发app
 
 // 设置全局变量 appModule，
-var appModule = angular.module('starter', ['ionic']);
+var appModule = angular.module('starter', ['ionic','treeControl']);
 
 // 设置运行时的参数
 appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $state , tipMsg, dbTool) {
@@ -22,7 +22,7 @@ appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $s
 
     //物理返回按钮控制&双击退出应用
     $ionicPlatform.registerBackButtonAction(function (e) {
-        if ($location.path() == '/admin`/welcome'||$location.path() == '/home/welcome' || $location.path() == '/login') {
+        if ($location.path() == '/admin/welcome'||$location.path() == '/home/welcome' || $location.path() == '/login') {
             //判断处于哪个页面时双击退出
             if ($rootScope.backButtonPressedOnceToExit) {
                 ionic.Platform.exitApp();//退出app

@@ -11,11 +11,10 @@
      * 登录控制器
      */
     function loginControllerFun($scope, $state, $ionicModal, tipMsg,tools, loginService) {
-        $scope.loginData = {}; //登录数据
+        $scope.loginData = {username:'cookie',password:'1'}; //登录数据
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
         $scope.login = loginFun; //登录
-        $scope.toWorkLog=toWorkLogFun;//登录工作日志
         $scope.toSignup = toSignupFun;
 
         //登录
@@ -35,11 +34,6 @@
             }).finally(function () {
                 tipMsg.loading().hide();//隐藏加载框
             });
-        }
-
-        // 登录工作日志
-        function toWorkLogFun() {
-            $state.go('worklog.list');
         }
 
         //根据角色跳转至不同页面
@@ -102,17 +96,8 @@
                     delay.reject('无密码');
                     return delay.promise;
                 }
-            } else if(!appConfig.getLocalDebug()){
+            } else {
                 return commonHttp.jsonPost('login_check', data);
-            }else{
-                var delay2 = $q.defer();
-                var user=appConfig.getDebugUser();
-                if(data.username==user.username&&data.password==user.password){
-                    delay2.resolve({"id":1,"account":"cookie","username":"cookie",roles:['admin']});
-                }else{
-                    delay2.reject('用户名或密码错误');
-                }
-                return delay2.promise;
             }
         }
 

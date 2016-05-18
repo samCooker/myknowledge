@@ -3,7 +3,7 @@
  */
 
 (function(){
-    appModule.filter('showOrHideFilter',['$sce', function($sce){
+    appModule.filter('showOrHideFilter',['$sce', function(){
         //val:截取的字符串 size：截取长度  showFlag:收起还是展开
         return function(val,size,showFlag){
             if(val){
@@ -11,14 +11,20 @@
                     return val;//字符串长度小于截取的长度，则不进行截取
                 }
                 if(showFlag){
-                    return $sce.trustAsHtml(val);
+                    return val;
                 }
                 if(!showFlag){
-                    return $sce.trustAsHtml(val.substr(0, size)+'...');//截取0-param个字符
+                    return val.substr(0, size)+'...';//截取0-param个字符
                 }
             }
             return '';
         };
     }])//截取字符串
+    .filter('trustAsResourceUrl', ['$sce', function($sce) {
+      //将url加入白名单
+      return function(val) {
+        return $sce.trustAsResourceUrl(val);
+      };
+    }])
     ;
 })();

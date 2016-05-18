@@ -198,7 +198,7 @@
             template:
                 '<label class="item item-checkbox">' +
                 '<div class="checkbox checkbox-input-hidden disable-pointer-events">' +
-                '<input type="radio" name="radio-group">' +
+                '<input type="radio">' +
                 '<i class="checkbox-icon"></i>' +
                 '</div>' +
                 '<div class="item-content disable-pointer-events" ng-transclude></div>' +
