@@ -13,11 +13,34 @@
     <!--内容-->
     <ion-content>
       <ion-list>
+
+        <ion-item >
+          <label class="toggle toggle-calm">
+            <input type="checkbox" ng-model="pushFlag">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </ion-item>
         <ion-item ng-click="getCurrentPosition()">获取位置</ion-item>
+        <ion-item >所在地位置<br>
+          <input type="text" ng-model="position.name">
+        </ion-item>
+
+        <ion-item >
+          目的地经度位置<br>
+          <input type="text" ng-model="destination.lat">
+        </ion-item>
+        <ion-item >目的地经度位置<br>
+          <input type="text" ng-model="destination.lng">
+        </ion-item>
+        <ion-item >目的地位置<br>
+          <input type="text" ng-model="destination.name">
+        </ion-item>
         <ion-item ng-click="navigation()">导航</ion-item>
       </ion-list>
       {{position}}
-
+      {{extra}}
       {{errorInfo}}
     </ion-content>
 </ion-view>

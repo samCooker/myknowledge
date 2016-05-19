@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/../ccworklog/plugins/cn.com.chaochuang.plugin.navigation/README.md" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../ccworklog/plugins/cn.com.chaochuang.plugin.navigation/plugin.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/README.md" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/android.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.mapnavigation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/README.md" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/README.md" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/plugin.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/plugin.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/src" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/src/android/MapNavigation.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.com.chaochuang.plugin.navigation/www" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/plugins/cn.jpush.phonegap.JPushPlugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/icon/tr-hdpi-icon.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/icon/tr-mdpi-icon.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/icon/tr-xhdpi-icon.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-land-hdpi-screen.PNG" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-land-mdpi-screen.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-land-xhdpi-screen.PNG" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-port-hdpi-screen.PNG" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-port-mdpi-screen.PNG" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/android/splash/tr-port-xhdpi-screen.PNG" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/css/icons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/css/models.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/common/directives.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/common/filters.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/common/services.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/images" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/treecontrol/angular-tree-control.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/treecontrol/tree-control-attribute.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/treecontrol/tree-control.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/uitree" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/lib/uitree/angular-ui-tree.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/www/lib/uitree/angular-ui-tree.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/www/lib/uitree/angular-ui-tree.min.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/www/lib/uitree/angular-ui-tree.min.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/js/ccworklogControllers.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/dialog-favorite-prj.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/dialog-favorite-words.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/dialog-login.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/dialog-projects.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/edit.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/help.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/main.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/ccworklog/templates/setting.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/treecontrol/basic-example.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/treecontrol/js/basic-example.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/modules/uitree" charset="UTF-8" />
+  </component>
 </project>
-

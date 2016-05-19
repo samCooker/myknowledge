@@ -12,46 +12,44 @@
   function GeolocationController($scope, tipMsg) {
 
     $scope.location = {};
+    $scope.origin={};
+    $scope.destination={};
+    $scope.position={};
+    $scope.pushFlag=true;
 
     $scope.getCurrentPosition = function () {
-      getCurrentPositionFun();
-    };
-
-    $scope.navigation = function () {
-      Navigation.do(
-        {
-          lat: $scope.location.latitude,
-          lon: $scope.location.longitude
-        },
-        function (message) {
-          tipMsg.showMsg(message);
-        }, function (message) {
-          tipMsg.showMsg(message);
-        });
-    };
-
-    function getCurrentPositionFun() {
       if (navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-
-          $scope.location.latitude = position.coords.latitude;
-          $scope.location.longitude = position.coords.longitude;
-
-          $scope.position = 'Latitude: ' + position.coords.latitude + '\n' +
-            'Longitude: ' + position.coords.longitude + '\n' +
-            'Altitude: ' + position.coords.altitude + '\n' +
-            'Accuracy: ' + position.coords.accuracy + '\n' +
-            'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-            'Heading: ' + position.coords.heading + '\n' +
-            'Speed: ' + position.coords.speed + '\n' +
-            'Timestamp: ' + position.timestamp + '\n';
+        var options = {timeout: 5000, enableHighAccuracy: true };
+          navigator.geolocation.getCurrentPosition(function(position) {
+          $scope.position=position;
         }, function (error) {
-          console.log(error);
-          $scope.errorInfo = error;
-        });
+          $scope.errorInfo=error;
+          tipMsg.alertMsg(error);
+        }, options);
+
       } else {
         tipMsg.showMsg('无定位插件');
       }
+    };
+
+    $scope.navigation = function () {
+      //tipMsg.alertMsg($scope.position.coords.latitude+"|"+$scope.position.coords.longitude);
+      MapNavigation.navigation({
+        originLat:$scope.position.coords.latitude||'',
+        originLng:$scope.position.coords.longitude||'',
+        originName:$scope.position.name||'',
+        destLat:$scope.destination.lat||'',
+        destLng:$scope.destination.lng||'',
+        destName:$scope.destination.name||''
+      }, function (msg) {
+        tipMsg.alertMsg(msg);
+      }, function (error) {
+        tipMsg.alertMsg(error);
+      });
+    };
+
+    function getCurrentPositionFun() {
+
     }
   }
 

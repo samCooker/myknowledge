@@ -43,9 +43,6 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-        },
-        "com.lovedudu.cordova": {
-            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
     "dependent_plugins": {

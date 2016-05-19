@@ -7,8 +7,14 @@
         "files": {}
     },
     "installed_plugins": {
+        "cn.com.chaochuang.mapnavigation": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
         "cn.jpush.phonegap.JPushPlugin": {
             "API_KEY": "21f9723ba2ac4e04e96917cc",
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "cordova-plugin-console": {
@@ -18,6 +24,9 @@
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "cordova-plugin-network-information": {
@@ -40,17 +49,7 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-        },
-        "com.lovedudu.cordova": {
-            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-        }
-    }
+    "dependent_plugins": {}
 }

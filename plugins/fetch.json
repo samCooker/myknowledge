@@ -104,14 +104,5 @@
         },
         "is_top_level": true,
         "variables": {}
-    },
-    "com.lovedudu.cordova": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/shosky/cordova-navigation.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
     }
 }

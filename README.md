@@ -79,5 +79,14 @@ Link        :
 安装：cordova plugin add jpush-phonegap-plugin --variable API_KEY=your_jpush_appkey
 *************************************
 
+12.地图定位
 
-AK A0:70:06:7F:FD:65:AC:BC:95:5F:59:94:C7:BB:4A:4A:76:39:69:7F;com.ionicframework.myknowledge769957
+
+baidu
+cordova plugin add https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git --variable API_KEY=百度分配的AK --save
+AK 6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa
+
+       "cordova-plugin-baidu-geolocation": {
+            "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa",
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        }
