@@ -1,8 +1,18 @@
-<treecontrol class="tree-light"
-             tree-model="treedata"
-             options="opts"
-             on-selection="showSelected(node,selected)"
-  >
-  <span style="font: 1.5em/38px not specified;color: #000;overflow: hidden;border-bottom:1px solid #CCC; font-size: 25px;">label:{{node.label}} ({{node.id}})</span>
-</treecontrol>
-
+<ion-view view-title="">
+  <!--头部-->
+  <ion-nav-bar class="bar bar-header bar-positive" align-title="center"><!--头部-->
+    <ion-nav-buttons side="left"><!--左边的按钮-->
+      <cs-return-btn></cs-return-btn>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <!--内容-->
+  <ion-content>
+    <treecontrol class="tree-light"
+                 tree-model="treedata"
+                 options="opts"
+                 on-selection="showSelected(node,selected)"
+      >
+      <span style="font: 1.5em/38px not specified;color: #000;overflow: hidden;border-bottom:1px solid #CCC; font-size: 25px;">label:{{node.label}} ({{node.id}})</span>
+    </treecontrol>
+  </ion-content>
+</ion-view>

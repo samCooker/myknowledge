@@ -80,13 +80,14 @@ Link        :
 *************************************
 
 12.地图定位
+  1.
+  cordova plugin add cordova-plugin-geolocation
 
-
-baidu
-cordova plugin add https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git --variable API_KEY=百度分配的AK --save
-AK 6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa
-
-       "cordova-plugin-baidu-geolocation": {
-            "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa",
-            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-        }
+  2.
+  baidu（未验证）
+  cordova plugin add https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git --variable API_KEY=百度分配的AK --save
+  AK 6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa
+         "cordova-plugin-baidu-geolocation": {
+              "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa",
+              "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+          }

@@ -25,21 +25,20 @@ public class MapNavigation extends CordovaPlugin{
                 Options options = new Options().fromJson(jsonArray);
                 Intent intent = null;
                 if(appInstalled("com.baidu.BaiduMap")){
-                    //如果有百度地图
+                    //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
                     intent = Intent.parseUri("intent://map/direction?"
                             + "origin="+options.getOrigin4Baidu()
                             + "&destination="+options.getDestination4Baidu()
-                            + "&mode="+options.model
+                            + "&mode="+options.getModel4Baidu()
                             + "&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
                     activity.startActivity(intent);
-                    callbackContext.success(options.getOrigin4Baidu());
+                    callbackContext.success("成功进行导航。");
                 }else if(appInstalled("com.autonavi.minimap")){
-                    //如果有高德地图
-                    StringBuilder builder =new StringBuilder("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+
-                            "&dev=0&m=0&t=1");
+                    //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
+                    StringBuilder builder =new StringBuilder("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini());
                     intent = Intent.parseUri(builder.toString(),0);
                     activity.startActivities(new Intent[]{intent});
-                    callbackContext.success("成功调用高德地图。");
+                    callbackContext.success("成功进行导航。");
                 }else {
                     callbackContext.error("您还没有安装百度地图和高德地图。");
                 }
@@ -48,6 +47,51 @@ public class MapNavigation extends CordovaPlugin{
                 e.printStackTrace();
                 callbackContext.error(e.toString());
             }
+        }
+        if (action.equals("navigationBaiduMap")){
+            try {
+                Activity activity = this.cordova.getActivity();
+                //导航选项
+                Options options = new Options().fromJson(jsonArray);
+                Intent intent = null;
+                if(appInstalled("com.baidu.BaiduMap")){
+                    //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
+                    intent = Intent.parseUri("intent://map/direction?"
+                            + "origin="+options.getOrigin4Baidu()
+                            + "&destination="+options.getDestination4Baidu()
+                            + "&mode="+options.getModel4Baidu()
+                            + "&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
+                    activity.startActivity(intent);
+                    callbackContext.success("成功进行导航。");
+                } else {
+                    callbackContext.error("您还没有安装百度地图。");
+                }
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                callbackContext.error(e.toString());
+            }
+        }
+        if (action.equals("navigationMiniMap")){
+          try {
+              Activity activity = this.cordova.getActivity();
+              //导航选项
+              Options options = new Options().fromJson(jsonArray);
+              Intent intent = null;
+              if(appInstalled("com.autonavi.minimap")){
+                  //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
+                  StringBuilder builder =new StringBuilder("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini());
+                  intent = Intent.parseUri(builder.toString(),0);
+                  activity.startActivities(new Intent[]{intent});
+                  callbackContext.success("成功进行导航。");
+              }else {
+                  callbackContext.error("您还没有安装高德地图。");
+              }
+              return true;
+          }catch (Exception e){
+              e.printStackTrace();
+              callbackContext.error(e.toString());
+          }
         }
         return false;
     }
@@ -98,13 +142,13 @@ public class MapNavigation extends CordovaPlugin{
             this.destLng = options.optString("destLng","");
             this.destName = options.optString("destName","");
             //默认步行
-            this.model = options.optString("model","walking");
+            this.model = options.optString("model");
 
             this.src = options.optString("src","");
 
             return this;
         }
-
+        //百度地图获取出发地信息
         public String getOrigin4Baidu(){
             if(this.isNotBlank(this.originName)&&this.isNotBlank(this.originLat)&&this.isNotBlank(this.originLng)){
                 return "latlng:"+this.originLat+","+this.originLng+"|name:"+this.originName;
@@ -115,7 +159,7 @@ public class MapNavigation extends CordovaPlugin{
             }
             return "";
         }
-
+        //百度地图获取目的地信息
         public String getDestination4Baidu(){
             if(this.isNotBlank(this.destName)&&this.isNotBlank(this.destLat)&&this.isNotBlank(this.destLng)){
                 return "latlng:"+this.destLat+","+this.destLng+"|name:"+this.destName;
@@ -126,16 +170,23 @@ public class MapNavigation extends CordovaPlugin{
             }
             return "";
         }
+        public String getModel4Baidu(){
+            if(!this.isNotBlank(this.model)){
+              this.model="walking";//默认步行
+            }
+            return this.model;
+        }
 
+        //高德地图获取出发地信息
         public String getOrigin4Mini(){
-            if(this.isNotBlank(this.destName)&&this.isNotBlank(this.destLat)&&this.isNotBlank(this.destLng)){
-                return "&slat="+this.destLat+"&slon="+this.destLng+"&sname="+this.destName;
-            }else if(this.isNotBlank(this.destLat)&&this.isNotBlank(this.destLng)){
-                return "&slat="+this.destLat+"&slon="+this.destLng;
+            if(this.isNotBlank(this.originName)&&this.isNotBlank(this.originLat)&&this.isNotBlank(this.originLng)){
+                return "&slat="+this.originLat+"&slon="+this.originLng+"&sname="+this.originName;
+            }else if(this.isNotBlank(this.originLat)&&this.isNotBlank(this.originLng)){
+                return "&slat="+this.originLat+"&slon="+this.originLng;
             }
             return "";
         }
-
+        //高德地图获取目的地信息
         public String getDestination4Mini(){
             if(this.isNotBlank(this.destName)&&this.isNotBlank(this.destLat)&&this.isNotBlank(this.destLng)){
                 return "&dlat="+this.destLat+"&dlon="+this.destLng+"&dname="+this.destName;
@@ -143,6 +194,13 @@ public class MapNavigation extends CordovaPlugin{
                 return "&dlat="+this.destLat+"&dlon="+this.destLng;
             }
             return "";
+        }
+
+        public String getModel4Mini(){
+            if(!this.isNotBlank(this.model)){
+              this.model="4";//默认步行
+            }
+            return "&dev=0&t="+this.model+"&m=0";
         }
 
         public boolean isNotBlank(String s){
