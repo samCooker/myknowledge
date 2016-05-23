@@ -83,6 +83,7 @@ Link        :
   1.
   cordova plugin add cordova-plugin-geolocation
 
+
   2.
   baidu（未验证）
   cordova plugin add https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git --variable API_KEY=百度分配的AK --save

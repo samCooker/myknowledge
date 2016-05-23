@@ -38,5 +38,7 @@
         <splash density="port-xhdpi" src="resources/android/splash/tr-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/tr-port-xhdpi-screen.png" />
     </platform>
-
+    <plugin name="cordova-plugin-baidu-geolocation" spec="https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git">
+        <variable name="API_KEY" value="6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa" />
+    </plugin>
 </widget>

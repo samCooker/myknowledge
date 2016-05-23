@@ -13,6 +13,9 @@
       <feature name="MapNavigation">
         <param name="android-package" value="cn.com.chaochuang.MapNavigation"/>
       </feature>
+      <feature name="MapMarker">
+        <param name="android-package" value="cn.com.chaochuang.MapMarker"/>
+      </feature>
     </config-file>
     <!--<config-file target="AndroidManifest.xml" parent="/manifest/application">-->
       <!--<activity android:name="org.apache.cordova.CordovaActivity">-->
@@ -23,6 +26,7 @@
       <!--</activity>-->
     <!--</config-file>-->
     <source-file src="src/android/MapNavigation.java" target-dir="src/cn/com/chaochuang"/>
+    <source-file src="src/android/MapMarker.java" target-dir="src/cn/com/chaochuang"/>
   </platform>
   <!-- 暂时无用-->
   <!--<platform name="ios">-->

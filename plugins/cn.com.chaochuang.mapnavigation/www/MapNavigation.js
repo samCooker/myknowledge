@@ -12,7 +12,12 @@ var MapNavigation = {
   //调用高德地图 仅android
   navigationMiniMap:function(key, successCallback, errorCallback) {
     exec(successCallback, errorCallback, 'MapNavigation', 'navigationMiniMap', [key])
+  },
+  //调用百度地图 仅android
+  markerBaiduMap:function(key, successCallback, errorCallback) {
+    exec(successCallback, errorCallback, 'MapMarker', 'mapMarker', [key])
   }
+
 };
 
 module.exports= MapNavigation;

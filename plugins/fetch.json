@@ -89,20 +89,23 @@
             "API_KEY": "21f9723ba2ac4e04e96917cc"
         }
     },
+    "cordova-plugin-baidu-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {
+            "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa"
+        }
+    },
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
             "id": "cordova-plugin-compat"
         },
         "is_top_level": false,
-        "variables": {}
-    },
-    "cordova-plugin-geolocation": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-geolocation"
-        },
-        "is_top_level": true,
         "variables": {}
     }
 }

@@ -23,8 +23,14 @@
     $scope.getCurrentPosition = function () {
       if (navigator && navigator.geolocation) {
         tipMsg.loading().show();
-        var options = {timeout: 5000, enableHighAccuracy: true };
-          navigator.geolocation.getCurrentPosition(function(position) {
+        //var options = {timeout: 5000, enableHighAccuracy: true };
+        var options = {
+          enableHighAccuracy: false,  // 是否使用 GPS
+          maximumAge: 30000,         // 缓存时间
+          timeout: 27000,            // 超时时间
+          coorType: 'gcj02'         // 默认是 gcj02，可填 bd09ll 以获取百度经纬度用于访问百度 API
+        };
+        navigator.geolocation.getCurrentPosition(function(position) {
             $scope.$apply(function () {
               $scope.position=position;
             });
@@ -95,6 +101,22 @@
           return true;
         }
       });
+    }
+
+    //地图标记
+    $scope.mapMaker = function () {
+      var options={
+        lat:$scope.destination.lat,
+        lng:$scope.destination.lng,
+        title:"我的目的地",
+        src:"com.ionicframework.myknowledge769957",
+        content:"目的地"
+      };
+      MapNavigation.markerBaiduMap(options, function (msg) {
+        tipMsg.alertMsg(msg);
+      }, function (error) {
+        tipMsg.alertMsg(error);
+      })
     }
 
   }

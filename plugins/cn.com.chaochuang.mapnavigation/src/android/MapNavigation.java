@@ -18,80 +18,114 @@ public class MapNavigation extends CordovaPlugin{
 
     @Override
     public boolean execute(String action, JSONArray jsonArray, CallbackContext callbackContext) throws JSONException {
+        //导航
         if (action.equals("navigate")){
-            try {
-                Activity activity = this.cordova.getActivity();
-                //导航选项
-                Options options = new Options().fromJson(jsonArray);
-                Intent intent = null;
-                if(appInstalled("com.baidu.BaiduMap")){
-                    //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
-                    intent = Intent.parseUri("intent://map/direction?"
-                            + "origin="+options.getOrigin4Baidu()
-                            + "&destination="+options.getDestination4Baidu()
-                            + "&mode="+options.getModel4Baidu()
-                            + "&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
-                    activity.startActivity(intent);
-                    callbackContext.success("成功进行导航。");
-                }else if(appInstalled("com.autonavi.minimap")){
-                    //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
-                    StringBuilder builder =new StringBuilder("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini());
-                    intent = Intent.parseUri(builder.toString(),0);
-                    activity.startActivities(new Intent[]{intent});
-                    callbackContext.success("成功进行导航。");
-                }else {
-                    callbackContext.error("您还没有安装百度地图和高德地图。");
-                }
-                return true;
-            }catch (Exception e){
-                e.printStackTrace();
-                callbackContext.error(e.toString());
-            }
+            return this.navigate4Both(jsonArray,callbackContext);
         }
+        //使用百度地图导航
         if (action.equals("navigationBaiduMap")){
-            try {
-                Activity activity = this.cordova.getActivity();
-                //导航选项
-                Options options = new Options().fromJson(jsonArray);
-                Intent intent = null;
-                if(appInstalled("com.baidu.BaiduMap")){
-                    //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
-                    intent = Intent.parseUri("intent://map/direction?"
-                            + "origin="+options.getOrigin4Baidu()
-                            + "&destination="+options.getDestination4Baidu()
-                            + "&mode="+options.getModel4Baidu()
-                            + "&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
-                    activity.startActivity(intent);
-                    callbackContext.success("成功进行导航。");
-                } else {
-                    callbackContext.error("您还没有安装百度地图。");
-                }
-                return true;
-            }catch (Exception e){
-                e.printStackTrace();
-                callbackContext.error(e.toString());
-            }
+            return this.navigate4Baidu(jsonArray, callbackContext);
         }
+        //使用高德地图导航
         if (action.equals("navigationMiniMap")){
-          try {
-              Activity activity = this.cordova.getActivity();
-              //导航选项
-              Options options = new Options().fromJson(jsonArray);
-              Intent intent = null;
-              if(appInstalled("com.autonavi.minimap")){
-                  //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
-                  StringBuilder builder =new StringBuilder("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini());
-                  intent = Intent.parseUri(builder.toString(),0);
-                  activity.startActivities(new Intent[]{intent});
-                  callbackContext.success("成功进行导航。");
-              }else {
-                  callbackContext.error("您还没有安装高德地图。");
-              }
-              return true;
-          }catch (Exception e){
-              e.printStackTrace();
-              callbackContext.error(e.toString());
-          }
+            return this.navigate4Mini(jsonArray,callbackContext);
+        }
+        return false;
+    }
+
+    /**
+     * 使用高德地图导航
+     * @param jsonArray
+     * @param callbackContext
+     * @return
+     */
+    private boolean navigate4Mini(JSONArray jsonArray, CallbackContext callbackContext) {
+        try {
+            Activity activity = this.cordova.getActivity();
+            //导航选项
+            Options options = new Options().fromJson(jsonArray);
+            Intent intent = null;
+            if(appInstalled("com.autonavi.minimap")){
+                //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
+                intent = Intent.parseUri("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini(),0);
+                activity.startActivities(new Intent[]{intent});
+                callbackContext.success("成功进行导航。");
+            }else {
+                callbackContext.error("您还没有安装高德地图。");
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            callbackContext.error(e.toString());
+        }
+        return false;
+    }
+
+    /**
+     * 使用百度地图导航
+     * @param jsonArray
+     * @param callbackContext
+     * @return
+     */
+    private boolean navigate4Baidu(JSONArray jsonArray, CallbackContext callbackContext) {
+        try {
+            Activity activity = this.cordova.getActivity();
+            //导航选项
+            Options options = new Options().fromJson(jsonArray);
+            Intent intent = null;
+            if(appInstalled("com.baidu.BaiduMap")){
+                //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
+                intent = Intent.parseUri("intent://map/direction?"
+                        + "origin="+options.getOrigin4Baidu()
+                        + "&destination="+options.getDestination4Baidu()
+                        + "&mode="+options.getModel4Baidu()
+                        + "&coord_type=gcj02&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
+                activity.startActivity(intent);
+                callbackContext.success("成功进行导航。");
+            } else {
+                callbackContext.error("您还没有安装百度地图。");
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            callbackContext.error(e.toString());
+        }
+        return false;
+    }
+
+    /**
+     * 使用百度地图或高德地图导航
+     * @param jsonArray
+     * @param callbackContext
+     * @return
+     */
+    private boolean navigate4Both(JSONArray jsonArray, CallbackContext callbackContext) {
+        Activity activity = this.cordova.getActivity();
+        //导航选项
+        Options options = new Options().fromJson(jsonArray);
+        try {
+            Intent intent = null;
+            if(appInstalled("com.baidu.BaiduMap")){
+                //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
+                intent = Intent.parseUri("intent://map/direction?"
+                        + "origin="+options.getOrigin4Baidu()
+                        + "&destination="+options.getDestination4Baidu()
+                        + "&mode="+options.getModel4Baidu()
+                        + "&coord_type=gcj02&referer=Autohome|GasStation#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end",0);
+                activity.startActivity(intent);
+                callbackContext.success("成功进行导航。");
+            }else if(appInstalled("com.autonavi.minimap")){
+                //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
+                intent = Intent.parseUri("androidamap://route?sourceApplication=softname" +options.getOrigin4Mini()+options.getDestination4Mini()+options.getModel4Mini(),0);
+                activity.startActivities(new Intent[]{intent});
+                callbackContext.success("成功进行导航。");
+            }else {
+                callbackContext.error("您还没有安装百度地图和高德地图。");
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            callbackContext.error(e.toString());
         }
         return false;
     }
@@ -115,6 +149,9 @@ public class MapNavigation extends CordovaPlugin{
         return app_installed;
     }
 
+    /**
+     * 配置数据实体
+     */
     private final class Options {
 
         private String originLat;
