@@ -33,14 +33,20 @@
         }else if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"iosamap://"]])
         {
              //NSString *urlString = [[NSString stringWithFormat:@"iosamap://navi?sourceApplication=applicationName&backScheme=applicationScheme&poiname=大梅沙海滨公园&poiid=BGVIS&lat=22.597811&lon=114.001424&dev=1&style=2"]
-            [self failWithCallbackID:command.callbackId withMessage:@"未安装百度地图,无法导航!"];            return ;
+            [self failWithCallbackID:command.callbackId withMessage:@"未安装高德地图,无法导航!"];
+            return ;
         }else
         {
-            [self failWithCallbackID:command.callbackId withMessage:@"未安装百度地图,无法导航!"];            return ;
+            [self failWithCallbackID:command.callbackId withMessage:@"未安装百度地图或高德地图,无法导航!"];
+            return ;
         }
 
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
 
-    - (void)failWithCallbackID:(NSString *)callbackID withMessage:(NSString *)message    {        CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:message];        [self.commandDelegate sendPluginResult:commandResult callbackId:callbackID];    }
+    - (void)failWithCallbackID:(NSString *)callbackID withMessage:(NSString *)message
+    {
+        CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:message];
+        [self.commandDelegate sendPluginResult:commandResult callbackId:callbackID];
+    }
     @end

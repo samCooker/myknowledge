@@ -7,11 +7,11 @@ var ACTION_GET_CURRENT_POSITION = 'getCurrentPosition';
 var ACTION_WATCH_POSITION = 'watchPosition';
 var ACTION_CLEAR_WATCH = 'clearWatch';
 
-var geolocation = module.exports = {};
+var geolocationBaidu = module.exports = {};
 
 var idGenerator = 0;
 
-geolocation.getCurrentPosition = function (success, error, options) {
+geolocationBaidu.getCurrentPosition = function (success, error, options) {
   if (typeof sucess === 'object') {
     options = success;
   }
@@ -23,7 +23,7 @@ geolocation.getCurrentPosition = function (success, error, options) {
   }, error, SERVICE_NAME, ACTION_GET_CURRENT_POSITION, [options]);
 };
 
-geolocation.watchPosition = function (success, error, options) {
+geolocationBaidu.watchPosition = function (success, error, options) {
   var watchId = idGenerator++;
   cordova.exec(function(args) {
     success.apply(null, args);
@@ -31,6 +31,6 @@ geolocation.watchPosition = function (success, error, options) {
   return watchId;
 };
 
-geolocation.clearWatch = function (watchId) {
+geolocationBaidu.clearWatch = function (watchId) {
   cordova.exec(null, null, SERVICE_NAME, ACTION_CLEAR_WATCH, [watchId]);
 };

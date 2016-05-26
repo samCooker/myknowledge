@@ -85,10 +85,14 @@ Link        :
 
 
   2.
-  baidu（未验证）
+  baidu
   cordova plugin add https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git --variable API_KEY=百度分配的AK --save
   AK 6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa
-         "cordova-plugin-baidu-geolocation": {
-              "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa",
-              "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
-          }
+
+  3.
+  baidu(修改后)
+
+  cordova plugin add cordova-plugin-baidu-geolocation-c
+
+13.调用百度或高德地图app
+  cordova plugin add https://github.com/samCooker/mapnavigation.git

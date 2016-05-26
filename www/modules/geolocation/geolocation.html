@@ -22,7 +22,7 @@
         <div class="card">
             <ion-list>
                 <div class="item item-button-right">
-                    当前位置信息
+                    当前位置信息gcj02
                     <button class="button button-positive" ng-click="getCurrentPosition()">
                         <i class="icon ion-location"></i>
                     </button>
@@ -35,6 +35,31 @@
                     <label class="item item-input">
                         <span class="input-label">经度:</span>
                         <input type="text" ng-model="position.coords.longitude">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">地名:</span>
+                        <input type="text" ng-model="position.name">
+                    </label>
+                </div>
+            </ion-list>
+        </div>
+
+        <div class="card">
+            <ion-list>
+                <div class="item item-button-right">
+                    当前位置信息bd09
+                    <button class="button button-positive" ng-click="getCurrentPositionBd09()">
+                        <i class="icon ion-location"></i>
+                    </button>
+                </div>
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">纬度:</span>
+                        <input type="text" ng-model="position.coords2.latitude">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">经度:</span>
+                        <input type="text" ng-model="position.coords2.longitude">
                     </label>
                     <label class="item item-input">
                         <span class="input-label">地名:</span>
@@ -75,8 +100,74 @@
                         <i class="icon ion-navigate"></i>
                     </button>
                 </div>
+
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">纬度:</span>
+                        <input type="text" ng-model="position.coords.latitude">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">经度:</span>
+                        <input type="text" ng-model="position.coords.longitude">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">地名:</span>
+                        <input type="text" ng-model="position.name">
+                    </label>
+                </div>
             </ion-list>
         </div>
+
+        <div class="card">
+            <ion-list>
+                <div class="item">坐标转换
+                    <button class="button button-positive" ng-click="gcj02Tobd09()">
+                        gcj02转bd09<i class="icon ion-navigate"></i>
+                    </button>
+                    <button class="button button-positive" ng-click="bd09Togcj02()">
+                        bd09转gcj02<i class="icon ion-navigate"></i>
+                    </button>
+                </div>
+
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">数据:</span>
+                        <input type="text" ng-model="transform.data">
+                    </label>
+                </div>
+
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">转换后:</span>
+                        <input type="text" ng-model="transform.data2">
+                    </label>
+                </div>
+            </ion-list>
+        </div>
+
+        <div class="card">
+            <ion-list>
+                <div class="item">坐标转换
+                    <button class="button button-positive" ng-click="onlineGcj02Tobd09()">
+                        在线gcj02转bd09<i class="icon ion-navigate"></i>
+                    </button>
+                </div>
+
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">数据:</span>
+                        <input type="text" ng-model="onlineTransform.Data">
+                    </label>
+                </div>
+                <div class="item">
+                    <label class="item item-input">
+                        <span class="input-label">转换后:</span>
+                        <input type="text" ng-model="onlineTransform.Data2">
+                    </label>
+                </div>
+            </ion-list>
+        </div>
+
 
     </ion-content>
 </ion-view>

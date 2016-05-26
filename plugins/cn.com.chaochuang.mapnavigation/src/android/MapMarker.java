@@ -27,14 +27,44 @@ public class MapMarker extends CordovaPlugin{
                     //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
                     Intent intent = Intent.parseUri(options.getUri4Baidu(),0);
                     activity.startActivity(intent);
-                    callbackContext.success(options.getUri4Baidu());
+                    callbackContext.success("成功标记。");
                 }else if(appInstalled("com.autonavi.minimap")){
                     //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
-                    Intent intent = Intent.parseUri("",0);
+                    Intent intent = Intent.parseUri(options.getUri4Mini(),0);
                     activity.startActivities(new Intent[]{intent});
-                    callbackContext.success("成功进行导航。");
+                    callbackContext.success("成功标记。");
                 }else {
                     callbackContext.error("您还没有安装百度地图和高德地图。");
+                }
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                callbackContext.error(e.toString());
+            }
+        }else if("mapMarkerBaidu".equals(action)){
+            try {
+                if(appInstalled("com.baidu.BaiduMap")){
+                    //如果有百度地图 uri详情：http://lbsyun.baidu.com/index.php?title=uri/api/android
+                    Intent intent = Intent.parseUri(options.getUri4Baidu(),0);
+                    activity.startActivity(intent);
+                    callbackContext.success("成功标记。");
+                }else {
+                    callbackContext.error("您还没有安装百度地图。");
+                }
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                callbackContext.error(e.toString());
+            }
+        }else if("mapMarkerMini".equals(action)){
+            try {
+                if(appInstalled("com.autonavi.minimap")){
+                    //如果有高德地图 uri详情：http://lbs.amap.com/api/uri-api/
+                    Intent intent = Intent.parseUri(options.getUri4Mini(),0);
+                    activity.startActivities(new Intent[]{intent});
+                    callbackContext.success("成功标记。");
+                }else {
+                    callbackContext.error("您还没有安装高德地图。");
                 }
                 return true;
             }catch (Exception e){
@@ -75,6 +105,10 @@ public class MapMarker extends CordovaPlugin{
          */
         public String getUri4Baidu(){
             return "intent://map/marker?location="+this.lat+","+this.lng+"&title="+this.title+"&content="+this.content+"&src="+this.src+"#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
+        }
+
+        public String getUri4Mini(){
+            return "androidamap://viewMap?sourceApplication="+this.src+"&poiname="+this.title+"&lat="+this.lat+"&lon="+this.lng+"&dev=0";
         }
     }
 
