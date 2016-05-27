@@ -44,7 +44,14 @@
         "cordova-plugin-baidu-geolocation": {
             "API_KEY": "6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa",
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        }
+    }
 }

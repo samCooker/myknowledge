@@ -107,6 +107,11 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
       controller: 'geolocationController',
       templateUrl: 'modules/geolocation/geolocation.html'
     })
+    .state('mapview',{
+      url: '/mapview',
+      controller: 'mapviewController',
+      templateUrl: 'modules/webmap/mapview.html'
+    })
   ;
   $urlRouterProvider.otherwise('/login');//找不到对应url的默认设置
 });

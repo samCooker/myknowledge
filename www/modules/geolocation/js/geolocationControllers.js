@@ -33,6 +33,7 @@
         navigator.geolocationBaidu.getCurrentPosition(function(position) {
             $scope.$apply(function () {
               $scope.position=position;
+              $scope.transform.data=position.coords.longitude+','+position.coords.latitude;
             });
             tipMsg.loading().hide();
         }, function (error) {
@@ -47,7 +48,6 @@
     $scope.getCurrentPositionBd09 = function () {
       if (navigator && navigator.geolocationBaidu) {
         tipMsg.loading().show();
-        //var options = {timeout: 5000, enableHighAccuracy: true };
         var options = {
           enableHighAccuracy: false,  // 是否使用 GPS
           maximumAge: 30000,         // 缓存时间
@@ -57,6 +57,25 @@
         navigator.geolocationBaidu.getCurrentPosition(function(position) {
           $scope.$apply(function () {
             $scope.position.coords2=position.coords;
+            $scope.transform.data=position.coords.longitude+','+position.coords.latitude;
+          });
+          tipMsg.loading().hide();
+        }, function (error) {
+          tipMsg.alertMsg(error);
+          tipMsg.loading().hide();
+        }, options);
+      } else {
+        tipMsg.showMsg('无定位插件');
+      }
+    };
+    $scope.getCurrentPositionWgs84 = function () {
+      if (navigator && navigator.geolocation) {
+        tipMsg.loading().show();
+        var options = {timeout: 5000, enableHighAccuracy: true };
+        navigator.geolocation.getCurrentPosition(function(position) {
+          $scope.$apply(function () {
+            $scope.position.coords3=position.coords;
+            $scope.transform.data=position.coords.longitude+','+position.coords.latitude;
           });
           tipMsg.loading().hide();
         }, function (error) {
@@ -178,6 +197,12 @@
       var _c = $scope.transform.data.split(',');
       console.log(_c);
       var _transform = coordtransform.bd09togcj02(_c[0],_c[1]);
+      $scope.transform.data2=_transform[0]+','+_transform[1];
+    };
+    $scope.wgs84Togcj02= function () {
+      var _c = $scope.transform.data.split(',');
+      console.log(_c);
+      var _transform = coordtransform.wgs84togcj02(parseInt(_c[0], 10),parseInt(_c[1], 10));
       $scope.transform.data2=_transform[0]+','+_transform[1];
     };
 

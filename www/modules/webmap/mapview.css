@@ -1,0 +1,17 @@
+#container{
+
+    height: 70%;
+
+    width: 100%;
+
+}
+
+section,.AMapArea{
+
+    height: 70%!important;
+
+    margin: 0px;
+
+    padding: 0px;
+
+}

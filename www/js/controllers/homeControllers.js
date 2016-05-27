@@ -50,6 +50,10 @@
     //地图定位
     $scope.toGeolocation = function () {
       $state.go('geolocation');
+    };
+
+    $scope.toMapview = function (){
+      $state.go('mapview');
     }
   }
 
