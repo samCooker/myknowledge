@@ -1,5 +1,10 @@
 # ionicDemo
 ionic demo template
+
+  # 文件结构
+    root
+      |-
+
 *****关于图标*****
 访问http://ionicons.com/  可查询具体图标名称
 或 查看ionicons-2.0.1.zip

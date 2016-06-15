@@ -63,3 +63,13 @@ gulp.task('minify', function() {
         .pipe(concat('all.min.js'))
         .pipe(gulp.dest('./www/js/'))
 });
+
+gulp.task('minifyhtml', function() {
+    return gulp.src(['./www/modules/cordovaapi/api-event.html'])
+        .pipe(ngAnnotate())
+        .pipe(ngmin({dynamic: false}))
+        .pipe(stripDebug())
+        .pipe(uglify({outSourceMap: false}))
+        .pipe(concat('api-event-1.html'))
+        .pipe(gulp.dest('./www/modules/cordovaapi/'))
+});

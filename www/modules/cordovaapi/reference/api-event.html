@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="description" content="List of Cordova JavaScript run-time events. ">
+    <title> Events - Apache Cordova</title>
+    <link rel="stylesheet" type="text/css" href="../common-files/main.css">
+    <link rel="stylesheet" type="text/css" href="../common-files/syntax.css">
+    <link rel="stylesheet" href="../common-files/docsearch.min.css">
+    <link href="../common-files/css" rel="stylesheet" type="text/css">
+    <style type="text/css">._yddWrapper * {
+        display: inline;
+        text-align: left;
+        font-size: 12px;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        text-decoration: none
+    }
+
+    ._yddWrapper div {
+        display: block
+    }
+
+    ._yddWrapper {
+        z-index: 10001;
+        border: 1px solid #b2d8f8;
+        min-width: 250px;
+        max-width: 400px;
+        box-shadow: 1px 1px 6px rgba(0, 0, 0, .2)
+    }
+
+    ._yddContainer {
+        color: #222;
+        background: #fff;
+        font-family: 'Microsoft YaHei';
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0
+    }
+
+    ._yddTop {
+        height: 22px;
+        line-height: 22px;
+        padding: 0 4px;
+        background-color: #e8f5fc
+    }
+
+    ._yd_phonetic {
+        font-family: 'lucida sans unicode', arial, sans-serif;
+        font-size: 12px
+    }
+
+    ._yd_voice_btn, ._yd_voice_btn:hover {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        background: url(data:image/gif;base64,R0lGODlhDwAPAJECAP///zWh1P///wAAACH5BAEAAAIALAAAAAAPAA8AAAIrlC+hyKbbzoPxAcrsDYk7vXWSApQhRZqn1wXqgoIw+7lrY2H4FCF8P6IJCgA7)
+    }
+
+    a._yd_voice_btn:hover {
+        opacity: .75
+    }
+
+    #_yd_close {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 4px;
+        text-align: center;
+        font-size: 12pt
+    }
+
+    ._yddKeyTitle {
+        font-weight: bold
+    }
+
+    ._yddMiddle {
+        margin-bottom: 10px
+    }
+
+    ._ydd-tabs {
+        color: #959595;
+        margin: 5px 0;
+        padding: 0 5px;
+        height: 18px;
+        border-bottom: 1px solid
+    }
+
+    ._ydd-tab {
+        display: block;
+        float: left;
+        height: 18px;
+        margin: 0 5px -1px 0;
+        padding: 0 4px;
+        line-height: 18px;
+        border: 1px solid;
+        border-bottom: 0 none
+    }
+
+    ._ydd-tabs, ._ydd-tab {
+        border-color: #d5e7f3;
+        background: #fff
+    }
+
+    ._ydd-trans-container {
+        line-height: 160%
+    }
+
+    ._ydd-padding010 {
+        padding: 0 10px
+    }</style>
+</head>
+<body>
+<div class="docs container">
+    <div class="col-md-8 col-lg-9 col-lg-offset-3 page-content-container container">
+        <div class="page-content row">
+<div class="col-md-offset-1 col-md-10">
+<div id="page-toc-source">
+<a class="fragment-anchor" id="events"></a><span id="events"></span><h1>Events</h1>
+
+<p>There are various events provided by cordova to be used by the application.
+The application code could add listeners for these events. For example:</p>
+
+<p><strong>HTML File</strong></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>Device Ready Example<span class="nt">&lt;/title&gt;</span>
+
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="na">src=</span><span class="s">"cordova.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="na">src=</span><span class="s">"example.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"onLoad()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p><strong>JS File</strong></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// example.js file</span>
+<span class="c1">// Wait for device API libraries to load</span>
+<span class="c1">//</span>
+<span class="kd">function</span> <span class="nx">onLoad</span><span class="p">()</span> <span class="p">{</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"deviceready"</span><span class="p">,</span> <span class="nx">onDeviceReady</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// device APIs are available</span>
+<span class="c1">//</span>
+<span class="kd">function</span> <span class="nx">onDeviceReady</span><span class="p">()</span> <span class="p">{</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"pause"</span><span class="p">,</span> <span class="nx">onPause</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"resume"</span><span class="p">,</span> <span class="nx">onResume</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"menubutton"</span><span class="p">,</span> <span class="nx">onMenuKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="c1">// Add similar listeners for other events</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onPause</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the pause event</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onResume</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the resume event</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onMenuKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the menubutton event</span>
+<span class="p">}</span>
+
+<span class="c1">// Add similar event handlers for other events</span>
+</code></pre></div>
+<p><strong>Note</strong>: Applications typically should use <code>document.addEventListener</code> to attach an event listener once the <a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#deviceready">deviceready</a></p>
+
+<p>The following table lists the cordova events and the supported platforms:</p>
+
+<!-- START HTML -->
+
+<table class="compat" width="100%">
+
+<thead>
+<tr>
+    <th>Supported Platforms/<br>Events
+    </th><th>android</th>
+    <th>blackberry10</th>
+    <th>ios</th>
+    <th>Windows Phone 8</th>
+    <th>Windows</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#deviceready">deviceready</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="y"></td>
+    <td data-col="winphone8" class="y"></td>
+    <td data-col="win" class="y"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#pause">pause</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="y"></td>
+    <td data-col="winphone8" class="y"></td>
+    <td data-col="win" class="y"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#resume">resume</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="y"></td>
+    <td data-col="winphone8" class="y"></td>
+    <td data-col="win" class="y"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#backbutton">backbutton</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="y"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#menubutton">menubutton</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#searchbutton">searchbutton</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="n"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#startcallbutton">startcallbutton</a></th>
+    <td data-col="android" class="n"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#endcallbutton">endcallbutton</a></th>
+    <td data-col="android" class="n"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#volumedownbutton">volumedownbutton</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+
+<tr>
+    <th><a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#volumeupbutton">volumeupbutton</a></th>
+    <td data-col="android" class="y"></td>
+    <td data-col="blackberry10" class="y"></td>
+    <td data-col="ios" class="n"></td>
+    <td data-col="winphone8" class="n"></td>
+    <td data-col="win" class="n"></td>
+</tr>
+</tbody>
+</table>
+
+<!-- END HTML -->
+
+<a class="fragment-anchor" id="deviceready"></a><span id="deviceready"></span><h2>deviceready<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#deviceready"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The deviceready event fires when Cordova is fully loaded. This event is
+essential to any application. It signals that Cordova's device APIs have
+loaded and are ready to access.</p>
+
+<p>Cordova consists of two code bases: native and JavaScript. While the
+native code loads, a custom loading image displays. However,
+JavaScript only loads once the DOM loads. This means the web app may
+potentially call a Cordova JavaScript function before the
+corresponding native code becomes available.</p>
+
+<p>The <code>deviceready</code> event fires once Cordova has fully loaded. Once the
+event fires, you can safely make calls to Cordova APIs.  Applications
+typically attach an event listener with <code>document.addEventListener</code>
+once the HTML document's DOM has loaded.</p>
+
+<p>The <code>deviceready</code> event behaves somewhat differently from others.  Any
+event handler registered after the <code>deviceready</code> event fires has its
+callback function called immediately.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"deviceready"</span><span class="p">,</span> <span class="nx">onDeviceReady</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onDeviceReady</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Now safe to use device APIs</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="pause"></a><span id="pause"></span><h2>pause<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#pause"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The pause event fires when the native platform puts the application into the background,
+typically when the user switches to a different application.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"pause"</span><span class="p">,</span> <span class="nx">onPause</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onPause</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the pause event</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="ios-quirks"></a><h3>iOS Quirks<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#ios-quirks"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>In the <code>pause</code> handler, any calls to the Cordova API or to native
+plugins that go through Objective-C do not work, along with any
+interactive calls, such as alerts or <code>console.log()</code>. They are only
+processed when the app resumes, on the next run loop.</p>
+
+<p>The iOS-specific <code>resign</code> event is available as an alternative to
+<code>pause</code>, and detects when users enable the <strong>Lock</strong> button to lock the
+device with the app running in the foreground.  If the app (and
+device) is enabled for multi-tasking, this is paired with a subsequent
+<code>pause</code> event, but only under iOS 5. In effect, all locked apps in iOS
+5 that have multi-tasking enabled are pushed to the background.  For
+apps to remain running when locked under iOS 5, disable the app's
+multi-tasking by setting <a href="http://developer.apple.com/library/ios/#documentation/general/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html">UIApplicationExitsOnSuspend</a>
+to <code>YES</code>. To run when locked on iOS 4, this setting does not matter.</p>
+
+<a class="fragment-anchor" id="resume"></a><span id="resume"></span><h2>resume<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#resume"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The <code>resume</code> event fires when the native platform pulls the application out from the background.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"resume"</span><span class="p">,</span> <span class="nx">onResume</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onResume</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the resume event</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="ios-quirks"></a><h3>iOS Quirks<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#ios-quirks"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Any interactive functions called from a <a href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#pause">pause</a> event handler execute
+later when the app resumes, as signaled by the <code>resume</code> event. These
+include alerts, <code>console.log()</code>, and any calls from plugins or the
+Cordova API, which go through Objective-C.</p>
+
+<ul>
+<li><p><strong>active</strong> event</p>
+
+    <p>The iOS-specific <code>active</code> event is available as an alternative to
+        <code>resume</code>, and detects when users disable the <strong>Lock</strong> button to unlock
+        the device with the app running in the foreground.  If the app (and
+        device) is enabled for multi-tasking, this is paired with a subsequent
+        <code>resume</code> event, but only under iOS 5. In effect, all locked apps in
+        iOS 5 that have multi-tasking enabled are pushed to the background.
+        For apps to remain running when locked under iOS 5, disable the app's
+        multi-tasking by setting <a href="http://developer.apple.com/library/ios/#documentation/general/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html">UIApplicationExitsOnSuspend</a>
+        to <code>YES</code>. To run when locked on iOS 4, this setting does not matter.</p></li>
+<li><p><strong>resume</strong> event</p>
+
+    <p>When called from a <code>resume</code> event handler, interactive functions such
+        as <code>alert()</code> need to be wrapped in a <code>setTimeout()</code> call with a
+        timeout value of zero, or else the app hangs. For example:</p>
+    <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"resume"</span><span class="p">,</span> <span class="nx">onResume</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+        <span class="kd">function</span> <span class="nx">onResume</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// TODO: do your thing!</span>
+        <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+    </code></pre></div></li>
+</ul>
+
+<a class="fragment-anchor" id="android-quirks"></a><h3>Android Quirks<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#android-quirks"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Refer <a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/android/lifecycle.html">Android Life Cycle Guide</a> for details on android quirks with
+the <code>resume</code> event.</p>
+
+<a class="fragment-anchor" id="backbutton"></a><span id="backbutton"></span><h2>backbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#backbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the back button. To override the default
+back-button behavior, register an event listener for the <code>backbutton</code> event.
+It is no longer necessary to call any other method to override the
+back-button behavior.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"backbutton"</span><span class="p">,</span> <span class="nx">onBackKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onBackKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the back button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="windows-quirks"></a><h3>Windows Quirks<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#windows-quirks"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Throw an error in a <code>backbutton</code> callback to force the default behavior, which is an app exit:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'backbutton'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">cordova</span><span class="p">.</span><span class="nx">platformId</span> <span class="o">!==</span> <span class="s1">'windows'</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">!==</span> <span class="nx">firstPageUrl</span><span class="p">)</span> <span class="p">{</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">back</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'Exit'</span><span class="p">);</span> <span class="c1">// This will suspend the app</span>
+<span class="p">}</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div>
+<a class="fragment-anchor" id="menubutton"></a><span id="menubutton"></span><h2>menubutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#menubutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the menu button. Applying an event handler
+overrides the default menu button behavior.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"menubutton"</span><span class="p">,</span> <span class="nx">onMenuKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onMenuKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the back button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="searchbutton"></a><span id="searchbutton"></span><h2>searchbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#searchbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the search button on Android. If you need to
+override the default search button behavior on Android you can register an event
+listener for the 'searchbutton' event.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"searchbutton"</span><span class="p">,</span> <span class="nx">onSearchKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onSearchKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the search button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="startcallbutton"></a><span id="startcallbutton"></span><h2>startcallbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#startcallbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the start call button. If you need to override
+the default start call behavior you can register an event listener for the <code>startcallbutton</code> event.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"startcallbutton"</span><span class="p">,</span> <span class="nx">onStartCallKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onStartCallKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the start call button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="endcallbutton"></a><span id="endcallbutton"></span><h2>endcallbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#endcallbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>This event fires when the user presses the end call button. The event overrides the
+default end call behavior.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"endcallbutton"</span><span class="p">,</span> <span class="nx">onEndCallKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onEndCallKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the end call button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="volumedownbutton"></a><span id="volumedownbutton"></span><h2>volumedownbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#volumedownbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the volume down button. If you need to override
+the default volume down behavior you can register an event listener for the <code>volumedownbutton</code> event.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"volumedownbutton"</span><span class="p">,</span> <span class="nx">onVolumeDownKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onVolumeDownKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the volume down button</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="fragment-anchor" id="volumeupbutton"></a><span id="volumeupbutton"></span><h2>volumeupbutton<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#volumeupbutton"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The event fires when the user presses the volume up button. If you need to override
+the default volume up behavior you can register an event listener for the <code>volumeupbutton</code> event.</p>
+
+<a class="fragment-anchor" id="quick-example"></a><h3>Quick Example<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/cordova/events/events.html#quick-example"><i class="glyphicon glyphicon-link"></i></a></h3>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"volumeupbutton"</span><span class="p">,</span> <span class="nx">onVolumeUpKeyDown</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">onVolumeUpKeyDown</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// Handle the volume up button</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="blue-divider"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

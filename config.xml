@@ -4,13 +4,19 @@
     <description>
         An Ionic Framework and Cordova project.
     </description>
-    <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
+    <author email="sam2cooker@gmail.com" href="https://mail.google.com">
+      Cookie Sam
     </author>
+    <!-- 入口-->
     <content src="index.html" />
+    <!-- Defines the set of external domains the app is allowed to communicate with. 允许访问的域的白名单-->
     <access origin="bdapp://map/marker" />
     <access origin="bdapp://map/direction" />
     <access origin="*" />
+
+    <!-- android -->
+    <preference name="android-minSdkVersion" value="4.2.2" />
+
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -38,7 +44,5 @@
         <splash density="port-xhdpi" src="resources/android/splash/tr-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/tr-port-xhdpi-screen.png" />
     </platform>
-    <plugin name="cordova-plugin-baidu-geolocation" spec="https://github.com/ETENG-OSP/cordova-plugin-baidu-geolocation.git">
-        <variable name="API_KEY" value="6AeHHnQQhgoMNOvOw9RZklLmZoE7kvSa" />
-    </plugin>
+    <engine name="android" spec="~5.1.1" />
 </widget>

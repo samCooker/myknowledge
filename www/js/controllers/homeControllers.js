@@ -54,6 +54,10 @@
 
     $scope.toMapview = function (){
       $state.go('mapview');
+    };
+
+    $scope.toCordovaApi = function (){
+      $state.go('cordovaapi.list');
     }
   }
 

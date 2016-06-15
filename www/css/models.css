@@ -51,3 +51,42 @@
     text-indent: 2em;
 }
 
+/*栅格额外样式*/
+.ss-grid-1{
+    border: none;
+    max-width: 120px;
+}
+.ss-grid-1 p{
+    white-space: normal;
+}
+
+/*首页栅格样式*/
+@media (max-width: 380px) {
+    .responsive-sm-s {
+        -webkit-box-direction: normal;
+        -moz-box-direction: normal;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column; }
+    .responsive-sm-s .col, .responsive-sm-s .col-10, .responsive-sm-s .col-20, .responsive-sm-s .col-25, .responsive-sm-s .col-33, .responsive-sm-s .col-34, .responsive-sm-s .col-50, .responsive-sm-s .col-66, .responsive-sm-s .col-67, .responsive-sm-s .col-75, .responsive-sm-s .col-80, .responsive-sm-s .col-90 {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -moz-box-flex: 1;
+        -moz-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding: 0 25px;
+        margin-left: 0;
+        max-width: 100%;
+        width: 100%; }
+    .responsive-sm-s .ss-grid-1{
+        max-width: 250px;
+    }
+}
+@media (min-width: 470px) {
+    .responsive-sm-s .ss-grid-1{
+        max-width: 250px;
+    }
+}

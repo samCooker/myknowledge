@@ -9,7 +9,7 @@
   /**
    * 地图定位
    */
-  function GeolocationController($scope,$ionicActionSheet,tipMsg,coordtransform,$http) {
+  function GeolocationController($scope,$ionicActionSheet,tipMsg,coordtransform,$http,$interval) {
     //目的地信息
     $scope.destination={lat:'22.812535',lng:'108.344435',name:'目的地'};
     //当前位置信息
@@ -25,8 +25,8 @@
         tipMsg.loading().show();
         //var options = {timeout: 5000, enableHighAccuracy: true };
         var options = {
-          enableHighAccuracy: false,  // 是否使用 GPS
-          maximumAge: 30000,         // 缓存时间
+          enableHighAccuracy: true,  // 是否使用 GPS
+          maximumAge: 10000,         // 缓存时间
           timeout: 27000,            // 超时时间
           coorType: 'gcj02'         // 默认是 gcj02，可填 bd09ll 以获取百度经纬度用于访问百度 API
         };
