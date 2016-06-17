@@ -58,6 +58,9 @@
 
     $scope.toCordovaApi = function (){
       $state.go('cordovaapi.list');
+    };
+    $scope.toIonicApi = function (){
+      $state.go('ionicapi.css');
     }
   }
 

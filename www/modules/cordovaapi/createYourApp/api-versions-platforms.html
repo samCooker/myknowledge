@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="description" content="How to manage platforms and Cordova CLI versions. ">
+
+    <title>
+        
+            
+                Platforms and Plugins Version Management - Apache Cordova
+            
+        
+    </title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../common-files/main.css">
+    <link rel="stylesheet" type="text/css" href="../common-files/syntax.css">
+    <!-- Algolia Search CSS -->
+    <link rel="stylesheet" href="../common-files/docsearch.min.css">
+
+    <!-- Fonts -->
+    <!-- For attribution information, see www/attributions.html -->
+    <link href="../common-files/css" rel="stylesheet" type="text/css">
+
+<body>
+
+<div class="docs container">
+
+    <!-- Page content -->
+    <div class="col-md-8 col-lg-9 col-lg-offset-3 page-content-container container">
+        <div class="page-content row">
+            <div class="col-md-offset-1 col-md-10">
+
+                <div class="content-header">
+                    <div class="toc-dropdown dropdown visible-xs-block visible-sm-block">
+                    </div>
+                    <!-- Version dropdown -->
+                    <div class="dropdown">
+
+                    </div>
+                </div>
+
+                <div id="page-toc-source">
+                    <a class="fragment-anchor" id="platforms-and-plugins-version-management"></a><span id="platforms-and-plugins-version-management"></span><h1>Platforms and Plugins Version Management</h1>
+
+<p>From version 4.3.0 onwards, Cordova provides the ability to save and restore platforms and plugins.</p>
+
+<p>This feature allows developers to save and restore their app to a known state without having to check in all of the platform and plugin source code.</p>
+
+<p>The 'save' command stores details about the app's platform and plugin versions in config.xml.
+The 'restore' step happens automatically when a <strong>'cordova prepare'</strong> is issued, making use of information previously saved in the config.xml file.</p>
+
+<p>One scenario where save/restore capabilities come in handy is in large teams that work on an app, with each team member focusing on a platform or plugin. This feature makes it easier to share the project and reduce the amount of redundant code that is checked in the repository.</p>
+
+<a class="fragment-anchor" id="platform-versioning"></a><span id="platform-versioning"></span><h2>Platform Versioning<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#platform-versioning"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<a class="fragment-anchor" id="saving-platforms"></a><h3>Saving platforms<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#saving-platforms"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>To save a platform, you issue the following command :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova platform add &lt;platform[@&lt;version&gt;] | directory | git_url&gt; --save
+</code></pre></div>
+<p>After running the above command, the resulting config.xml looks like :</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span>
+    ...
+    <span class="nt">&lt;engine</span> <span class="na">name=</span><span class="s">"android"</span> <span class="na">spec=</span><span class="s">"~4.0.0"</span> <span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/xml&gt;</span>
+</code></pre></div>
+<p>Some examples :</p>
+
+<ul>
+<li><strong>'cordova platform add android --save'</strong> =&gt; retrieves the pinned version of the android platform, adds it to the project and then updates config.xml.</li>
+<li><strong>'cordova platform add android@3.7.0 --save'</strong> =&gt; retrieves the android platform, version 3.7.0 from npm, adds it to the project and then updates config.xml.</li>
+<li><strong>'cordova platform add android@https://github.com/apache/cordova-android.git鈥�--save'</strong> =&gt; clones the specified cordova-android git repository, adds the android platform to the project, then updates config.xml and point its version to the specified git-url.</li>
+<li><strong>'cordova platform add C:/path/to/android/platform --save'</strong> =&gt; retrieves the android platform from the specified directory, adds it to the project, then updates config.xml and point to the directory.</li>
+</ul>
+
+<a class="fragment-anchor" id="mass-saving-platforms-on-an-existing-project"></a><h3>Mass saving platforms on an existing project<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#mass-saving-platforms-on-an-existing-project"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>The '--save' flag described above is only useful when you remember to use it during the platform addition.
+If you have a pre-existing project and you want to save all the currently added platforms in your project, you can use :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova platform save
+</code></pre></div>
+<a class="fragment-anchor" id="updating--removing-platforms"></a><h3>Updating / Removing platforms<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#updating--removing-platforms"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>It is also possible to update/delete from config.xml during the commands 'cordova platform update' and 'cordova platform remove' :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova platform update &lt;platform[@&lt;version&gt;] | directory | git_url&gt; --save
+<span class="gp">$ </span>cordova platform remove &lt;platform&gt; --save
+</code></pre></div>
+<p>Some examples :</p>
+
+<ul>
+<li><strong>'cordova platform update android --save'</strong> =&gt; In addition to updating the android platform to the pinned version, update config.xml entry</li>
+<li><strong>'cordova platform update android@3.8.0 --save'</strong> =&gt; In addition to updating the android platform to version 3.8.0, update config.xml entry</li>
+<li><strong>'cordova platform update /path/to/android/platform --save'</strong> =&gt; In addition to updating the android platform to version in the folder, update config.xml entry</li>
+<li><strong>'cordova platform remove android --save'</strong> =&gt; Removes the android platform from the project and deletes its entry from config.xml.</li>
+</ul>
+
+<a class="fragment-anchor" id="restoring-platforms"></a><h3>Restoring platforms<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#restoring-platforms"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Platforms are automatically restored from config.xml when the <strong>'cordova prepare'</strong> command is run.</p>
+
+<p>If you add a platform without specifying a version/folder/git_url, the version to install is taken from config.xml, <strong>if found</strong>.</p>
+
+<p>Example:</p>
+
+<p>Suppose your config.xml file contains the following entry:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span>
+    ...
+    <span class="nt">&lt;engine</span> <span class="na">name=</span><span class="s">"android"</span> <span class="na">spec=</span><span class="s">"3.7.0"</span> <span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/xml&gt;</span>
+</code></pre></div>
+<p>If you run the command <strong>'cordova platform add android'</strong> (no version/folder/git_url specified), the platform 'android@3.7.0' (as retrieved from config.xml) will be installed.</p>
+
+<hr>
+
+<a class="fragment-anchor" id="plugin-versioning"></a><span id="plugin-versioning"></span><h2>Plugin Versioning<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#plugin-versioning"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p><em>(The plugin commands are a mirror of the platform commands)</em></p>
+
+<a class="fragment-anchor" id="saving-plugins"></a><h3>Saving plugins<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#saving-plugins"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>To save a plugin, you issue the following command :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova plugin add &lt;plugin[@&lt;version&gt;] | directory | git_url&gt; --save
+</code></pre></div>
+<p>After running the above command, the resulting config.xml looks like :</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span>
+    ...
+    <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">"cordova-plugin-console"</span> <span class="na">spec=</span><span class="s">"~1.0.0"</span> <span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/xml&gt;</span>
+</code></pre></div>
+<p>Some examples :</p>
+
+<ul>
+<li><strong>'cordova plugin add cordova-plugin-console --save'</strong> =&gt; retrieves the pinned version of the console plugin, adds it to the project and then updates config.xml.</li>
+<li><strong>'cordova plugin add cordova-plugin-console@0.2.13 --save'</strong> =&gt; retrieves the android plugin, version 0.2.13 from npm, adds it to the project and then updates config.xml.</li>
+<li><strong>'cordova plugin add https://github.com/apache/cordova-plugin-console.git --save'</strong> =&gt; clones the specified console plugin git repository, adds the console plugin to the project, then updates config.xml and point its version to the specified git-url.</li>
+<li><strong>'cordova plugin add C:/path/to/console/plugin --save'</strong> =&gt; retrieves the console plugin from the specified directory, adds it to the project, then updates config.xml and point to the directory.</li>
+</ul>
+
+<a class="fragment-anchor" id="mass-saving-plugins-on-an-existing-project"></a><h3>Mass saving plugins on an existing project<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#mass-saving-plugins-on-an-existing-project"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>The '--save' flag described above is only useful when you remember to use it during the plugin addition.
+If you have a pre-existing project and you want to save all currently added plugins in the project, you can use :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova plugin save
+</code></pre></div>
+<a class="fragment-anchor" id="updating--removing-plugins"></a><h3>Updating / Removing plugins<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#updating--removing-plugins"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>It is also possible to update/delete from config.xml during the commands 'cordova plugin update' and 'cordova plugin remove' :</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova plugin update &lt;plugin[@&lt;version&gt;] | directory | git_url&gt; --save
+<span class="gp">$ </span>cordova plugin remove &lt;plugin&gt; --save
+</code></pre></div>
+<p>Some examples :</p>
+
+<ul>
+<li><strong>'cordova plugin update cordova-plugin-console --save'</strong> =&gt; In addition to updating the console plugin to the pinned version, update config.xml entry</li>
+<li><strong>'cordova plugin update cordova-plugin-console@0.2.13 --save'</strong> =&gt; In addition to updating the android plugin to version 3.8.0, update config.xml entry</li>
+<li><strong>'cordova plugin update /path/to/console/plugin --save'</strong> =&gt; In addition to updating the console plugin to version in the folder, update config.xml entry</li>
+<li><strong>'cordova plugin remove cordova-plugin-console --save'</strong> =&gt; Removes the console plugin from the project and deletes its entry from config.xml.</li>
+</ul>
+
+<a class="fragment-anchor" id="restoring-plugins"></a><h3>Restoring plugins<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/platform_plugin_versioning_ref/index.html#restoring-plugins"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Plugins are automatically restored from config.xml when the <strong>'cordova prepare'</strong> command is run.</p>
+
+<p>If you add a plugin without specifying a version/folder/git_url, the version to be installed is taken from config.xml, <strong>if found</strong>.</p>
+
+<p>Example:</p>
+
+<p>Suppose your config.xml file contains the following entry:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span>
+    ...
+    <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">"cordova-plugin-console"</span> <span class="na">spec=</span><span class="s">"0.2.11"</span> <span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/ xml&gt;</span>
+</code></pre></div>
+<p>If you run the command <strong>'cordova plugin add cordova-plugin-console'</strong> (no version/folder/git_url specified), the plugin 'cordova-plugin-console@0.2.11' (as retrieved from config.xml) will be installed.</p>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blue-divider"></div>
+
+        </div>
+    </div>
+</div>
+
+</body></html>

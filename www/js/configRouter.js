@@ -127,6 +127,21 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('ionicapi', {
+            url: '/ionicapi',
+            abstract:true,
+            controller: 'ionicApiMainController',
+            templateUrl: 'modules/ionicapi/main.html'
+        })
+        .state('ionicapi.css', {
+            url: '/css',
+            views: {
+                'ionicApiCss': {
+                    controller: 'ionicApiController',
+                    templateUrl: 'modules/ionicapi/list-css.html'
+                }
+            }
+        })
     ;
     $urlRouterProvider.otherwise('/login');//找不到对应url的默认设置
 });

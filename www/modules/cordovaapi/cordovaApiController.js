@@ -9,8 +9,8 @@
 
     function CordovaApiMainController($scope){
         $scope.rootPath = 'modules/cordovaapi/';
-        $scope.title='reference/api-config';
-        $scope.innerHtmlSrc=$scope.rootPath+'reference/api-config.html';
+        $scope.title='api-overview';
+        $scope.innerHtmlSrc=$scope.rootPath+'api-overview.html';
 
         $scope.changeIframeSrc = function (htmlName) {
             $scope.$broadcast('cordova.api.page.change',htmlName);

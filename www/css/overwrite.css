@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*覆盖ionic原有的样式*/
+/*覆盖或拓展ionic原有的样式*/
 
 /*覆盖ionic的加载样式*/
 /*.loading-container .loading {*/
@@ -36,4 +36,20 @@
 /*input 宽度*/
 .item-input-wrapper input{
   width: 90%;
+}
+
+.scroll{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+
+  width: 100%;
+  height: 100%;
 }

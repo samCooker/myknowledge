@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://cordova.apache.org/docs/en/6.x/config_ref/images.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="description" content="Learn how to customize icons for your Cordova application. ">
+
+    <title>
+        Customize app icons - Apache Cordova
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../common-files/main.css">
+    <link rel="stylesheet" type="text/css" href="../common-files/syntax.css">
+    <!-- Algolia Search CSS -->
+    <link rel="stylesheet" href="../common-files/docsearch.min.css">
+
+    <!-- Fonts -->
+    <!-- For attribution information, see www/attributions.html -->
+    <link href="../common-files/css" rel="stylesheet" type="text/css">
+
+
+<body>
+
+<div class="docs container">
+
+    <!-- Page content -->
+    <div class="col-md-8 col-lg-9 col-lg-offset-3 page-content-container container">
+        <div class="page-content row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="content-header">
+                    <div class="toc-dropdown dropdown visible-xs-block visible-sm-block">
+                    </div>
+                    <!-- Version dropdown -->
+                    <div class="dropdown">
+
+                    </div>
+                </div>
+                <div id="page-toc-source">
+                    <a class="fragment-anchor" id="customize-icons"></a><span id="customize-icons"></span><h1>Customize Icons</h1>
+
+<p>This section shows how to configure an application's icon for various platforms. Documentation about splash screen images can be found in the Cordova-Plugin-Splashscreen documentation <a href="http://cordova.apache.org/docs/en/6.x/reference/cordova-plugin-splashscreen/">Splashscreen plugin docs</a>.</p>
+
+<a class="fragment-anchor" id="configuring-icons-in-the-cli"></a><span id="configuring-icons-in-the-cli"></span><h2>Configuring Icons in the CLI<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#configuring-icons-in-the-cli"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>When working in the CLI you can define application icon(s) via the <code>&lt;icon&gt;</code> element (<code>config.xml</code>).
+If you do not specify an icon, the Apache Cordova logo is used.</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon.png"</span> <span class="na">platform=</span><span class="s">"ios"</span> <span class="na">width=</span><span class="s">"57"</span> <span class="na">height=</span><span class="s">"57"</span> <span class="na">density=</span><span class="s">"mdpi"</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attributes</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>src</td>
+<td><em>Required</em> <br> Location of the image file, relative to your project directory</td>
+</tr>
+<tr>
+<td>platform</td>
+<td><em>Optional</em> <br> Target platform</td>
+</tr>
+<tr>
+<td>width</td>
+<td><em>Optional</em> <br> Icon width in pixels</td>
+</tr>
+<tr>
+<td>height</td>
+<td><em>Optional</em> <br> Icon height in pixels</td>
+</tr>
+<tr>
+<td>density</td>
+<td><em>Optional</em> <br> <mark class="logo android" title="Android"></mark> <br> Specified icon density</td>
+</tr>
+<tr>
+<td>target</td>
+<td><em>Optional</em> <br> <mark class="logo windows" title="Windows"></mark> <br> Destination filename for the image file and all its' MRT companions</td>
+</tr>
+</tbody></table>
+
+<p>The following configuration can be used to define a single default icon
+which will be used for all platforms.</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/icon.png"</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<p>For each platform, you can also define a pixel-perfect icon set to fit
+different screen resolutions.</p>
+
+<a class="fragment-anchor" id="android"></a><span id="android"></span><h2>Android<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#android"><i class="glyphicon glyphicon-link"></i></a></h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"android"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/ldpi.png"</span> <span class="na">density=</span><span class="s">"ldpi"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/mdpi.png"</span> <span class="na">density=</span><span class="s">"mdpi"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/hdpi.png"</span> <span class="na">density=</span><span class="s">"hdpi"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/xhdpi.png"</span> <span class="na">density=</span><span class="s">"xhdpi"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/xxhdpi.png"</span> <span class="na">density=</span><span class="s">"xxhdpi"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/android/xxxhdpi.png"</span> <span class="na">density=</span><span class="s">"xxxhdpi"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+<a class="fragment-anchor" id="see-also"></a><h3>See Also<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#see-also"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<ul>
+<li><a href="https://www.google.com/design/spec/style/icons.html">Android icon guide</a></li>
+<li><a href="http://developer.android.com/guide/practices/screens_support.html">Android - Supporting multiple screens</a></li>
+</ul>
+
+<a class="fragment-anchor" id="blackberry10"></a><span id="blackberry10"></span><h2>BlackBerry10<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#blackberry10"><i class="glyphicon glyphicon-link"></i></a></h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"blackberry10"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/bb10/icon-86.png"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/bb10/icon-150.png"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+<a class="fragment-anchor" id="see-also"></a><h3>See Also<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#see-also"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<ul>
+<li><a href="http://developer.blackberry.com/html5/documentation/icon_element.html">BlackBerry's documentation</a> for targeting multiple sizes and locales.</li>
+</ul>
+
+<a class="fragment-anchor" id="browser"></a><span id="browser"></span><h2>Browser<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#browser"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Icons are not applicable to the Browser platform.</p>
+
+<a class="fragment-anchor" id="ios"></a><span id="ios"></span><h2>iOS<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#ios"><i class="glyphicon glyphicon-link"></i></a></h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"ios"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- iOS 8.0+ --&gt;</span>
+        <span class="c">&lt;!-- iPhone 6 Plus  --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-60@3x.png"</span> <span class="na">width=</span><span class="s">"180"</span> <span class="na">height=</span><span class="s">"180"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iOS 7.0+ --&gt;</span>
+        <span class="c">&lt;!-- iPhone / iPod Touch  --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-60.png"</span> <span class="na">width=</span><span class="s">"60"</span> <span class="na">height=</span><span class="s">"60"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-60@2x.png"</span> <span class="na">width=</span><span class="s">"120"</span> <span class="na">height=</span><span class="s">"120"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iPad --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-76.png"</span> <span class="na">width=</span><span class="s">"76"</span> <span class="na">height=</span><span class="s">"76"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-76@2x.png"</span> <span class="na">width=</span><span class="s">"152"</span> <span class="na">height=</span><span class="s">"152"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iOS 6.1 --&gt;</span>
+        <span class="c">&lt;!-- Spotlight Icon --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-40.png"</span> <span class="na">width=</span><span class="s">"40"</span> <span class="na">height=</span><span class="s">"40"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-40@2x.png"</span> <span class="na">width=</span><span class="s">"80"</span> <span class="na">height=</span><span class="s">"80"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iPhone / iPod Touch --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon.png"</span> <span class="na">width=</span><span class="s">"57"</span> <span class="na">height=</span><span class="s">"57"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon@2x.png"</span> <span class="na">width=</span><span class="s">"114"</span> <span class="na">height=</span><span class="s">"114"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iPad --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-72.png"</span> <span class="na">width=</span><span class="s">"72"</span> <span class="na">height=</span><span class="s">"72"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-72@2x.png"</span> <span class="na">width=</span><span class="s">"144"</span> <span class="na">height=</span><span class="s">"144"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iPhone Spotlight and Settings Icon --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-small.png"</span> <span class="na">width=</span><span class="s">"29"</span> <span class="na">height=</span><span class="s">"29"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-small@2x.png"</span> <span class="na">width=</span><span class="s">"58"</span> <span class="na">height=</span><span class="s">"58"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- iPad Spotlight and Settings Icon --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-50.png"</span> <span class="na">width=</span><span class="s">"50"</span> <span class="na">height=</span><span class="s">"50"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/ios/icon-50@2x.png"</span> <span class="na">width=</span><span class="s">"100"</span> <span class="na">height=</span><span class="s">"100"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+<a class="fragment-anchor" id="see-also"></a><h3>See Also<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#see-also"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html">App icon and image size guidelines</a></li>
+</ul>
+
+<a class="fragment-anchor" id="windows"></a><span id="windows"></span><h2>Windows<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#windows"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>For Windows the recommended approach to define application icons is to use the <code>target</code> attribute.</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"windows"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/windows/storelogo.png"</span> <span class="na">target=</span><span class="s">"StoreLogo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/windows/smalllogo.png"</span> <span class="na">target=</span><span class="s">"Square30x30Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square44x44Logo.png"</span> <span class="na">target=</span><span class="s">"Square44x44Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square70x70Logo.png"</span> <span class="na">target=</span><span class="s">"Square70x70Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square71x71Logo.png"</span> <span class="na">target=</span><span class="s">"Square71x71Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square150x150Logo.png"</span> <span class="na">target=</span><span class="s">"Square150x150Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square310x310Logo.png"</span> <span class="na">target=</span><span class="s">"Square310x310Logo"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Wide310x150Logo.png"</span> <span class="na">target=</span><span class="s">"Wide310x150Logo"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+<p>where <code>src</code> is the path to the icon which needs to be added.</p>
+
+<p>The Windows platform handles MRT icons automatically, so if you specify <code>src="res/windows/storelogo.png"</code> the following files will be copied into the application's <code>images</code> folder: <code>res/windows/storelogo.scale-100.png</code>, <code>res/windows/storelogo.scale-200.png</code>, etc.</p>
+
+<p>TODO Define what MRT is.</p>
+
+<p>The <code>target</code> attribute specifies the base name for the resultant icons. For every icon file, its destination filename is calculated as <code>target + '.' + MRT_qualifiers + extension(src)</code>. For the icons to display properly in the application, every <code>target</code> value should be one of the icon filenames defined in the application's <code>.appxmanifest</code> file.</p>
+
+<p>Summarizing the above... using the <code>target</code> attribute it is possible to:</p>
+
+<ul>
+<li>define a group of icons for different device scale factors using a single <code>&lt;icon ...&gt;</code> element, for example:
+<code>xml
+&lt;icon src="res/Windows/AppListIcon.png" target="Square44x44Logo" /&gt;
+</code>
+which is equivalent to the following lines:
+<code>xml
+&lt;icon src="res/Windows/Square44x44Logo.scale-100.png" width="44" height="44" /&gt;
+&lt;icon src="res/Windows/Square44x44Logo.scale-150.png" width="66" height="66" /&gt;
+&lt;icon src="res/Windows/Square44x44Logo.scale-200.png" width="88" height="88" /&gt;
+&lt;icon src="res/Windows/Square44x44Logo.scale-240.png" width="106" height="106" /&gt;
+</code></li>
+<li>define icons with scale factors other than <code>scale-100</code> and <code>scale-240</code> (and any other MRT qualifiers)</li>
+</ul>
+
+<p>Although it is not recommended, it is also possible to define icons using the <code>width</code> and <code>height</code> attributes:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"windows"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/windows/logo.png"</span> <span class="na">width=</span><span class="s">"150"</span> <span class="na">height=</span><span class="s">"150"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/windows/smalllogo.png"</span> <span class="na">width=</span><span class="s">"30"</span> <span class="na">height=</span><span class="s">"30"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/windows/storelogo.png"</span> <span class="na">width=</span><span class="s">"50"</span> <span class="na">height=</span><span class="s">"50"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square44x44Logo.scale-100.png"</span> <span class="na">width=</span><span class="s">"44"</span> <span class="na">height=</span><span class="s">"44"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square44x44Logo.scale-240.png"</span> <span class="na">width=</span><span class="s">"106"</span> <span class="na">height=</span><span class="s">"106"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square70x70Logo.scale-100.png"</span> <span class="na">width=</span><span class="s">"70"</span> <span class="na">height=</span><span class="s">"70"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square71x71Logo.scale-100.png"</span> <span class="na">width=</span><span class="s">"71"</span> <span class="na">height=</span><span class="s">"71"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square71x71Logo.scale-240.png"</span> <span class="na">width=</span><span class="s">"170"</span> <span class="na">height=</span><span class="s">"170"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square150x150Logo.scale-240.png"</span> <span class="na">width=</span><span class="s">"360"</span> <span class="na">height=</span><span class="s">"360"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Square310x310Logo.scale-100.png"</span> <span class="na">width=</span><span class="s">"310"</span> <span class="na">height=</span><span class="s">"310"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Wide310x150Logo.scale-100.png"</span> <span class="na">width=</span><span class="s">"310"</span> <span class="na">height=</span><span class="s">"150"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/Windows/Wide310x150Logo.scale-240.png"</span> <span class="na">width=</span><span class="s">"744"</span> <span class="na">height=</span><span class="s">"360"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+<a class="fragment-anchor" id="see-also"></a><h3>See Also:<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#see-also"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<ul>
+<li><a href="https://msdn.microsoft.com/en-us/library/windows/apps/mt412102.aspx">Windows 10 platform guidelines for icons</a>.</li>
+<li><a href="https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh781198.aspx">Windows 8.1 tiles and icons sizes</a></li>
+</ul>
+
+<a class="fragment-anchor" id="windows-phone-8-wp8-platform"></a><span id="windows-phone-8-wp8-platform"></span><h2>Windows Phone 8 (WP8 Platform)<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/config_ref/images.html#windows-phone-8-wp8-platform"><i class="glyphicon glyphicon-link"></i></a></h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"wp8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/wp/ApplicationIcon.png"</span> <span class="na">width=</span><span class="s">"99"</span> <span class="na">height=</span><span class="s">"99"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- tile image --&gt;</span>
+        <span class="nt">&lt;icon</span> <span class="na">src=</span><span class="s">"res/wp/Background.png"</span> <span class="na">width=</span><span class="s">"159"</span> <span class="na">height=</span><span class="s">"159"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+</code></pre></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blue-divider"></div>
+        </div>
+    </div>
+</div>

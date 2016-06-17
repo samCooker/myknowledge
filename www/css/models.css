@@ -90,3 +90,11 @@
         max-width: 250px;
     }
 }
+
+.ss-small-card{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+    max-width: 500px;
+    margin: 20px auto;
+}

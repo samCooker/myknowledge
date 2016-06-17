@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="description" content="Develop your own plugin. ">
+
+    <title>
+                Plugin Development Guide - Apache Cordova
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../common-files/main.css">
+    <link rel="stylesheet" type="text/css" href="../common-files/syntax.css">
+    <!-- Algolia Search CSS -->
+    <link rel="stylesheet" href="../common-files/docsearch.min.css">
+
+    <!-- Fonts -->
+    <!-- For attribution information, see www/attributions.html -->
+    <link href="../common-files/css" rel="stylesheet" type="text/css">
+
+
+<body>
+
+<div class="docs container">
+
+    <!-- Page content -->
+    <div class="col-md-8 col-lg-9 col-lg-offset-3 page-content-container container">
+        <div class="page-content row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="content-header">
+                    <div class="toc-dropdown dropdown visible-xs-block visible-sm-block">
+                    </div>
+                    <!-- Version dropdown -->
+                    <div class="dropdown">
+
+                    </div>
+                </div>
+
+                <div id="page-toc-source">
+                    <a class="fragment-anchor" id="plugin-development-guide"></a><span id="plugin-development-guide"></span><h1>Plugin Development Guide</h1>
+
+<p>A <em>plugin</em> is a package of injected code that allows the Cordova webview within
+which the app renders to communicate with the native platform on
+which it runs.  Plugins provide access to device and platform
+functionality that is ordinarily unavailable to web-based apps. All
+the main Cordova API features are implemented as plugins, and many
+others are available that enable features such as bar code scanners,
+NFC communication, or to tailor calendar interfaces. You can search for available plugins
+on <a href="http://cordova.apache.org/plugins/">Cordova Plugin Search page</a>.</p>
+
+<p>Plugins comprise a single JavaScript interface along with
+corresponding native code libraries for each supported platform.  In essence
+this hides the various native code implementations behind a common
+JavaScript interface.</p>
+
+<p>This section steps through a simple <em>echo</em> plugin that passes a string from
+JavaScript to the native platform and back, one that you can use as a
+model to build far more complex features.  This section discusses the
+basic plugin structure and the outward-facing JavaScript interface.
+For each corresponding native interface, see the list at the end of
+this section.</p>
+
+<p>In addition to these instructions, when preparing to write a plugin it
+is best to look over <a href="http://cordova.apache.org/contribute">existing plugins</a>
+for guidance.</p>
+
+<a class="fragment-anchor" id="building-a-plugin"></a><span id="building-a-plugin"></span><h2>Building a Plugin<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#building-a-plugin"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Application developers use the CLI's <a href="http://cordova.apache.org/docs/en/6.x/reference/cordova-cli/index.html#cordova-plugin-command">plugin add command</a> to add a plugin to a project. The
+argument to that command is the URL for a <em>git</em> repository containing
+the plugin code.  This example implements Cordova's Device API:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
+</code></pre></div>
+<p>The plugin repository must feature a top-level <code>plugin.xml</code> manifest
+file. There are many ways to configure this file, details for which
+are available in the <a href="http://cordova.apache.org/docs/en/6.x/plugin_ref/spec.html">Plugin Specification</a>. This abbreviated version of the <code>Device</code> plugin provides a simple example to use as a model:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;plugin</span> <span class="na">xmlns=</span><span class="s">"http://apache.org/cordova/ns/plugins/1.0"</span>
+        <span class="na">id=</span><span class="s">"cordova-plugin-device"</span> <span class="na">version=</span><span class="s">"0.2.3"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Device<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Cordova Device Plugin<span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;license&gt;</span>Apache 2.0<span class="nt">&lt;/license&gt;</span>
+    <span class="nt">&lt;keywords&gt;</span>cordova,device<span class="nt">&lt;/keywords&gt;</span>
+    <span class="nt">&lt;js-module</span> <span class="na">src=</span><span class="s">"www/device.js"</span> <span class="na">name=</span><span class="s">"device"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;clobbers</span> <span class="na">target=</span><span class="s">"device"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/js-module&gt;</span>
+    <span class="nt">&lt;platform</span> <span class="na">name=</span><span class="s">"ios"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;config-file</span> <span class="na">target=</span><span class="s">"config.xml"</span> <span class="na">parent=</span><span class="s">"/*"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">"Device"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"ios-package"</span> <span class="na">value=</span><span class="s">"CDVDevice"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/feature&gt;</span>
+        <span class="nt">&lt;/config-file&gt;</span>
+        <span class="nt">&lt;header-file</span> <span class="na">src=</span><span class="s">"src/ios/CDVDevice.h"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;source-file</span> <span class="na">src=</span><span class="s">"src/ios/CDVDevice.m"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/platform&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</code></pre></div>
+<p>The top-level <code>plugin</code> tag's <code>id</code> attribute uses the same
+reverse-domain format to identify the plugin package as the apps to
+they're added.  The <code>js-module</code> tag specifies the path to the common
+JavaScript interface.  The <code>platform</code> tag specifies a corresponding
+set of native code, for the <code>ios</code> platform in this case.  The
+<code>config-file</code> tag encapsulates a <code>feature</code> tag that is injected into
+the platform-specific <code>config.xml</code> file to make the platform aware of
+the additional code library.  The <code>header-file</code> and <code>source-file</code> tags
+specify the path to the library's component files.</p>
+
+<a class="fragment-anchor" id="validating-a-plugin-using-plugman"></a><span id="validating-a-plugin-using-plugman"></span><h2>Validating a Plugin using Plugman<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#validating-a-plugin-using-plugman"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>You can use the <code>plugman</code> utility to check whether the plugin installs
+correctly for each platform.  Install <code>plugman</code> with the following
+<a href="http://nodejs.org/">node</a> command:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install -g plugman
+</code></pre></div>
+<p>You need an valid app source directory, such as the top-level <code>www</code>
+directory included in a default CLI-generated project as described in
+<a href="http://cordova.apache.org/docs/en/6.x/guide/cli/index.html">Create your first app</a> guide.</p>
+
+<p>Then run a command such as the following to test whether iOS
+dependencies load properly:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">plugman install --platform ios --project /path/to/my/project/www --plugin /path/to/my/plugin
+</code></pre></div>
+<p>For details on <code>plugman</code> options, see <a href="http://cordova.apache.org/docs/en/6.x/plugin_ref/plugman.html">Using Plugman to Manage Plugins</a>. For information on how to actually <em>debug</em> plugins, see each platform's native interface listed at the bottom of this page.</p>
+
+<a class="fragment-anchor" id="the-javascript-interface"></a><span id="the-javascript-interface"></span><h2>The JavaScript Interface<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#the-javascript-interface"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>The JavaScript provides the front-facing interface, making it perhaps
+the most important part of the plugin.  You can structure your
+plugin's JavaScript however you like, but you need to call
+<code>cordova.exec</code> to communicate with the native platform, using the
+following syntax:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cordova</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">winParam</span><span class="p">)</span> <span class="p">{},</span>
+             <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{},</span>
+             <span class="s2">"service"</span><span class="p">,</span>
+             <span class="s2">"action"</span><span class="p">,</span>
+             <span class="p">[</span><span class="s2">"firstArgument"</span><span class="p">,</span> <span class="s2">"secondArgument"</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="kc">false</span><span class="p">]);</span>
+</code></pre></div>
+<p>Here is how each parameter works:</p>
+
+<ul>
+<li><p><code>function(winParam) {}</code>: A success callback function. Assuming your
+<code>exec</code> call completes successfully, this function executes along
+with any parameters you pass to it.</p></li>
+<li><p><code>function(error) {}</code>: An error callback function. If the operation
+does not complete successfully, this function executes with an
+optional error parameter.</p></li>
+<li><p><code>"service"</code>: The service name to call on the native side. This
+corresponds to a native class, for which more information is
+available in the native guides listed below.</p></li>
+<li><p><code>"action"</code>: The action name to call on the native side. This
+generally corresponds to the native class method. See the native
+guides listed below.</p></li>
+<li><p><code>[/* arguments */]</code>: An array of arguments to pass into the native
+environment.</p></li>
+</ul>
+
+<a class="fragment-anchor" id="sample-javascript"></a><span id="sample-javascript"></span><h2>Sample JavaScript<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#sample-javascript"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>This example shows one way to implement the plugin's JavaScript
+interface:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">echo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">cordova</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">callback</span><span class="p">(</span><span class="s1">'Nothing to echo.'</span><span class="p">);</span>
+    <span class="p">},</span> <span class="s2">"Echo"</span><span class="p">,</span> <span class="s2">"echo"</span><span class="p">,</span> <span class="p">[</span><span class="nx">str</span><span class="p">]);</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>In this example, the plugin attaches itself to the <code>window</code> object as
+the <code>echo</code> function, which plugin users would call as follows:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">echo</span><span class="p">(</span><span class="s2">"echome"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">echoValue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">echoValue</span> <span class="o">==</span> <span class="s2">"echome"</span><span class="p">);</span> <span class="c1">// should alert true.</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Look at the last three arguments to the <code>cordova.exec</code> function. The
+first calls the <code>Echo</code> <em>service</em>, a class name. The second requests
+the <code>echo</code> <em>action</em>, a method within that class. The third is an array
+of arguments containing the echo string, which is the <code>window.echo</code>
+function's the first parameter.</p>
+
+<p>The success callback passed into <code>exec</code> is simply a reference to the
+callback function <code>window.echo</code> takes. If the native platform fires
+the error callback, it simply calls the success callback and passes it
+a default string.</p>
+
+<a class="fragment-anchor" id="native-interfaces"></a><span id="native-interfaces"></span><h2>Native Interfaces<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#native-interfaces"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Once you define JavaScript for your plugin, you need to complement it
+with at least one native implementation. Details for each platform are
+listed below, and each builds on the simple Echo Plugin example above:</p>
+
+<ul>
+<li><a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/android/plugin.html">Android Plugins</a></li>
+<li><a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/plugin.html">iOS Plugins</a></li>
+<li><a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/blackberry10/plugin.html">BlackBerry 10 Plugins</a></li>
+<li><a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/wp8/plugin.html">Windows Phone 8 Plugins</a></li>
+<li><a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/win8/plugin.html">Windows Plugins</a></li>
+</ul>
+
+<a class="fragment-anchor" id="publishing-plugins"></a><span id="publishing-plugins"></span><h2>Publishing Plugins<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#publishing-plugins"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>You can publish your plugin to any <code>npmjs</code>-based registry, but the recommended one is the <a href="https://www.npmjs.com/">NPM registry</a>. Other developers can install your plugin automatically using either <code>plugman</code> or the Cordova CLI.</p>
+
+<p>To publish a plugin to NPM registry you need to follow steps below:</p>
+
+<ul>
+<li><p>install the <code>plugman</code> CLI:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>npm install -g plugman
+</code></pre></div></li>
+<li><p>create <code>package.json</code> file for your plugin:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>plugman createpackagejson /path/to/your/plugin
+</code></pre></div></li>
+<li><p>publish it:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>npm adduser <span class="c"># that is if you don't have an account yet</span>
+<span class="gp">$ </span>npm publish /path/to/your/plugin
+</code></pre></div></li>
+</ul>
+
+<p>For more details on npm usage refer to <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages">publishing a npm package</a> on the NPM documentation site.</p>
+
+<a class="fragment-anchor" id="integrating-with-plugin-search"></a><span id="integrating-with-plugin-search"></span><h2>Integrating with Plugin Search<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#integrating-with-plugin-search"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>To surface the plugin in <a href="http://cordova.apache.org/plugins/">Cordova Plugin Search</a>, add the <code>ecosystem:cordova</code> keyword to the <code>package.json</code> file of your plugin before publishing.</p>
+
+<p>To indicate support for a particular platform add a keyword with the <code>&lt;platformName&gt;</code> as <code>**cordova-&lt;platformName&gt;**</code> to the list of keywords in package.json.
+Plugman's <code>createpackagejson</code> command does this for you, but if you did not use it to generate your <code>package.json</code>, you should manually edit it as shown below.</p>
+
+<p>For example, for a plugin that supports android, iOS &amp; Windows, the keywords in package.json should include:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="s2">"keywords"</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"ecosystem:cordova"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cordova-android"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cordova-ios"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cordova-windows"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>For more detailed example of a package.json, review the <a href="https://github.com/apache/cordova-plugin-device/blob/master/package.json">package.json file of cordova-plugin-device</a>.</p>
+
+<a class="fragment-anchor" id="specifying-cordova-dependencies"></a><span id="specifying-cordova-dependencies"></span><h2>Specifying Cordova Dependencies<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#specifying-cordova-dependencies"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p><strong>Cordova 6.1.0</strong> added support for specifying the Cordova-related dependencies of a plugin
+as part of the plugin's <code>package.json</code> file. Plugins may list the dependencies for multiple
+releases so as to provide guidance to the Cordova CLI when it is selecting the version of a
+plugin to fetch from npm. The CLI will choose the latest release of a plugin that is
+compatible with the local project's installed platforms and plugins as well as the
+the local Cordova CLI version. If no releases of the plugin are compatible, the CLI will warn
+the user about the failed requirements and fall back to the old behavior of fetching the
+latest release.</p>
+
+<p>This feature is intended to eventually replace the <a href="http://cordova.apache.org/docs/en/6.x/plugin_ref/spec.html#engines-and-engine">engines element</a> in plugin.xml.
+Listing dependencies is a good way to ensure that your plugin will not appear broken or cause
+build errors when fetched from npm. If the latest release of the plugin is not compatible with
+a project, the CLI will give the app developer a list of unmet project requirements so that
+they are aware of incompatibilites and can update their project to support your plugin. This
+allows your plugin to respond to breaking changes without fear of confusing devlopers who
+are building against old platforms and plugins.</p>
+
+<p>To specify Cordova-related dependencies for a plugin, alter the <code>engines</code> element in
+<code>package.json</code> to include a <code>cordovaDependencies</code> object using the following
+structure:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">engines</span><span class="err">:</span> <span class="p">{</span>
+    <span class="nl">cordovaDependencies</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nl">PLUGIN_VERSION</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nl">DEPENDENCY</span><span class="p">:</span> <span class="nx">SEMVER_RANGE</span><span class="p">,</span>
+            <span class="nx">DEPENDENCY</span><span class="err">:</span> <span class="nx">SEMVER_RANGE</span><span class="p">,</span>
+            <span class="p">...</span>
+        <span class="p">},</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>PLUGIN_VERSION</code> specifies a version of your plugin. It should adhere the syntax for a single version as defined by <a href="https://www.npmjs.com/package/semver">npm's semver package</a> or an upper bound (see <a href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#upper-bounds">below</a>)</li>
+<li><code>DEPENDENCY</code> may be one of the following:
+
+<ul>
+<li>The Cordova CLI, <code>"cordova"</code></li>
+<li>A Cordova platform (e.g. <code>"cordova-android"</code>, <code>"cordova-ios"</code>, <code>"cordova-windows"</code>, etc.)</li>
+<li>Another Cordova plugin (e.g. <code>"cordova-plugin-camera"</code>, etc.)</li>
+</ul></li>
+<li><code>SEMVER_RANGE</code> should adhere to the syntax for a range as defined by <a href="https://www.npmjs.com/package/semver">npm's semver package</a></li>
+</ul>
+
+<p><strong>NOTE:</strong> A Cordova platform <code>DEPENDENCY</code> refers to the Cordova platform and not
+the OS (i.e. <code>cordova-android</code> rather than the Android OS)</p>
+
+<p>Your <code>cordovaDependencies</code> may list any number of <code>PLUGIN_VERSION</code> requirements
+and any number of <code>DEPENDENCY</code> constraints within them. Versions of your plugin
+that do not have their dependencies listed will be assumed to have the same
+dependency information as the highest <code>PLUGIN_VERSION</code> listed below them. For
+example, consider the following entry:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">engines</span><span class="err">:</span> <span class="p">{</span>
+    <span class="nl">cordovaDependencies</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"1.0.0"</span><span class="err">:</span> <span class="p">{</span> <span class="s2">"cordova-android"</span><span class="err">:</span> <span class="s2">"&lt;3.0.0"</span><span class="p">},</span>
+        <span class="s2">"2.1.0"</span><span class="err">:</span> <span class="p">{</span> <span class="s2">"cordova-android"</span><span class="err">:</span> <span class="s2">"&gt;4.0.0"</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>All plugin versions below the lowest entry (1.0.0 in this example) are assumed
+to have no dependencies. Any version of the plugin between 1.0.0 and 2.1.0 is
+assumed to have the same dependencies as version 1.0.0 (a cordova-android
+version less than 3.0.0). This lets you only update your <code>cordovaDependencies</code>
+information when there are breaking changes.</p>
+
+<a class="fragment-anchor" id="upper-bounds"></a><h3>Upper Bounds<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/hybrid/plugins/index.html#upper-bounds"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>In addition to a single version, a <code>PLUGIN_VERSION</code> in <code>cordovaDependencies</code>
+may also specify an upper bound to amend entries for older releases
+of your plugin. This is useful when a breaking change occurs in a <code>DEPENDENCY</code>
+and a new constraint must be added for all older versions of a plugin that do
+not support it. These bounds should be written as, a <code>&lt;</code> followed by a single
+<a href="https://www.npmjs.com/package/semver">semver</a> version (<strong>Not an arbitrary range!</strong>). This will apply
+whatever <code>DEPENDENCY</code> values are given to all versions of the plugin below the
+specified version. For example, consider the following entry:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">engines</span><span class="err">:</span> <span class="p">{</span>
+    <span class="nl">cordovaDependencies</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"0.0.1"</span><span class="err">:</span>  <span class="p">{</span> <span class="s2">"cordova-ios"</span><span class="err">:</span> <span class="s2">"&gt;1.0.0"</span> <span class="p">},</span>
+        <span class="s2">"&lt;1.0.0"</span><span class="err">:</span> <span class="p">{</span> <span class="s2">"cordova-ios"</span><span class="err">:</span> <span class="s2">"&lt;2.0.0"</span> <span class="p">},</span>
+        <span class="s2">"&lt;2.0.0"</span><span class="err">:</span> <span class="p">{</span> <span class="s2">"cordova-ios"</span><span class="err">:</span> <span class="s2">"&lt;5.0.0"</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Here we specify one plugin version (0.0.1) and two upper bounds (&lt;1.0.0 and &lt;2.0.0)
+that constrain cordova-ios. The two upper bounds do not override the constraint
+of 0.0.1, they are combined via AND at evaluation time. When the CLI checks the
+cordova-ios version of the project, the constraint that will be evaluated for
+plugin version 0.0.1 will be the combination of these three:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">    cordova-ios &gt;1.0.0 AND cordova-ios &lt;2.0.0 AND cordova-ios &lt;5.0.0
+</code></pre></div>
+<p>Please note that the only <code>PLUGIN_VERSION</code> values allowed are single versions or
+upper bounds; no other semver ranges are supported.</p>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blue-divider"></div>
+        </div>
+    </div>
+</div>
+
+</body></html>

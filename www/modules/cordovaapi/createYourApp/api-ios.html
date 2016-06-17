@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="description" content=" ">
+
+    <title>
+        
+            
+                iOS Platform Guide - Apache Cordova
+            
+        
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../common-files/main.css">
+    <link rel="stylesheet" type="text/css" href="../common-files/syntax.css">
+    <!-- Algolia Search CSS -->
+    <link rel="stylesheet" href="../common-files/docsearch.min.css">
+
+    <!-- Fonts -->
+    <!-- For attribution information, see www/attributions.html -->
+    <link href="../common-files/css" rel="stylesheet" type="text/css">
+
+
+
+<body>
+
+<div class="docs container">
+
+    <!-- Page content -->
+    <div class="col-md-8 col-lg-9 col-lg-offset-3 page-content-container container">
+        <div class="page-content row">
+            <div class="col-md-offset-1 col-md-10">
+
+                <div class="content-header">
+                    <div class="toc-dropdown dropdown visible-xs-block visible-sm-block">
+                    </div>
+                    <!-- Version dropdown -->
+                    <div class="dropdown">
+
+                    </div>
+                </div>
+                
+
+                <div id="page-toc-source">
+                    <a class="fragment-anchor" id="ios-platform-guide"></a><span id="ios-platform-guide"></span><h1>iOS Platform Guide</h1>
+
+<p>This guide shows how to set up your SDK development environment to
+deploy Cordova apps for iOS devices such as iPhone and iPad,
+and how to optionally use iOS-centered command-line tools in your
+development workflow. You need to install the SDK tools regardless of
+whether you want to use these platform-centered shell tools
+or cross-platform Cordova CLI for development. For a comparison of the two
+development paths, see the <a href="http://cordova.apache.org/docs/en/6.x/guide/overview/index.html#development-paths">Overview</a>.
+For details on the CLI, see <a href="http://cordova.apache.org/docs/en/6.x/reference/cordova-cli/index.html">Cordova CLI Reference</a>.</p>
+
+<a class="fragment-anchor" id="requirements-and-support"></a><span id="requirements-and-support"></span><h2>Requirements and Support<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#requirements-and-support"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Apple庐 tools required to build iOS applications only run on the OS X
+operating system on Intel-based Macs. Xcode庐 6.0 (the minimum required
+version) runs only on OS X version 10.9 (Mavericks) or greater, and
+includes the iOS 8 SDK (Software Development Kit).  To submit apps to
+the Apple App Store鈩�requires the latest versions of the Apple tools.</p>
+
+<p>You can test many of the Cordova features using the iOS simulator
+installed with the iOS SDK and Xcode, but you need an actual device to
+fully test all of the app's device features before submitting to the
+App Store.  The device must have at least iOS 8 installed, the
+minimum iOS version supported as of Cordova 4.0.0. Supported devices
+include iPhone 4S, iPhone 5, iPhone 5C, iPhone 5S, iPhone 6, 
+iPhone 6 Plus, iPhone 6S, iPhone 6S Plus, iPhone SE, iPad 2, 
+iPad 3, iPad 4, iPad Air, iPad Air 2, iPad Pro, iPad Mini, 
+iPad Mini 2, iPad Mini 3, iPod Touch 5th gen and iPod Touch 6th gen or later.</p>
+
+<a class="fragment-anchor" id="installing-the-requirements"></a><span id="installing-the-requirements"></span><h2>Installing the Requirements<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#installing-the-requirements"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<a class="fragment-anchor" id="xcode"></a><h3>Xcode<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#xcode"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>There are two ways to download Xcode:</p>
+
+<ul>
+<li><p>from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">App Store</a>,
+available by searching for "Xcode" in the <strong>App Store</strong> application.</p></li>
+<li><p>from <a href="https://developer.apple.com/downloads/index.action">Apple Developer Downloads</a>,
+which requires registration as an Apple Developer.</p></li>
+</ul>
+
+<p>Once Xcode is installed, several command-line tools need to be enabled
+for Cordova to run. From the command line, run:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>xcode-select --install
+</code></pre></div>
+<a class="fragment-anchor" id="deployment-tools"></a><h3>Deployment Tools<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#deployment-tools"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>The <a href="https://www.npmjs.org/package/ios-sim">ios-sim</a> and
+<a href="https://www.npmjs.org/package/ios-deploy">ios-deploy</a> tools - allows you
+to launch iOS apps into the iOS Simulator and iOS Device from the command-line.</p>
+
+<p>To install them, run the following from command-line terminal:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>npm install -g ios-sim
+<span class="gp">$ </span>npm install -g ios-deploy
+</code></pre></div>
+<a class="fragment-anchor" id="project-configuration"></a><span id="project-configuration"></span><h2>Project Configuration<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#project-configuration"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Installing Xcode will mostly set everything needed to get started with the native side of things.
+You should now be able to create and build a cordova project.
+For more details on installing and using the CLI, refer to <a href="http://cordova.apache.org/docs/en/6.x/guide/cli/index.html">Create your first app</a> guide.</p>
+
+<a class="fragment-anchor" id="deploying-to-simulator"></a><h3>Deploying to Simulator<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#deploying-to-simulator"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>To preview the app in the iOS simulator:</p>
+
+<ol>
+<li><p>Open the project file from Xcode and make sure the <em>.xcodeproj</em> file is selected in the left panel.</p></li>
+<li><p>Select the <strong>hello</strong> app in the panel immediately to the right.</p></li>
+<li><p>Select the intended device from the toolbar's <strong>Scheme</strong> menu, such
+as the iPhone 6.0 Simulator as highlighted here:</p></li>
+</ol>
+
+<p><img src="select_xcode_scheme.png" alt=""></p>
+
+<ol>
+<li>Press the <strong>Run</strong> button that appears in the same toolbar to the
+left of the <strong>Scheme</strong>. That builds, deploys and runs the
+application in the simulator. A separate simulator application opens
+to display the app:</li>
+</ol>
+
+<p><img src="HelloWorldStandard.png" alt=""></p>
+
+<p>Only one simulator may run at a time, so if you want to test the app
+   in a different simulator, you need to quit the simulator application
+   and run a different target within Xcode.</p>
+
+<p>Xcode comes bundled with simulators for the latest versions of iPhone
+and iPad. Older versions may be available from the <strong>Xcode 鈫�Preferences 鈫�Downloads 鈫�Components</strong> panel.</p>
+
+<a class="fragment-anchor" id="deploying-to-device"></a><h3>Deploying to Device<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#deploying-to-device"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>For details about various requirements to deploy to a device, refer
+to the <em>Launch Your App On Devices</em> section of
+Apple's
+<a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html">About App Distribution Workflows</a>.
+Briefly, you need to do the following before deploying:</p>
+
+<ol>
+<li><p>Create a <em>Provisioning Profile</em> within the
+<a href="https://developer.apple.com/ios/manage/overview/index.action">iOS Provisioning Portal</a>.
+You can use its <em>Development Provisioning Assistant</em> to create and
+install the profile and certificate Xcode requires.</p></li>
+<li><p>Verify that the <em>Code Signing Identity</em> setting within the <em>Code Signing</em> section
+within the build settings is set to your provisioning profile
+name.</p></li>
+</ol>
+
+<p>To deploy to the device:</p>
+
+<ol>
+<li><p>Use the USB cable to plug the device into your Mac.</p></li>
+<li><p>Select the name of the project in the Xcode window's <strong>Scheme</strong>
+drop-down list.</p></li>
+<li><p>Select your device from the <strong>Device</strong> drop-down list. If it is
+plugged in via USB but still does not appear, press the
+<strong>Organizer</strong> button to resolve any errors.</p></li>
+<li><p>Press the <strong>Run</strong> button to build, deploy and run the application
+on your device.</p></li>
+</ol>
+
+<a class="fragment-anchor" id="signing-an-app"></a><span id="signing-an-app"></span><h2>Signing an App<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#signing-an-app"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>First, you should read through the <a href="https://developer.apple.com/support/code-signing/">Code Signing Support Page</a>
+and the <a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html">App Distribution Workflows</a>.</p>
+
+<a class="fragment-anchor" id="using-flags"></a><h3>Using Flags<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#using-flags"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>To sign an app, you need the following parameters:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Code Sign Identity</td>
+<td><code>--codeSignIdentity</code></td>
+<td>Code signing identity to use for signing. It can be created with Xcode and added to your keychain.</td>
+</tr>
+<tr>
+<td>Provisioning Profile</td>
+<td><code>--provisioningProfile</code></td>
+<td>GUID of the provisioning profile to be used for signing. It is copied here on your Mac: <code>~/Library/MobileDevice/Provisioning\ Profiles/</code>. Opening it in a text editor, you can find the GUID which needs to be specified here.</td>
+</tr>
+<tr>
+<td>Code Sign Resource Rules</td>
+<td><code>--codesignResourceRules</code></td>
+<td>(Optional) Used to control which files in a bundle should be sealed by a code signature. For more details, read <a href="https://developer.apple.com/library/mac/technotes/tn2206/_index.html#//apple_ref/doc/uid/DTS40007919-CH1-TNTAG206">The OS X Code Signing In Depth article</a></td>
+</tr>
+</tbody></table>
+
+<a class="fragment-anchor" id="using-buildjson"></a><h3>Using build.json<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#using-buildjson"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Alternatively, you could specify them in a build configuration file (<code>build.json</code>)
+using the <code>--buildConfig</code> argument to the same commands. Here's a sample of a
+build configuration file:</p>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nt">"ios"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"debug"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"codeSignIdentity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"iPhone Development"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"provisioningProfile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"926c2bd6-8de9-4c2f-8407-1016d2d12954"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"release"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"codeSignIdentity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"iPhone Distribution"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"provisioningProfile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70f699ad-faf1-4adE-8fea-9d84738fb306"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<a class="fragment-anchor" id="using-xcrun"></a><h3>Using xcrun<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#using-xcrun"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>You can also sign from the command line using the following command:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">xcrun -sdk iphoneos PackageApplication -v /home/user/app/build/device/MyApp.app -o /home/user/app/build/device/MyApp.ipa --sign <span class="s2">"iPhone Development"</span> --embed <span class="s2">"7151ab45-6085-4ea1-9bcd-022b5cebe44b"</span>
+</code></pre></div>
+<a class="fragment-anchor" id="debugging"></a><span id="debugging"></span><h2>Debugging<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#debugging"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>For details on the debugging tools that come with Xcode, see this <a href="https://developer.apple.com/support/debugging">article</a>
+and this <a href="https://developer.apple.com/videos/play/wwdc2014-413/">video</a>.</p>
+
+<a class="fragment-anchor" id="open-a-project-within-xcode"></a><h3>Open a Project within Xcode<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#open-a-project-within-xcode"><i class="glyphicon glyphicon-link"></i></a></h3>
+
+<p>Cordova for iOS projects can be opened in Xcode. This can be useful if
+you wish to use Xcode built in debugging/profiling tools or if you are
+developing iOS plugins. Please note that when opening your project in Xcode,
+it is recommended that you do NOT edit your code in the IDE. This will edit the code
+in the <code>platforms</code> folder of your project (not <code>www</code>), and changes are liable to be overwritten.
+Instead, edit the <code>www</code> folder and copy over your changes by running <code>cordova build</code>.</p>
+
+<p>Plugin developers wishing to edit their native code in the IDE should use the <code>--link</code> flag when adding their
+plugin to the project via cordova plugin add. This will link the files so that changes to the plugin files in the
+platforms folder are reflected in your plugin's source folder (and vice versa).</p>
+
+<p>Once the ios platform is added to your project and built using <code>cordova build</code>, you can open it from
+within Xcode. Double-click to open the <code>${PROJECT_NAME}/platforms/ios/${PROJECT_NAME}.xcodeproj</code>
+file. The screen should look like this:</p>
+
+<p><img src="helloworld_project.png" alt=""></p>
+
+<a class="fragment-anchor" id="platform-centered-workflow"></a><span id="platform-centered-workflow"></span><h2>Platform Centered Workflow<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#platform-centered-workflow"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>cordova-ios includes a number of scripts that allow the platform to be used
+without the full Cordova CLI. This development path may offer you a greater
+range of development options in certain situations than the cross-platform cordova CLI.
+For example, you need to use shell tools when deploying a custom
+Cordova WebView alongside native components. Before using this
+development path, you must still configure the SDK environment
+as described in <a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#link-requirements-and-support">Requirements and Support</a>
+above.</p>
+
+<p>For each of the scripts discussed below, refer to
+ <a href="http://cordova.apache.org/docs/en/6.x/reference/cordova-cli/index.html">Cordova CLI Reference</a> for more information on their
+arguments and usage. Each script has a name that matches the corresponding CLI
+command. For example, <code>cordova-ios/bin/create</code> is equivalent to
+<code>cordova create</code>.</p>
+
+<p>To get started, either download the cordova-ios package from
+<a href="https://www.npmjs.com/package/cordova-ios">npm</a> or
+<a href="https://github.com/apache/cordova-ios">Github</a>.</p>
+
+<p>To create a project using this package, run the <code>create</code> script in the <code>bin</code>
+folder:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova-ios/bin/create ...
+</code></pre></div>
+<p>To run the app, use the <code>run</code> script in the <code>bin</code> folder:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>cordova-ios/bin/run
+</code></pre></div>
+<p>The created project will have a folder named <code>cordova</code> inside that contains
+scripts for the project-specific Cordova commands (e.g. <code>run</code>, <code>build</code>, etc.).
+Additionally, The project will feature a structure different from that of a
+normal Cordova project. Notably, <code>/www</code> is moved to <code>/assets/www</code>.</p>
+
+<p>To install plugins in this project, use the <a href="http://cordova.apache.org/docs/en/6.x/plugin_ref/plugman.html">Cordova Plugman Utility</a>.</p>
+
+<a class="fragment-anchor" id="upgrading"></a><span id="upgrading"></span><h2>Upgrading<a class="header-link" href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/index.html#upgrading"><i class="glyphicon glyphicon-link"></i></a></h2>
+
+<p>Refer to <a href="http://cordova.apache.org/docs/en/6.x/guide/platforms/ios/upgrade.html">this</a> article for instructions to upgrade your <code>cordova-ios</code> version.</p>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blue-divider"></div>
+        </div>
+    </div>
+</div>
+
+
+</body></html>

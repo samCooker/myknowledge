@@ -291,8 +291,8 @@
     function inputDateManually() {
       var defDate = $filter('date')(new Date(), 'yyyy-MM-dd');
       return tipMsg.inputMsg($scope, defDate, '输入一个日期(yyyy-MM-dd)').then(function (workDate) {
-        tipMsg.loading().show();//显示加载框
         if (/\d{4}-\d{2}-\d{2}/.test(workDate)) {
+          tipMsg.loading().show();//显示加载框
           ccworklogHttp.workLogGet('workdaily/workDailyEdit.do?day=' + workDate).then(function (htmlData) {
             $scope.submitData.workDate = workDate;
             initAndEditWorklog(resolveReturnData(htmlData));
@@ -519,7 +519,7 @@
 
     //-------------常用词条---------------
     // 创建一个选择词条弹出窗模板
-    $ionicModal.fromTemplateUrl('modules/ccworklog/templates/dialog-words.html', {
+    $ionicModal.fromTemplateUrl('modules/ccworklog/templates/dialog-favorite-words.html', {
       scope: $scope, //继承自父scope
       animation: 'slide-in-up' //弹出动画
     }).then(function (modal) {
