@@ -62,13 +62,16 @@ appModule.factory('appConfig', function () {
     var port = '8080';
     var isLocal = true;
     var debugUser={username:'cookie',password:'cookie4cook'};
+    var _mainMenu ='login';
 
     return {
         getLocalDebug: getLocalDebugFun,//获取是否离线启动app
         setLocalDebug: setLocalDebugFun,//设置是否离线
         getHost: getHostFun,//获取http请求url
         getLocalHost: getLocalHostFun,//获取离线数据的url
-        getDebugUser:getDebugUserFun
+        getDebugUser:getDebugUserFun,
+        getMainMenu:getMainMenuFun,
+        setMainMenu:setMainMenuFun
     };
 
     /**
@@ -107,5 +110,13 @@ appModule.factory('appConfig', function () {
      */
     function getDebugUserFun() {
         return debugUser;
+    }
+
+    function getMainMenuFun(){
+        return _mainMenu;
+    }
+
+    function setMainMenuFun(menuState){
+        _mainMenu=menuState;
     }
 });

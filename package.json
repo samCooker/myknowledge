@@ -36,10 +36,5 @@
       "id": "cn.jpush.phonegap.JPushPlugin"
     }
   ],
-  "cordovaPlatforms": [
-    {
-      "platform": "android",
-      "locator": "browser"
-    }
-  ]
+  "cordovaPlatforms": []
 }

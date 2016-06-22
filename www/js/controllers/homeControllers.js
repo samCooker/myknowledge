@@ -13,7 +13,6 @@
    */
   function HomeController($scope, $state, commonHttp, tipMsg) {
     $scope.relogin = toLoginPage;
-    $scope.logout = toLoginPage;
 
     //重新登录和登出时，回到登录页面
     function toLoginPage() {
@@ -22,6 +21,9 @@
       });
     }
 
+    $scope.exitApp = function () {
+      ionic.Platform.exitApp();//退出app
+    }
 
   }
 
@@ -29,39 +31,11 @@
    * 欢迎页面控制器，继承自homeController
    */
   function WelcomeController($scope, $state, commonHttp, tipMsg) {
-    $scope.addModules = addModulesFun;
-    $scope.toWorkLog = toWorkLogFun;
 
-    //添加新菜单模块
-    function addModulesFun() {
-
-    }
-
-    //跳转至工作日志填写页面
-    function toWorkLogFun() {
-      $state.go('worklog.list');
-    }
-
-    // 树形结构
-    $scope.toTreecontrol = function () {
-      $state.go('treecontrol');
+    $scope.toDifferentModule = function (moduleName) {
+      $state.go(moduleName);
     };
 
-    //地图定位
-    $scope.toGeolocation = function () {
-      $state.go('geolocation');
-    };
-
-    $scope.toMapview = function (){
-      $state.go('mapview');
-    };
-
-    $scope.toCordovaApi = function (){
-      $state.go('cordovaapi.list');
-    };
-    $scope.toIonicApi = function (){
-      $state.go('ionicapi.css');
-    }
   }
 
   /**

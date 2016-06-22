@@ -279,7 +279,7 @@
 
 
     /**
-     * 返回指定状态的页面，默认返回首页app.fordos
+     * 返回指定状态的页面，默认返回首页login
      * @returns {*}
      */
     function CsbackToDir(){
@@ -292,7 +292,7 @@
             },
             template:'<button class="button button-icon button-clear ion-chevron-left" ng-click="s_backToHome()"></button>',
             controller:function($scope,$state){
-                var stateName=$scope.backToState||'app.fordos';
+                var stateName=$scope.backToState||'login';
                 $scope.s_backToHome=function(){
                     $state.go(stateName);
                 }

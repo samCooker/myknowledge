@@ -1,33 +1,18 @@
-<ion-side-menus enable-menu-with-back-views="true"><!--enable-menu-with-back-views:是否能用物理返回键打开侧边框 -->
-
-    <ion-side-menu-content drag-content="true"><!-- drag-content="false" 不允许拖动打开侧边栏-->
+<link href="modules/ionicapi/common/ionicapi.css" rel="stylesheet">
+<ion-view view-title="">
         <ion-tabs class="tabs-striped tabs-balanced tabs-icon-top"><!-- class='tabs-icon-top' 图标上移，这样title才能显示出来-->
             <!--  标签 -->
             <ion-tab title="" icon="ion-social-css3-outline" href="#/ionicapi/css">
                 <ion-nav-view name="ionicApiCss"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="" icon="ion-social-javascript-outline" href="#/ionicapi/css">
-                <ion-nav-view name="ionicApiCss"></ion-nav-view>
+            <ion-tab title="" icon="ion-social-javascript-outline" href="#/ionicapi/js">
+                <ion-nav-view name="ionicApiJs"></ion-nav-view>
             </ion-tab>
 
-            <ion-tab title="" icon="ion-ios-flower-outline" href="#/ionicapi/css">
-                <ion-nav-view name="ionicApiCss"></ion-nav-view>
+            <ion-tab title="" icon="ion-ios-flower-outline" href="#/ionicapi/other">
+                <ion-nav-view name="ionicApiOther"></ion-nav-view>
             </ion-tab>
 
         </ion-tabs>
-    </ion-side-menu-content>
-
-    <!--侧边栏 side:left 或 right-->
-    <ion-side-menu side="right">
-        <!--标题栏-->
-        <ion-header-bar class="bar-stable" align-title="center">
-            <h1 class="title"></h1>
-        </ion-header-bar>
-        <!--内容-->
-        <ion-content class="stable-bg"><!--background color-->
-
-        </ion-content>
-    </ion-side-menu>
-
-</ion-side-menus>
+</ion-view>

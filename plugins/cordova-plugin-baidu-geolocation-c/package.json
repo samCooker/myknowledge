@@ -1,0 +1,26 @@
+{
+  "name": "cordova-plugin-baidu-geolocation-c",
+  "version": "0.2.4",
+  "description": "使用百度定位sdk进行定位",
+  "cordova": {
+    "id": "cordova-plugin-baidu-geolocation",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samCooker/cordova-plugin-baidu-geolocation.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "baidu"
+  ],
+  "author": "cookie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samCooker/cordova-plugin-baidu-geolocation/issues"
+  },
+  "homepage": "https://github.com/samCooker/cordova-plugin-baidu-geolocation#readme"
+}

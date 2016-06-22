@@ -30,7 +30,7 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
             url: '/welcome',
             views: {
                 'welcome': {
-                    templateUrl: 'templates/home/welcome.html',
+                    templateUrl: 'templates/home/view-welcome.html',
                     controller: 'welcomeController'
                 }
             }
@@ -46,17 +46,26 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
             url: '/welcome',
             views: {
                 'welcome': {
-                    templateUrl: 'templates/home/welcome.html',
+                    templateUrl: 'templates/home/view-welcome.html',
                     controller: 'welcomeController'
                 }
             }
         })
-        .state('admin.management', {
-            url: '/management',
+        .state('admin.demo', {
+            url: '/demo',
             views: {
-                'management': {
-                    templateUrl: 'templates/home/management.html',
-                    controller: 'userManagementController'
+                'demo': {
+                    templateUrl: 'templates/home/view-demo.html',
+                    controller: 'welcomeController'
+                }
+            }
+        })
+        .state('admin.other', {
+            url: '/other',
+            views: {
+                'other': {
+                    templateUrl: 'templates/home/view-other.html',
+                    controller: 'welcomeController'
                 }
             }
         })
@@ -81,7 +90,7 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
             views: {
                 'worklogcontent': {
                     controller: 'worklogEditController',
-                    params: {id: null},//定义需要传递的值，使用 $state.go('',{id:''})可传递
+                    params: {id: null},//定义需要传递的值，使用 $state.go('',{id:''})可传递,使用$stateParams.id获取
                     templateUrl: 'modules/ccworklog/templates/edit.html'
                 }
             }
@@ -107,11 +116,13 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'geolocationController',
             templateUrl: 'modules/geolocation/geolocation.html'
         })
+        //web 地图
         .state('mapview', {
             url: '/mapview',
             controller: 'mapviewController',
             templateUrl: 'modules/webmap/mapview.html'
         })
+        //cordova API
         .state('cordovaapi', {
             url: '/cordovaapi',
             abstract:true,
@@ -127,6 +138,7 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        //ionic API
         .state('ionicapi', {
             url: '/ionicapi',
             abstract:true,
@@ -137,10 +149,34 @@ appModule.config(function ($stateProvider, $urlRouterProvider) {
             url: '/css',
             views: {
                 'ionicApiCss': {
-                    controller: 'ionicApiController',
+                    controller: 'ionicApiCssController',
                     templateUrl: 'modules/ionicapi/list-css.html'
                 }
             }
+        })
+        .state('ionicapi.js', {
+            url: '/js',
+            views: {
+                'ionicApiJs': {
+                    controller: 'ionicApiJsController',
+                    templateUrl: 'modules/ionicapi/list-js.html'
+                }
+            }
+        })
+        .state('ionicapi.other', {
+            url: '/other',
+            views: {
+                'ionicApiOther': {
+                    controller: 'ionicApiCssController',
+                    templateUrl: 'modules/ionicapi/list-other.html'
+                }
+            }
+        })
+        .state('apisearch', {
+            url: '/apisearch',
+            controller: 'ionicApiSearchController',
+            params: {type: 'css'},
+            templateUrl: 'modules/ionicapi/search.html'
         })
     ;
     $urlRouterProvider.otherwise('/login');//找不到对应url的默认设置

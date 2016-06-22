@@ -1,0 +1,25 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-view view-title="search">
+    <!--头部-->
+    <ion-header-bar class="item-input-inset bar-balanced" align-title="center"><!--头部-->
+        <div class="buttons">
+            <cs-return-btn></cs-return-btn>
+        </div>
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" placeholder="请输入名称进行查询" ng-model="searchParams.title">
+        </label>
+        <div class="buttons">
+            <!--<button class="button button-clear button-icon ion-android-checkbox-outline" ng-click="apiSearch()"></button>-->
+        </div>
+    </ion-header-bar>
+    <!--内容-->
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-icon-left" ng-repeat="menu in menuData | filter: searchParams" ng-click="apiSearch(menu.id)">
+                <i class="icon ion-pricetag" style="font-size: 15px"></i>
+                {{menu.title}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

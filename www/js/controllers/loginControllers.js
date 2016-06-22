@@ -10,8 +10,8 @@
     /**
      * 登录控制器
      */
-    function loginControllerFun($scope, $state, $ionicModal, tipMsg,tools, loginService) {
-        $scope.loginData = {username:'cookie',password:'1'}; //登录数据
+    function loginControllerFun($scope, $state, $ionicModal, appConfig, tipMsg,tools, loginService) {
+        $scope.loginData = {username:'',password:''}; //登录数据
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
         $scope.login = loginFun; //登录
@@ -21,7 +21,7 @@
         function loginFun() {
             tipMsg.loading().show();//显示加载框
             loginService.login($scope.loginData).then(function(result) {
-                if (result.id) {
+                if (result) {
                     //根据角色跳转至不同页面
                     toDifferentPage(result);
                     $scope.hasError = false;
@@ -39,8 +39,10 @@
         //根据角色跳转至不同页面
         function toDifferentPage(userData) {
             if(tools.isInArray(userData.roles,'admin')){
+                appConfig.setMainMenu('admin.welcome');
                 $state.go('admin.welcome');
             }else{
+                appConfig.setMainMenu('home.welcome');
                 $state.go('home.welcome');
             }
         }
@@ -88,14 +90,19 @@
         function loginFun(data) {
             if (!data.username || !data.password) {
                 var delay = $q.defer();
-                if (!data.username) {
-                    delay.reject('无用户名');
-                    return delay.promise;
-                }
-                if (!data.password) {
-                    delay.reject('无密码');
-                    return delay.promise;
-                }
+                delay.resolve({
+                    account:'anonymous',
+                    username:'anonymous'
+                });
+                return delay.promise;
+                //if (!data.username) {
+                //    delay.reject('无用户名');
+                //    return delay.promise;
+                //}
+                //if (!data.password) {
+                //    delay.reject('无密码');
+                //    return delay.promise;
+                //}
             } else {
                 return commonHttp.jsonPost('login_check', data);
             }

@@ -21,7 +21,7 @@
      * 定位当前位置
      */
     $scope.getCurrentPosition = function () {
-      if (navigator && navigator.geolocationBaidu) {
+      if (navigator && navigator.geolocation) {
         tipMsg.loading().show();
         //var options = {timeout: 5000, enableHighAccuracy: true };
         var options = {
@@ -30,7 +30,7 @@
           timeout: 27000,            // 超时时间
           coorType: 'gcj02'         // 默认是 gcj02，可填 bd09ll 以获取百度经纬度用于访问百度 API
         };
-        navigator.geolocationBaidu.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             $scope.$apply(function () {
               $scope.position=position;
               $scope.transform.data=position.coords.longitude+','+position.coords.latitude;
@@ -46,7 +46,7 @@
     };
 
     $scope.getCurrentPositionBd09 = function () {
-      if (navigator && navigator.geolocationBaidu) {
+      if (navigator && navigator.geolocation) {
         tipMsg.loading().show();
         var options = {
           enableHighAccuracy: false,  // 是否使用 GPS
@@ -54,7 +54,7 @@
           timeout: 27000,            // 超时时间
           coorType: 'bd09ll'         // 默认是 gcj02，可填 bd09ll 以获取百度经纬度用于访问百度 API
         };
-        navigator.geolocationBaidu.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
           $scope.$apply(function () {
             $scope.position.coords2=position.coords;
             $scope.transform.data=position.coords.longitude+','+position.coords.latitude;
