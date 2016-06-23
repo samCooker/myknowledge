@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cn.com.chaochuang.startapp"
+        version="1.0.0">
+  <name>startApp</name>
+  <description>启动指定的app</description>
+
+  <js-module name="CsStartActivity" src="www/CsStartActivity.js">
+    <clobbers target="CsStartActivity"/>
+  </js-module>
+  <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="StartActivity">
+        <param name="android-package" value="cn.com.chaochuang"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/StartActivity.java" target-dir="src/cn/com/chaochuang"/>
+  </platform>
+
+</plugin>

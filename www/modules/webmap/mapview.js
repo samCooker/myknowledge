@@ -3,11 +3,21 @@
  */
 
 (function () {
-    'use strict';
-    appModule.controller('mapviewController', MapviewController)
+    appModule
+        .config(mapviewRouter)
+        .controller('mapviewController', MapviewController)
     ;
 
-    function MapviewController($scope,$timeout) {
+    function mapviewRouter($stateProvider) {
+        $stateProvider
+            .state('mapview', {
+                url: '/mapview',
+                controller: 'mapviewController',
+                templateUrl: 'modules/webmap/mapview.html'
+            })
+    }
+
+    function MapviewController($scope, $timeout) {
 
         var AMapArea = document.getElementById('amap');
 
@@ -19,7 +29,7 @@
 
         $scope.initAMap = function () {
 
-            var position = new AMap.LngLat(108.328491,22.807999);
+            var position = new AMap.LngLat(108.328491, 22.807999);
 
             $scope.mapObj = new AMap.Map($scope.AMapId, {
 
@@ -39,7 +49,7 @@
 
             var marker = new AMap.Marker({
                 map: $scope.mapObj,
-                position: [108.328491,22.807999],
+                position: [108.328491, 22.807999],
                 icon: "http://webapi.amap.com/images/0.png",
                 offset: new AMap.Pixel(-10, -34)
 
@@ -124,15 +134,15 @@
                 //});
 
                 var content = '<div class="infowindow-content">' +
-                        '<div class="amap-info-header">这是第'+(++i)+'个点</div>' +
-                        '<div class="amap-info-body" id="address_1">地址</div></div>';
+                    '<div class="amap-info-header">这是第' + (++i) + '个点</div>' +
+                    '<div class="amap-info-body" id="address_1">地址</div></div>';
                 $scope.infoWindow = new AMap.InfoWindow({
                     content: content  //使用默认信息窗体框样式，显示信息内容
                 });
 
                 var address_1 = angular.element(document.querySelector('#address_1'));
                 console.log(address_1);
-                AMap.event.addDomListener(address_1,'click', function (e) {
+                AMap.event.addDomListener(address_1, 'click', function (e) {
                     console.log(e);
                 });
                 //给Marker绑定单击事件
@@ -149,53 +159,53 @@
         };
 
 
-        $scope.markerList =[];
+        $scope.markerList = [];
         $scope.markerMap = function () {
-                var marker = new AMap.Marker({
-                    map: $scope.mapObj,
-                    position: [108.328759,22.808617],
-                    icon: "http://webapi.amap.com/images/2.png",
-                    offset: new AMap.Pixel(-10, -34)
+            var marker = new AMap.Marker({
+                map: $scope.mapObj,
+                position: [108.328759, 22.808617],
+                icon: "http://webapi.amap.com/images/2.png",
+                offset: new AMap.Pixel(-10, -34)
 
-                });
-                //给Marker绑定单击事件
-                marker.on('click', $scope.markerClick);
-                $scope.markerList.push(marker);
+            });
+            //给Marker绑定单击事件
+            marker.on('click', $scope.markerClick);
+            $scope.markerList.push(marker);
 
-                marker = new AMap.Marker({
-                    map: $scope.mapObj,
-                    position: [108.328319,22.808499],
-                    icon: "http://webapi.amap.com/images/3.png",
-                    offset: new AMap.Pixel(-10, -34)
+            marker = new AMap.Marker({
+                map: $scope.mapObj,
+                position: [108.328319, 22.808499],
+                icon: "http://webapi.amap.com/images/3.png",
+                offset: new AMap.Pixel(-10, -34)
 
-                });
-                //给Marker绑定单击事件
-                marker.on('click', $scope.markerClick);
-                $scope.markerList.push(marker);
-
-
-                marker = new AMap.Marker({
-                    map: $scope.mapObj,
-                    position: [108.327627,22.808721],
-                    icon: "http://webapi.amap.com/images/4.png",
-                    offset: new AMap.Pixel(-10, -34)
-
-                });
-                //给Marker绑定单击事件
-                marker.on('click', $scope.markerClick);
-                $scope.markerList.push(marker);
+            });
+            //给Marker绑定单击事件
+            marker.on('click', $scope.markerClick);
+            $scope.markerList.push(marker);
 
 
-                marker = new AMap.Marker({
-                    map: $scope.mapObj,
-                    position: [108.32841,22.807796],
-                    icon: "http://webapi.amap.com/images/1.png",
-                    offset: new AMap.Pixel(-10, -34)
+            marker = new AMap.Marker({
+                map: $scope.mapObj,
+                position: [108.327627, 22.808721],
+                icon: "http://webapi.amap.com/images/4.png",
+                offset: new AMap.Pixel(-10, -34)
 
-                });
-                //给Marker绑定单击事件
-                marker.on('click', $scope.markerClick);
-                $scope.markerList.push(marker);
+            });
+            //给Marker绑定单击事件
+            marker.on('click', $scope.markerClick);
+            $scope.markerList.push(marker);
+
+
+            marker = new AMap.Marker({
+                map: $scope.mapObj,
+                position: [108.32841, 22.807796],
+                icon: "http://webapi.amap.com/images/1.png",
+                offset: new AMap.Pixel(-10, -34)
+
+            });
+            //给Marker绑定单击事件
+            marker.on('click', $scope.markerClick);
+            $scope.markerList.push(marker);
         };
     }
 }());

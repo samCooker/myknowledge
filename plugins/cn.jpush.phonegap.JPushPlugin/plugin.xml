@@ -172,7 +172,7 @@
         <source-file src="src/android/x86/libjpush213.so" target-dir="libs/x86"/>
         <source-file src="src/android/x86_64/libjpush213.so" target-dir="libs/x86_64"/>
 
-        <!--<source-file src="src/android/JPushPlugin.java" target-dir="src/cn/jpush/phonegap"/>-->
+        <source-file src="src/android/JPushPlugin.java" target-dir="src/cn/jpush/phonegap"/>
         <source-file src="src/android/MyReceiver.java" target-dir="src/cn/jpush/phonegap"/>
     	<source-file src="src/android/test_notification_layout.xml" target-dir="res/layout"/>
     	<source-file src="src/android/jpush_notification_icon.png" target-dir="res/drawable"/>
