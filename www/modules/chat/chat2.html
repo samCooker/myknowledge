@@ -1,0 +1,53 @@
+<link href="modules/chat/style.css" rel="stylesheet">
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-view view-title="聊天室">
+    <!--头部-->
+    <ion-nav-bar class="bar bar-header bar-positive" align-title="center"><!--头部-->
+        <ion-nav-buttons side="left"><!--左边的按钮-->
+            <cs-return-btn></cs-return-btn>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <!--内容-->
+    <ion-content>
+        <div class="container">
+            <div class="col-md-12 col-lg-6">
+                <div class="panel">
+                    <!--Widget body-->
+                    <div id="demo-chat-body" class="collapse in">
+                        <div class="nano has-scrollbar" >
+                            <div class="nano-content pad-all" tabindex="0" style="right: -17px;">
+                                <ul class="list-unstyled media-block">
+                                    <li class="mar-btm" ng-repeat="chat in chatList">
+                                        <div class="media-left" ng-class="{'media-right':$odd}">
+                                            <img src="img/d-1-2.png" class="img-circle img-sm" alt="头像">
+                                        </div>
+                                        <div class="media-body pad-hor" ng-class="{'speech-right':$odd}">
+                                            <div class="speech">
+                                                <a href="#" class="media-heading">{{chat.name}}</a>
+                                                <p>{{chat.msg}}</p>
+                                                <p class="speech-time">
+                                                    <i class="fa fa-clock-o fa-fw"></i>{{chat.time|date:'MM-dd hh:mm'}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <!--Widget footer-->
+    <div class="panel-footer chat-input-bottom">
+        <div class="row">
+            <div class="col">
+                <input type="text" placeholder="Enter your text" ng-model="chat.msg" class="form-control chat-input">
+            </div>
+            <div class="col-xs-3">
+                <button class="btn btn-primary btn-block" ng-click="sendMsg()">Send</button>
+            </div>
+        </div>
+    </div>
+</ion-view>

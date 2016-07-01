@@ -30,11 +30,21 @@
   /**
    * 欢迎页面控制器，继承自homeController
    */
-  function WelcomeController($scope, $state, commonHttp, tipMsg) {
+  function WelcomeController($scope, $state, loginService, tipMsg) {
 
     $scope.toDifferentModule = function (moduleName) {
+      console.log(moduleName);
       $state.go(moduleName);
     };
+
+    $scope.startCcWorkLogApp = function () {
+      var userData = loginService.getUserData();
+      window.plugins.startApp.startActivity({appId:"com.ionicframework.ccworklog586082",userName:userData.userName,password:userData.password}, function (result) {
+        tipMsg.alert(result);
+      }, function (error) {
+        tipMsg.alert(error);
+      });
+    }
 
   }
 

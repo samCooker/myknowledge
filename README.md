@@ -26,7 +26,7 @@ cordova plugin add cordova-plugin-x-toast
 *******************end**************************
 
 3.PouchDB 本地存储插件****************
-PouchDB是操作SQLite数据库的javascript库（跟mongoose操作mongodb一样）
+PouchDB是操作SQLite数据库的javascript库（操作与mongodb一样）
 
 SQLite是一种轻量级的嵌入式数据库（数据库不需要你安装的，手机系统自带，你需要安装的就是SQLite插件）
 安装SQLite插件和pouchdb.js库，并将pouchdb引入到index.html中。

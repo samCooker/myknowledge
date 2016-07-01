@@ -43,10 +43,16 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         }
     },
     "dependent_plugins": {
         "cn.com.chaochuang.mapnavigation": {
+            "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
+        },
+        "cn.com.chaochuang.startapp": {
             "PACKAGE_NAME": "com.ionicframework.myknowledge769957"
         },
         "cordova-plugin-compat": {

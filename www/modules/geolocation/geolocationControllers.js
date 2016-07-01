@@ -112,19 +112,19 @@
                 model: $scope.destination.model || ''
             };
             if ($scope.mapType == '百度') {
-                _start.navigationBaiduMap(options, function (msg) {
+                MapNavigation.navigationBaiduMap(options, function (msg) {
                     tipMsg.alertMsg(msg);
                 }, function (error) {
                     tipMsg.alertMsg(error);
                 });
             } else if ($scope.mapType == '高德') {
-                _start.navigationMiniMap(options, function (msg) {
+                MapNavigation.navigationMiniMap(options, function (msg) {
                     tipMsg.alertMsg(msg);
                 }, function (error) {
                     tipMsg.alertMsg(error);
                 });
             } else {
-                _start.navigation(options, function (msg) {
+                MapNavigation.navigation(options, function (msg) {
                     tipMsg.alertMsg(msg);
                 }, function (error) {
                     tipMsg.alertMsg(error);

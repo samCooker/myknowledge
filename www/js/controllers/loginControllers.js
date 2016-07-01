@@ -11,7 +11,7 @@
      * 登录控制器
      */
     function loginControllerFun($scope, $state, $ionicModal, appConfig, tipMsg,tools, loginService) {
-        $scope.loginData = {username:'',password:''}; //登录数据
+        $scope.loginData = {userName:'',password:''}; //登录数据
         $scope.signData = {}; //注册数据
         $scope.signup = {}; //与注册相关的实体类
         $scope.login = loginFun; //登录
@@ -79,23 +79,28 @@
      * 登录服务
      */
     function loginServiceFun($q, commonHttp, tipMsg, tools,appConfig) {
+
+        //userName  password
+        var _userData={};
+
         return {
             login: loginFun,
-            signup: signupFun
+            signup: signupFun,
+            getUserData:getUserDataFun
         };
 
         /**
          * 登录
          */
         function loginFun(data) {
-            if (!data.username || !data.password) {
+            if (!data.userName || !data.password) {
                 var delay = $q.defer();
                 delay.resolve({
                     account:'anonymous',
-                    username:'anonymous'
+                    userName:'anonymous'
                 });
                 return delay.promise;
-                //if (!data.username) {
+                //if (!data.userName) {
                 //    delay.reject('无用户名');
                 //    return delay.promise;
                 //}
@@ -104,6 +109,7 @@
                 //    return delay.promise;
                 //}
             } else {
+                _userData=data;
                 return commonHttp.jsonPost('login_check', data);
             }
         }
@@ -124,10 +130,10 @@
 
         //校验注册数据
         function checkSignData(signData) {
-            if (!signData.username) {
+            if (!signData.userName) {
                 return '请输入用户名。';
             }
-            if (signData.username.length < 3) {
+            if (signData.userName.length < 3) {
                 return '至少输入三个字符。';
             }
             if (!tools.checkEmail(signData.email)) {
@@ -140,6 +146,13 @@
                 return '两次输入的密码不一致';
             }
             return true;
+        }
+
+        /**
+         *
+         */
+        function getUserDataFun(){
+            return _userData;
         }
     }
 

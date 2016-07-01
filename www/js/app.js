@@ -1,6 +1,6 @@
 // 使用cordova+angularjs+ionic开发app
 
-// 设置全局变量 appModule，
+// 设置全局变量 appModule
 var appModule = angular.module('starter', ['ionic','treeControl']);
 
 // 设置运行时的参数
@@ -18,7 +18,7 @@ appModule.run(function ($ionicPlatform, $location, $rootScope, $ionicHistory, $s
     });
 
     //初始化本地存储数据库
-    dbTool.initWebSqlDb('appDb');
+    dbTool.initWebSqlDb('myknowledgeDb');
 
     //物理返回按钮控制&双击退出应用
     $ionicPlatform.registerBackButtonAction(function (e) {
