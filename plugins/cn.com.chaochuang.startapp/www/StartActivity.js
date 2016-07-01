@@ -8,7 +8,7 @@ var startApp = {
         exec(successCallback, errorCallback, 'StartActivity', 'startActivity', [data]);
     },
     getIntentData: function (data, successCallback, errorCallback) {
-        exec(successCallback, errorCallback, 'GetIntentData', 'getIntentData', [data]);
+        exec(successCallback, errorCallback, 'StartActivity', 'getIntentData', [data]);
     }
 };
 
