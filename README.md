@@ -3,6 +3,76 @@ ionic demo template
 
 # 文件结构
   
+# 编写规则
+
+* 关于命名
+
+    * 变量命名统一使用驼峰规则命名。
+    
+    * 文件夹命名：使用英文小写，单词之间使用'-'连接。如：cordova-plugin
+    
+    * html、css和js文件命名：使用英文小写，单词之间使用'-'连接，压缩后的文件使用'.min'后缀。如：ionic-angular.js,ionic-angular.min.js
+    
+    * java文件命名：首字母大写，使用驼峰规则命名。如：CordovaPlugin.java
+    
+    * js Controller命名使用 *Controller 方式，如：loginController
+
+* js编写规则
+
+    * 注释：
+    
+        每个方法名之上需写上方法的说明、创建人和创建日期。
+        
+        定义时变量时，需写上说明。
+        
+        如：
+        ```javascript
+               /**
+                 * 登录控制器
+                 * @author author
+                 * @date 2016年7月1日
+                 */
+                function LoginController($scope) {
+            
+                    //登录用户
+                    $scope.user = {};
+            
+                    //登录方法
+                    $scope.login = function () {
+            
+                    };
+            
+                }
+        ```
+        
+    * 变量
+        
+        有一定关联的变量应封装在同一个实体中，如：
+        
+        ```
+            用户名：{{user.name}}
+            密码：{{user.password}}
+        ```
+        
+        不符合的变量定义：
+        
+        ```
+            用户名：{{name}}
+            密码：{{password}}
+        ```
+        
+        方法定义使用匿名的方式，方便查看。
+        
+        ```javascript
+            //登录方法
+            $scope.login = function () {
+    
+            };
+        ```
+        
+    * 代码格式化
+    
+        使用WebStorm默认的代码格式。(快捷键：`Ctrl+Alt+L`)
 
 # 关于图标
 访问<http://ionicons.com/>  可查询具体图标名称 或 查看ionicons-2.0.1.zip
