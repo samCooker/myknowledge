@@ -103,4 +103,5 @@ ionic demo template
   cordova plugin add cordova-plugin-baidu-geolocation-c
 
 - 13.调用百度或高德地图app
+
   命令：cordova plugin add https://github.com/samCooker/mapnavigation.git
