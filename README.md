@@ -1,90 +1,93 @@
 # ionicDemo
 ionic demo template
 
-  # 文件结构
-    root
-      |-
+# 文件结构
+  
 
-*****关于图标*****
-访问http://ionicons.com/  可查询具体图标名称
-或 查看ionicons-2.0.1.zip
-*****************
+# 关于图标
+访问http://ionicons.com/  可查询具体图标名称 或 查看ionicons-2.0.1.zip
 
-****************弹出窗***********************
-demo可查看首页的注册对话框
-***************end***************************
+# cordova插件
+
+- 1.时间插件
+
+  命令: cordova plugin add cordova-plugin-datepicker
+
+  详情：https://www.npmjs.com/package/cordova-plugin-datepicker
 
 
-1.时间插件***********************
-cordova CLI: cordova plugin add cordova-plugin-datepicker
-详情可查看https://www.npmjs.com/package/cordova-plugin-datepicker
-*******************end************************
+- 2.Toast插件
 
-2.Toast插件***********************
-cordova plugin add cordova-plugin-x-toast
-详情查看：https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
-*******************end**************************
+  命令：cordova plugin add cordova-plugin-x-toast
+  详情：https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
 
-3.PouchDB 本地存储插件****************
-PouchDB是操作SQLite数据库的javascript库（操作与mongodb一样）
 
-SQLite是一种轻量级的嵌入式数据库（数据库不需要你安装的，手机系统自带，你需要安装的就是SQLite插件）
-安装SQLite插件和pouchdb.js库，并将pouchdb引入到index.html中。
+- 3.PouchDB 本地存储插件
 
-1. 安装指令: cordova plugin add io.litehelpers.cordova.sqlitestorage
-    **旧版本 cordova plugin add https://github.com/nolanlawson/sqlite-plugin-fork
-2. 在index.html中引入js<script src="lib/pouchdb/dist/pouchdb.min.js"></script>
+  PouchDB是操作SQLite数据库的javascript库（操作与mongodb一样）
 
-API: http://pouchdb.com/api.html
-demo: 查看homeControllers.js的FordosCtrlFun方法
+  SQLite是一种轻量级的嵌入式数据库（数据库不需要你安装的，手机系统自带，你需要安装的就是SQLite插件）
+  安装SQLite插件和pouchdb.js库，并将pouchdb引入到index.html中。
 
-PouchDB查询插件:
-https://github.com/nolanlawson/pouchdb-find
-*********************end***********************
+  * 1. 安装指令: cordova plugin add io.litehelpers.cordova.sqlitestorage
+  
+       旧版本 cordova plugin add https://github.com/nolanlawson/sqlite-plugin-fork
 
-4.图片浏览**********************
-cordova CLI: cordova plugin add https://github.com/wymsee/cordova-imagePicker.git
+  * 2. 在index.html中引入js<script src="lib/pouchdb/dist/pouchdb.min.js"></script>
 
-**********************end************************
+  API: http://pouchdb.com/api.html
 
-5.文件上传下载插件****************
-cordova CLI: cordova plugin add cordova-plugin-file-transfer
+  PouchDB查询插件:
+  
+  https://github.com/nolanlawson/pouchdb-find
 
-link :https://github.com/apache/cordova-plugin-file-transfer
-**********************end**********************
+- 4.图片浏览
 
-6.拍照*************************
-cordova CLI: cordova plugin add cordova-plugin-camera
-Link  https://github.com/apache/cordova-plugin-camera
-****************end************
+  命令: cordova plugin add https://github.com/wymsee/cordova-imagePicker.git
 
-7. ***************************
-cordova CLI :cordova plugin add cordova-plugin-admobpro
-Link        :https://github.com/floatinghotpot/cordova-admob-pro#quick-demo
+- 5.文件上传下载插件
 
-***********end***************
+  命令: cordova plugin add cordova-plugin-file-transfer
 
-8.**********fileOpener for android*********
-cordova CLI :cordova plugin add cordova-plugin-fileopener
-Link        :https://github.com/Smile-SA/cordova-plugin-fileopener
-*************************
+  详情: https://github.com/apache/cordova-plugin-file-transfer
 
-9.*************send message**************
-cordova CLI :cordova plugin add cordova-sms-plugin
-Link        :https://github.com/cordova-sms/cordova-sms-plugin
-*************************************
+- 6.拍照
 
-10.*************phonecaller**************
-cordova CLI :cordova plugin add cordova-plugin-phonecaller
-Link        :
-*************************************
+  命令: cordova plugin add cordova-plugin-camera
 
-11.*************JPush 推送**************
-极光推送：https://www.jpush.cn
-安装：cordova plugin add jpush-phonegap-plugin --variable API_KEY=your_jpush_appkey
-*************************************
+  详情: https//github.com/apache/cordova-plugin-camera
 
-12.地图定位
+- 7.
+
+  命令：cordova plugin add cordova-plugin-admobpro
+  
+  详情：https://github.com/floatinghotpot/cordova-admob-pro#quick-demo
+
+- 8.fileOpener for android
+
+  命令：cordova plugin add cordova-plugin-fileopener
+
+  详情：https://github.com/Smile-SA/cordova-plugin-fileopener
+
+- 9.发送短信
+
+  命令：cordova plugin add cordova-sms-plugin
+  
+  详情：https://github.com/cordova-sms/cordova-sms-plugin
+
+- 10.打电话
+
+  命令：cordova plugin add cordova-plugin-phonecaller
+
+
+- 11.JPush 推送
+
+  极光推送：https://www.jpush.cn
+
+  安装：cordova plugin add jpush-phonegap-plugin --variable API_KEY=your_jpush_appkey
+
+
+- 12.地图定位
   1.
   cordova plugin add cordova-plugin-geolocation
 
@@ -99,5 +102,5 @@ Link        :
 
   cordova plugin add cordova-plugin-baidu-geolocation-c
 
-13.调用百度或高德地图app
-  cordova plugin add https://github.com/samCooker/mapnavigation.git
+- 13.调用百度或高德地图app
+  命令：cordova plugin add https://github.com/samCooker/mapnavigation.git
