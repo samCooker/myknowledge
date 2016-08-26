@@ -1,0 +1,19 @@
+<!--模板需放在 ion-view 标签内-->
+<ion-view view-title="" class="animated fadeIn">
+    <!--头部-->
+    <ion-nav-bar class="bar bar-header bar-calm" align-title="center"><!--头部-->
+        <ion-nav-buttons side="left"><!--左边的按钮-->
+            <cs-return-btn></cs-return-btn>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <!--内容-->
+    <ion-content overflow-scroll="true" style="overflow:auto;">
+        <ion-list>
+            <ion-item ng-click="getVideoList()">获取列表</ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item ng-click="playVideo(($index+1))" ng-repeat="videoData in videoList">{{videoData.name}}</ion-item>
+        </ion-list>
+        <!--<iframe src="http://192.168.1.179:28080/gxfda_mobile_server/loginfail.html"></iframe>-->
+    </ion-content>
+</ion-view>

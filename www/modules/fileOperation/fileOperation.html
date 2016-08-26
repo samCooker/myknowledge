@@ -1,0 +1,34 @@
+<!--模板需放在 ion-modal-view 标签内-->
+<ion-view view-title="文件操作">
+    <!--头部-->
+    <ion-nav-bar class="bar bar-header bar-positive" align-title="center"><!--头部-->
+        <ion-nav-buttons side="left"><!--左边的按钮-->
+            <cs-return-btn></cs-return-btn>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <!--内容-->
+    <ion-content>
+        <div class="card">
+            <div class="list">
+                <div class="item item-button-right">
+                    选择文件
+                    <button class="button button-positive" ng-click="fileChoose()">
+                        <i class="icon ion-android-compass"></i>
+                    </button>
+                </div>
+                <div class="item">
+                    {{fileUri}}
+                </div>
+                <div class="item item-button-right">
+                    上传文件
+                    <button class="button button-positive" ng-click="uploadFile()">
+                        <i class="icon ion-android-compass"></i>
+                    </button>
+                </div>
+                <div class="item">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
